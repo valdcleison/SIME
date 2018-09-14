@@ -41,17 +41,17 @@
       <div id="sidebar" class="nav-collapse ">
         <!-- sidebar menu start-->
         <ul class="sidebar-menu" id="nav-accordion">
-          <p class="centered"><a href="profile.html"><img src="/res/Admin/img/ui-sam.jpg" class="img-circle" width="80"></a></p>
+          <p class="centered"><a href="/admin/profile/"><img src="/res/Admin/img/ui-sam.jpg" class="img-circle" width="80"></a></p>
           <h5 class="centered">Valdcleison Valdeci Araujo Carvalho</h5>
           <li class="mt">
-            <a href="?admin/">
-              <i class="fa fa-dashboard"></i>
-              <span>Inicio</span>
+            <a href="/admin/profile/">
+              <i class="fa fa-user"></i>
+              <span>Perfil</span>
               </a>
           </li>
           <li class="sub-menu">
             <a href="javascript:;">
-              <i class="fa fa-desktop"></i>
+              <i class="fa fa-group"></i>
               <span>Usuarios</span>
               </a>
             <ul class="sub">
@@ -61,7 +61,7 @@
           </li>
           <li class="sub-menu">
             <a href="javascript:;">
-              <i class="fa fa-cogs"></i>
+              <i class="fa fa-book"></i>
               <span>Escolas</span>
               </a>
             <ul class="sub">

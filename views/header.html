@@ -53,10 +53,11 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li class="active"><a href="#home-page">HOME</a></li>
                     <li><a href="#service-page">SERVIÇO</a></li>
-                    <li><a href="#feature-page">O SIME</a></li>
                     <li><a href="#price-page">PREÇOS</a></li>
                     <li><a href="#team-page">EQUIPE</a></li>
                     <li><a href="#contact-page">CONTATO</a></li>
+                    <li><a href="/login/">LOGIN</a></li>
+                    <li><a href="/solicitacao/">SOLICITAR</a></li>
                 </ul>
             </nav>
         </div>

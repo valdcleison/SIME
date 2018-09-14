@@ -9,6 +9,15 @@ use \Sime\Controller\Usuario;
 
 $app = new Slim();
 
+$app->notFound(function () use ($app) {
+    $page = new Page("/views/", [
+    	"header"=>false,
+    	"footer"=>false
+    ]);
+
+	$page->setTpl("not");
+});
+
 $app->get('/', function(){
 	
 	$page = new Page();
@@ -30,7 +39,10 @@ $app->get('/login/', function(){
 
 
 $app->post('/login/', function(){
-	
+	if ($_POST["user"] == null || $_POST['pass'] == null || $_POST["user"] == "") {
+		throw new \Exception("Preencha todos os campos");
+		header("Location: /login/",1000);
+	}
 	try{
 		$user = Usuario::login($_POST["user"], $_POST['pass']);
 		switch ($user->getniveladmin()) {

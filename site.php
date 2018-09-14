@@ -1,8 +1,9 @@
 <?php 
+use \Sime\Page;
 
 $app->get('/solicitacao/', function(){
 	
-	$page = new Page([
+	$page = new Page("/views/",[
 		"header"=>false,
 		"footer"=>false
 	]);	
