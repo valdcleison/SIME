@@ -1,5 +1,5 @@
 <?php if(!class_exists('Rain\Tpl')){exit;}?><!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
   <meta charset="utf-8">
@@ -34,18 +34,18 @@
           <br>
           <input type="password" name ="pass" class="form-control" placeholder="SENHA">
           <label class="checkbox">
-            <input type="checkbox" value="remember-me"> Lembrar
+            
             <span class="pull-right">
             <a data-toggle="modal" href="/login/#myModal"> Recuperar senha</a>
             </span>
-            </label>
+          </label>
           <button class="btn btn-theme btn-block" type="submit"><i class="fa fa-lock"></i> ENTRAR</button>
           <hr>
           
           <div class="registration">
-            Não tem acesso? Escoloha o melhor plano para sua escola, e solicite um orçamento<br/>
+            Não tem acesso? <br/>
             <a class="" href="/solicitacao/">
-              Solicitar
+              Clique aqui para solicitar
               </a>
           </div>
         </div>
@@ -79,12 +79,12 @@
   <script src="/res/Admin/lib/jquery/jquery.min.js"></script>
   <script src="/res/Admin/lib/bootstrap/js/bootstrap.min.js"></script>
   
-  <script type="text/javascript" src="/res/Admin/lib/jquery.backstretch.min.js"></script>
+  <!--<script type="text/javascript" src="/res/Admin/lib/jquery.backstretch.min.js"></script>
   <script>
     $.backstretch("/res/Admin/img/login-bg.jpg", {
       speed: 500
     });
-  </script>
+  </script>-->
 </body>
 
 </html>

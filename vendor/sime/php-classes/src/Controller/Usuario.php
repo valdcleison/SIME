@@ -34,10 +34,13 @@ class Usuario extends Control{
 			!(int)$_SESSION[Usuario::SESSION]["idusuario"] > 0 ||
 			!(int)$_SESSION[Usuario::SESSION]["niveladmin"] === $nivelAdmin
 		){
-			return false;
-		}else{
-			return true;
+			header("Location: /login/");
+			exit;
 		}
+	}
+
+	public static function list(){
+		return UsuarioDao::listAll();
 	}
 
 }

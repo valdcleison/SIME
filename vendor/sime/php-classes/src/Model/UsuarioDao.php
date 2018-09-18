@@ -45,6 +45,11 @@ public function login($user, $pass){
 
 	}
 }
+	public static function listAll(){
+		$sql = new Sql();
+
+		return $sql->select("SELECT * FROM usuario a INNER JOIN pessoa b USING(idpessoa) WHERE a.niveladmin = 2 ORDER BY b.nomepessoa");
+	}
 		
 
 }

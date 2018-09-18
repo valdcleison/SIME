@@ -10,6 +10,3 @@
       </section>
       <!-- /wrapper -->
     </section>
-    <!-- /MAIN CONTENT -->
-    <!--main content end-->
-    <!--footer start-->

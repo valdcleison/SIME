@@ -51,7 +51,7 @@ $app->post('/login/', function(){
 				exit;
 			break;
 			case '1':
-				header("Location: /portal/escola");
+				header("Location: /portal/");
 				exit;
 			break;
 			case '2':
