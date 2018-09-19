@@ -43,5 +43,27 @@ class Usuario extends Control{
 		return UsuarioDao::listAll();
 	}
 
+	public function saveAdmin(){
+		$userDao = new UsuarioDao();
+
+		$user = $userDao->saveAdmin($this);
+
+		$this->setData($user);
+	}
+
+	public function buscarAdmin($id){
+		$userDao = new UsuarioDao();
+
+		$data = $userDao->getAdmin((int)$id);
+
+		$this->setData($data);
+	}
+
+	public function atualizarAdmin(){
+		$userDao = new UsuarioDao();
+		var_dump($this);
+		exit;
+		$userDao->updateAdmin($this);
+	}
 }
  ?>

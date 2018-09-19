@@ -1,4 +1,4 @@
-  <section id="main-content">
+<?php if(!class_exists('Rain\Tpl')){exit;}?>  <section id="main-content">
       <section class="wrapper">
 
         <div class="row mt">
@@ -6,29 +6,29 @@
             <br><h3><i class="fa fa-angle-right"></i> Editar dados do Usuario</h3></b>
             <div class="form-panel">
               <div class=" form">
-                <form class="cmxform form-horizontal style-form" id="commentForm" method="post" action="/admin/users/{$user.idusuario}">
+                <form class="cmxform form-horizontal style-form" id="commentForm" method="post" action="/admin/users/<?php echo htmlspecialchars( $user["idusuario"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
                   <div class="form-group ">
                     <label for="cname" class="control-label col-lg-2">Nome</label>
                     <div class="col-lg-10">
-                      <input class=" form-control" id="cname" name="nomepessoa" minlength="2" type="text" value="{$user.nomepessoa}" required />
+                      <input class=" form-control" id="cname" name="nomepessoa" minlength="2" type="text" value="<?php echo htmlspecialchars( $user["nomepessoa"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" required />
                     </div>
                   </div>
                   <div class="form-group ">
                     <label for="cemail" class="control-label col-lg-2">E-Mail</label>
                     <div class="col-lg-10">
-                      <input class="form-control " id="cemail" type="email" name="emailpessoa" value="{$user.emailpessoa}" required />
+                      <input class="form-control " id="cemail" type="email" name="emailpessoa" value="<?php echo htmlspecialchars( $user["emailpessoa"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" required />
                     </div>
                   </div>
                   <div class="form-group ">
                     <label for="curl" class="control-label col-lg-2">CPF</label>
                     <div class="col-lg-10">
-                      <input class="form-control " id="ccpf" type="cpf" name="cpfpessoa" value="{$user.cpfpessoa}" required />
+                      <input class="form-control " id="ccpf" type="cpf" name="cpfpessoa" value="<?php echo htmlspecialchars( $user["cpfpessoa"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" required />
                     </div>
                   </div>
                   <div class="form-group ">
                     <label for="curl" class="control-label col-lg-2">Usuario</label>
                     <div class="col-lg-10">
-                      <input class="form-control " id="cuser" type="text" name="user" value="{$user.usuario}" required />
+                      <input class="form-control " id="cuser" type="text" name="user" value="<?php echo htmlspecialchars( $user["usuario"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" required />
                     </div>
                   </div>
                   

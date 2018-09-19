@@ -11,7 +11,7 @@
             <div class="content-panel">
 
               <table class="table table-striped table-advance table-hover">
-                <h4> <a href="" class="btn btn-success">Cadastrar</a></h4>
+                <h4> <a href="/admin/users/create" class="btn btn-success">Cadastrar</a></h4>
                 <hr>
                 <thead>
                   <tr>
@@ -30,7 +30,7 @@
                       <?php echo htmlspecialchars( $value1["idusuario"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
                     </td>
                     <td class="hidden-phone"><?php echo htmlspecialchars( $value1["nomepessoa"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
-                    <td><?php echo htmlspecialchars( $value1["cpfpessoa"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                    <td><?php echo htmlspecialchars( $value1["emailpessoa"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                     <td><span><?php echo htmlspecialchars( $value1["usuario"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span></td>
                     <td><span class="label label-primary label-mini"><?php if( $value1["niveladmin"] == 0 ){ ?>Aluno/Responsavel<?php }elseif( $value1["niveladmin"] == 1 ){ ?>Funcionario Escola<?php }else{ ?>Administrador do Sistema<?php } ?></span></td>
                     <td>
