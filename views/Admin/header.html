@@ -18,6 +18,7 @@
 
   <link href="/res/Admin/css/style.css" rel="stylesheet">
   <link href="/res/Admin/css/style-responsive.css" rel="stylesheet">
+  <link href="/res/Admin/css/table-responsive.css" rel="stylesheet">
 
 
 <body>

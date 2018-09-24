@@ -28,7 +28,7 @@
                   <div class="form-group ">
                     <label for="curl" class="control-label col-lg-2">Usuario</label>
                     <div class="col-lg-10">
-                      <input class="form-control " id="cuser" type="text" name="user" />
+                      <input class="form-control " id="cuser" type="text" name="usuario" />
                     </div>
                   </div>
                   <div class="form-group ">
@@ -45,7 +45,7 @@
                   </div>
                   <div class="form-group">
                     <div class="col-lg-offset-2 col-lg-10">
-                      <input class="btn btn-theme" type="submit"></input>
+                      <input class="btn btn-theme" type="submit" value="Salvar"></input>
                       <a class="btn btn-theme04" type="button" href="/admin/users/">Cancelar</a>
                     </div>
                   </div>

@@ -39,7 +39,7 @@ $app->get('/login/', function(){
 
 
 $app->post('/login/', function(){
-	if ($_POST["user"] == null || $_POST['pass'] == null || $_POST["user"] == "") {
+	if (empty($_POST["user"]) || empty($_POST['pass'])) {
 		throw new \Exception("Preencha todos os campos");
 		header("Location: /login/",1000);
 	}
@@ -69,6 +69,51 @@ $app->post('/login/', function(){
 $app->get("/logout/", function(){
 	Usuario::logout();
 	header("Location: /login/");
+	exit;
+});
+
+$app->post("/forgot/", function(){
+	$email = $_POST['emailpessoa'];
+
+	$user = Usuario::reSenha($email);
+
+	header("Location: /login/");
+	exit;
+});
+
+$app->get("/forgot/reset-password", function(){
+
+	$userInfo = Usuario::validarCodigo($_GET['code']);
+	
+	$page = new Page("/views/",[
+		"header"=>false,
+		"footer"=>false
+	]);	
+	
+	$page->setTpl("forget", array(
+		"code"=>$_GET['code']
+	));
+});
+
+$app->post("/forgot/reset-password/", function(){
+	if($_POST['senha'] != $_POST['comsenha']){
+		throw new \Exception("Senhas não conferem");
+		exit;
+	}
+
+	$code = $_POST['code'];
+	$senha = password_hash($_POST['senha'], PASSWORD_DEFAULT, [
+		'cost'=>12
+	]);
+
+	$recoveryInfo = Usuario::validarCodigo($code);
+	$id = (int)$recoveryInfo['idusuario'];
+	$user = new Usuario();
+
+	$user->buscarAdmin($id);
+	$user->atualizarSenha($senha);
+
+	header("Location: /login");
 	exit;
 });
 

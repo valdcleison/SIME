@@ -24,7 +24,6 @@
   <script src="/res/Admin/lib/jquery.nicescroll.js" type="text/javascript"></script>
 
   <script src="/res/Admin/lib/common-scripts.js"></script>
-
   
 </body>
 

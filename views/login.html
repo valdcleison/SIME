@@ -39,7 +39,7 @@
             <a data-toggle="modal" href="/login/#myModal"> Recuperar senha</a>
             </span>
           </label>
-          <button class="btn btn-theme btn-block" type="submit"><i class="fa fa-lock"></i> ENTRAR</button>
+          <input class="btn btn-theme btn-block" type="submit" value="ENTRAR"/>
           <hr>
           
           <div class="registration">
@@ -49,7 +49,7 @@
               </a>
           </div>
         </div>
-       
+       </form>
         <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal" class="modal fade">
           <div class="modal-dialog">
             <div class="modal-content">
@@ -57,11 +57,11 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title">Recuperar a senha</h4>
               </div>
-              <form action="/forget/">
+              <form action="/forgot/" method="post">
               	
               <div class="modal-body">
                 <p>Informe o seu email para recuperar sua senha!</p>
-                <input type="text" name="email" placeholder="Email" autocomplete="off" class="form-control placeholder-no-fix">
+                <input type="text" name="emailpessoa" placeholder="Email" autocomplete="off" class="form-control placeholder-no-fix" required>
               </div>
               <div class="modal-footer">
                 <button data-dismiss="modal" class="btn btn-default" type="button">Cancelar</button>
@@ -72,7 +72,7 @@
           </div>
         </div>
       
-      </form>
+      
     </div>
   </div>
   

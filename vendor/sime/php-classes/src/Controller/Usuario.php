@@ -7,6 +7,7 @@ use \Sime\Control;
 
 class Usuario extends Control{
 	const SESSION = "User";
+	const ENCODEKEY = "simeescolavwjdjp";
 
 	public static function login($nomeUser, $pass){
 		$UsuarioDao = new UsuarioDao();
@@ -43,12 +44,11 @@ class Usuario extends Control{
 		return UsuarioDao::listAll();
 	}
 
-	public function saveAdmin(){
+	public function salvarAdmin(){
 		$userDao = new UsuarioDao();
 
-		$user = $userDao->saveAdmin($this);
+		$userDao->saveAdmin($this);
 
-		$this->setData($user);
 	}
 
 	public function buscarAdmin($id){
@@ -58,12 +58,63 @@ class Usuario extends Control{
 
 		$this->setData($data);
 	}
-
+					
 	public function atualizarAdmin(){
 		$userDao = new UsuarioDao();
-		var_dump($this);
-		exit;
+		
 		$userDao->updateAdmin($this);
+	}
+
+	public function deletarAdmin(){
+		$userDao = new UsuarioDao();
+		
+		$userDao->deleteAdmin($this);
+	}
+
+	public static function reSenha($email){
+		$userDao = new UsuarioDao();
+		$user = $userDao->getUserByEmail($email);
+
+		$data = $userDao->forgotPassword($user);
+
+		
+		$code = base64_encode(openssl_encrypt( $data["idusuariorecuperarsenha"] , 'aes-256-cbc' , Usuario::ENCODEKEY , 0,  Usuario::ENCODEKEY));
+
+		//$code = base64_encode(openssl_encrypt($data["idusuariorecuperarsenha"], 'aes-256-cbc', Usuario::ENCODEKEY, $iv));
+
+		$link = "www.sime.com.br/forgot/reset-password?code=$code";
+
+		$email = new \Sime\Mailer($user['emailpessoa'], $user['nomepessoa'], "Redefinir Senha", "forgot", array(
+			"name"=>$user['nomepessoa'],
+			"link"=>$link
+		));
+
+		$email->send();
+
+		return $data;
+	}
+
+	public static function validarCodigo($code){
+		
+		
+		$id = openssl_decrypt(base64_decode($code),'aes-256-cbc', Usuario::ENCODEKEY, 0, Usuario::ENCODEKEY);
+		
+		$userDao = UsuarioDao::getRecovery($id);
+
+		Usuario::codigoValidado($id);
+		
+		return $userDao;
+		
+	}
+
+	public static function codigoValidado($id){
+		$userDao = new UsuarioDao();
+		$userDao->setForgotUsed($id);
+	}
+
+	public function atualizarSenha($senha){
+		$userDao = new UsuarioDao();
+		$userDao->changePassword();
 	}
 }
  ?>

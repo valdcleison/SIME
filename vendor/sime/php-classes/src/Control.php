@@ -14,10 +14,10 @@ public function __call($name, $args){
 
 	switch ($method) {
 		case "set":
-			$this->values[$fieldName] = $args[0];			
+			$this->values[$fieldName] = $args[0];
 		break;
 		case "get":
-			return $this->values[$fieldName];
+			return (isset($this->values[$fieldName])) ? $this->values[$fieldName] : NULL;
 		break;
 		
 
@@ -30,7 +30,7 @@ public function setData($data = array()){
 
 	foreach ($data as $key => $value) {
 
-		Control::{"set".$key}($value);
+		$this->{"set".$key}($value);
 
 	}
 	

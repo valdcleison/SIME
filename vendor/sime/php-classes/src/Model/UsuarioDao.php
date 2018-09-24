@@ -15,25 +15,39 @@ public function saveAdmin($user){
 		":pnomepessoa"=>$user->getnomepessoa(),
 		":pcpfpessoa"=>$user->getcpfpessoa(),
 		":pemailpessoa"=>$user->getemailpessoa(),
-		":user"=>$user->getuser(),
+		":user"=>$user->getusuario(),
 		":pass"=>$user->getpass()
 	));
-
-	return $results[0];
+	
+	$user->setData($results[0]);
 }
 
 public function updateAdmin($user){
+	
 	$sql = new Sql();
+
 	
 	$results = $sql->select("CALL sp_user_update(:piduser, :pnomepessoa, :pcpfpessoa, :pemailpessoa, :puser)", array(
-		":piduser"=>$user->getidusuario(),
-		":pnomepessoa"=>$user->nomepessoa(),
-		":pcpfpessoa"=>$user->getcpfpessoa(),
-		":pemailpessoa"=>$user->getemailpessoa(),
-		":puser"=>$user->getusuario(),
+		":piduser" => $user->getidusuario(),
+		":pnomepessoa" => $user->getnomepessoa(),
+		":pcpfpessoa" => $user->getcpfpessoa(),
+		":pemailpessoa" => $user->getemailpessoa(),
+		":puser" => $user->getusuario()
 	));
+	
+	
+	$user->setData($results[0]);
+}
 
-	return $results;
+public function deleteAdmin($user){
+	
+	$sql = new Sql();
+
+	
+	$sql->query("CALL sp_user_delete(:iduser)", array(
+		":iduser" => $user->getidusuario()
+	));
+	
 }
 
 public function login($user, $pass){
@@ -77,7 +91,68 @@ public function login($user, $pass){
 		return $resuts[0];
 	}
 
+	public function getUserByEmail($email){
+		$sql = new Sql();
+		$result = $sql->select("SELECT * FROM usuario u INNER JOIN pessoa p USING(idpessoa) WHERE u.emailpessoa = :email", array(
+			":email"=>$email
+		));
 
+		if(count($result) <= 0){
+			throw new \Exception("Não foi possivel recuperar a senha!");
+		}
+		return $result[0];
+	}
+
+	public function forgotPassword($user){
+		
+		$sql = new Sql();
+		$results = $sql->select("CALL sp_userspasswordsrecoveries_create(:idusuario, :ipusuario)", array(
+			":idusuario"=> $user['idusuario'],
+			":ipusuario"=>$_SERVER["REMOTE_ADDR"]
+
+		));
+
+		if($results <= 0){
+			throw new \Exception("Não foi possivel recuperar a senha!");
+		}
+		return $results[0];
+	}
+
+	public static function getRecovery($id){
+		$sql = new Sql();
+		$results = $sql->select("SELECT * FROM usuariorecuperarsenha urs 
+				INNER JOIN usuario u ON urs.usuario_idusuario = u.idusuario
+				INNER JOIN pessoa p ON u.idpessoa = p.idpessoa 
+				WHERE idusuariorecuperarsenha = :id
+				AND urs.dtrecuperacao IS NULL
+				AND DATE_ADD(urs.dtregistro, INTERVAL 1 HOUR) >= NOW()", 
+				array(
+					":id"=>$id
+				));
+
+		if(count($results) <= 0){
+			throw new \Exception("Não foi possivel recuperar a senha!");
+		}
+		return $results;
+
+	}
+
+	public static function setForgotUsed($id){
+		$sql = new Sql();
+		$sql->query("UPDATE usuariorecuperarsenha SET dtrecuperacao = NOW() WHERE idusuariorecuperarsenha = :id", 
+			array(
+				":id"=>$id
+
+		));
+	}
+
+	public function changePassword($idUsuario, $senha){
+		$sql = new Sql();
+		$sql->query("UPDATE usuario SET senha = :senha WHERE idUsuario = :idUsuario", array(
+			":senha"=>$senha,
+			":idUsuario"=>$idUsuario
+		));
+	}
 		
 
 }
