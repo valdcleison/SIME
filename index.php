@@ -33,15 +33,20 @@ $app->get('/login/', function(){
 		"footer"=>false
 	]);	
 	
-	$page->setTpl("login");
+	$page->setTpl("login", [
+		"error"=>Usuario::getError(),
+		"succes"=>Usuario::getSuccess()
+	]);
 });
 
 
 
 $app->post('/login/', function(){
 	if (empty($_POST["user"]) || empty($_POST['pass'])) {
-		throw new \Exception("Preencha todos os campos");
+
+		Usuario::setError("Preencha todos os campos");
 		header("Location: /login/",1000);
+		exit;
 	}
 	try{
 		$user = Usuario::login($_POST["user"], $_POST['pass']);
@@ -60,23 +65,32 @@ $app->post('/login/', function(){
 			break;
 		}
 	}catch(\Exception $e){
-
-		echo $e->getmessage();
-		
-
+		Usuario::setError($e->getmessage());
+		header("Location: /login/",1000);
+		exit;
 	}
 });
 $app->get("/logout/", function(){
 	Usuario::logout();
+	Usuario::setSuccess("Usuario desconectado com sucesso!");
 	header("Location: /login/");
 	exit;
 });
 
 $app->post("/forgot/", function(){
-	$email = $_POST['emailpessoa'];
+	try{
+		$email = $_POST['emailpessoa'];
 
-	$user = Usuario::reSenha($email);
+		$user = Usuario::reSenha($email);
+		Usuario::codigoValidado($id);
+	}catch(Exception $e){
+		Usuario::setError("Não foi possivel recuperar sua senha!");
+		header("Location: /login/");
+		exit;
+	}
 
+
+	Usuario::setSuccess("Acese seu email para recuperar sua senha!");
 	header("Location: /login/");
 	exit;
 });
@@ -91,30 +105,40 @@ $app->get("/forgot/reset-password", function(){
 	]);	
 	
 	$page->setTpl("forget", array(
-		"code"=>$_GET['code']
+		"code"=>$_GET['code'],
+		"error"=>Usuario::getError(),
+		"succes"=>Usuario::getSuccess()
 	));
 });
 
 $app->post("/forgot/reset-password/", function(){
 	if($_POST['senha'] != $_POST['comsenha']){
-		throw new \Exception("Senhas não conferem");
+	
+		Usuario::setError("Senhas não conferem");
+		header("Location: /forgot/reset-password?code=".$_POST['code']."");
 		exit;
 	}
+	try{
+		$code = $_POST['code'];
+		$senha = password_hash($_POST['senha'], PASSWORD_DEFAULT, [
+			'cost'=>12
+		]);
 
-	$code = $_POST['code'];
-	$senha = password_hash($_POST['senha'], PASSWORD_DEFAULT, [
-		'cost'=>12
-	]);
+		$recoveryInfo = Usuario::validarCodigo($code);
+		
+		$idusuario = (int)$recoveryInfo['idusuario'];
 
-	$recoveryInfo = Usuario::validarCodigo($code);
-	$id = (int)$recoveryInfo['idusuario'];
-	$user = new Usuario();
+		Usuario::codigoValidado((int)$recoveryInfo['idusuariorecuperarsenha']);
 
-	$user->buscarAdmin($id);
-	$user->atualizarSenha($senha);
+		$user = new Usuario();
 
-	header("Location: /login");
-	exit;
+		$user->buscarAdmin($idusuario);
+		$user->atualizarSenha($senha);
+	}catch(Exception $e){
+		Usuario::setError($e->getMessage());
+		header("Location: /login");
+		exit;
+	}
 });
 
 require_once("site.php");

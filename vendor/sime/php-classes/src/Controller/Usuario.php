@@ -8,6 +8,9 @@ use \Sime\Control;
 class Usuario extends Control{
 	const SESSION = "User";
 	const ENCODEKEY = "simeescolavwjdjp";
+	const ERROR = "UserError";
+	const ERROR_REGISTER = "UserErrorRegister";
+	const SUCCESS = "UserSucesss";
 
 	public static function login($nomeUser, $pass){
 		$UsuarioDao = new UsuarioDao();
@@ -17,6 +20,8 @@ class Usuario extends Control{
 		$user = new Usuario();
 
 		$user->setData($data);
+
+	
 
 		$_SESSION[Usuario::SESSION] = $user->getValues();
 
@@ -46,6 +51,14 @@ class Usuario extends Control{
 
 	public function salvarAdmin(){
 		$userDao = new UsuarioDao();
+
+		$password = password_hash($this->getpass(), PASSWORD_DEFAULT, [
+			'cost'=>12
+		]);
+
+		var_dump($password);
+		
+		$this->setpass($password);
 
 		$userDao->saveAdmin($this);
 
@@ -98,11 +111,9 @@ class Usuario extends Control{
 		
 		
 		$id = openssl_decrypt(base64_decode($code),'aes-256-cbc', Usuario::ENCODEKEY, 0, Usuario::ENCODEKEY);
-		
+
 		$userDao = UsuarioDao::getRecovery($id);
 
-		Usuario::codigoValidado($id);
-		
 		return $userDao;
 		
 	}
@@ -114,7 +125,74 @@ class Usuario extends Control{
 
 	public function atualizarSenha($senha){
 		$userDao = new UsuarioDao();
-		$userDao->changePassword();
+		
+		$userDao->changePassword($this->getidusuario(),$senha);
+	}
+
+	public static function setError($msg){
+
+		$_SESSION[Usuario::ERROR] = $msg;
+
+	}
+
+	public static function getError(){
+
+		$msg = (isset($_SESSION[Usuario::ERROR]) && $_SESSION[Usuario::ERROR]) ? $_SESSION[Usuario::ERROR] : '';
+
+		Usuario::clearError();
+
+		return $msg;
+
+	}
+
+	public static function clearError(){
+
+		$_SESSION[Usuario::ERROR] = NULL;
+
+	}
+
+	public static function setSuccess($msg){
+
+		$_SESSION[Usuario::SUCCESS] = $msg;
+
+	}
+
+	public static function getSuccess(){
+
+		$msg = (isset($_SESSION[Usuario::SUCCESS]) && $_SESSION[Usuario::SUCCESS]) ? $_SESSION[Usuario::SUCCESS] : '';
+
+		Usuario::clearSuccess();
+
+		return $msg;
+
+	}
+
+	public static function clearSuccess(){
+
+		$_SESSION[Usuario::SUCCESS] = NULL;
+
+	}
+
+	public static function setErrorRegister($msg){
+
+		$_SESSION[Usuario::ERROR_REGISTER] = $msg;
+
+	}
+
+	public static function getErrorRegister(){
+
+		$msg = (isset($_SESSION[Usuario::ERROR_REGISTER]) && $_SESSION[Usuario::ERROR_REGISTER]) ? $_SESSION[Usuario::ERROR_REGISTER] : '';
+
+		Usuario::clearErrorRegister();
+
+		return $msg;
+
+	}
+
+	public static function clearErrorRegister(){
+
+		$_SESSION[Usuario::ERROR_REGISTER] = NULL;
+
 	}
 }
  ?>

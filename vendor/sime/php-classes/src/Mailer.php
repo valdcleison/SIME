@@ -3,8 +3,8 @@ namespace Sime;
 
 use Rain\Tpl;
 class Mailer{
-	const USERNAME = "-------";
-	const PASSWORD = "------";
+	const USERNAME = "valdcleisonvaldeci@gmail.com";
+	const PASSWORD = "Val@250499";
 	const NAME_FROM = "Sime Escola";
 
 	private $mail;

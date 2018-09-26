@@ -53,7 +53,7 @@ public function deleteAdmin($user){
 public function login($user, $pass){
 	$sql = new Sql();
 
-	$results = $sql->select("SELECT * FROM usuario WHERE usuario = :user", array(
+	$results = $sql->select("SELECT * FROM usuario u  INNER JOIN pessoa p USING (idpessoa) WHERE u.usuario = :user", array(
 		":user"=>$user
 	));
 
@@ -133,7 +133,7 @@ public function login($user, $pass){
 		if(count($results) <= 0){
 			throw new \Exception("Não foi possivel recuperar a senha!");
 		}
-		return $results;
+		return $results[0];
 
 	}
 
@@ -148,7 +148,7 @@ public function login($user, $pass){
 
 	public function changePassword($idUsuario, $senha){
 		$sql = new Sql();
-		$sql->query("UPDATE usuario SET senha = :senha WHERE idUsuario = :idUsuario", array(
+		$sql->query("UPDATE usuario SET senha = :senha WHERE idusuario = :idUsuario", array(
 			":senha"=>$senha,
 			":idUsuario"=>$idUsuario
 		));

@@ -29,7 +29,7 @@
         <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
       </div>
 
-      <a href="/admin/" class="logo"><img src="/res/Layout/images/logo.png" height="30" width="120"></a>
+      <a href="/admin/" class="logo"><img src="/res/Admin/images/logo.png" height="30" width="120"></a>
 
       
       <div class="top-menu">
@@ -42,8 +42,8 @@
       <div id="sidebar" class="nav-collapse ">
         <!-- sidebar menu start-->
         <ul class="sidebar-menu" id="nav-accordion">
-          <p class="centered"><a href="/admin/profile/"><img src="/res/Admin/img/ui-sam.jpg" class="img-circle" width="80"></a></p>
-          <h5 class="centered">Valdcleison Valdeci Araujo Carvalho</h5>
+          <p class="centered"><a href="/admin/profile/"><img src="" class="img-circle" width="80"></a></p>
+          <h5 class="centered"><?php echo htmlspecialchars( $name, ENT_COMPAT, 'UTF-8', FALSE ); ?></h5>
           <li class="mt">
             <a href="/admin/profile/">
               <i class="fa fa-user"></i>

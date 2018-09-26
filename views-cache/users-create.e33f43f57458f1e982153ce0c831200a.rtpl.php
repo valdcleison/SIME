@@ -4,6 +4,8 @@
         <div class="row mt">
           <div class="col-lg-12">
             <br><h3><i class="fa fa-angle-right"></i> Cadastro de Usuario</h3></b>
+
+          
             <div class="form-panel">
               <div class=" form">
                 <form class="cmxform form-horizontal style-form" id="commentForm" method="post" action="/admin/users/create/">
