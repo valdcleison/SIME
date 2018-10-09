@@ -36,7 +36,7 @@
           <input type="password" id="resenha" name ="comsenha" class="form-control" minlength="8" placeholder="CONFIRMAÇÃO DE SENHA" required>
           <br>
           
-          <input class="btn btn-theme btn-block" onclick="confirmPass()" type="submit" value="SALVAR"/>
+          <input class="btn btn-theme btn-block" onclick="confirmPass();" type="submit" value="SALVAR"/>
           
         </div>
        </form>

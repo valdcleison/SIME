@@ -1,6 +1,6 @@
 <?php 
 
-$app->get("/portal/escola/", function(){
+$app->get("/portal/", function(){
 
 	if(!Usuario::verifyLogin(1)){
 		header("Location: /login/");

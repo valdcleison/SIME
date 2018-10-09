@@ -70,7 +70,16 @@
               <li><a href="/admin/escola/">Listar</a></li>
             </ul>
           </li>
-          
+          <li class="sub-menu">
+            <a href="javascript:;">
+              <i class="fa fa-book"></i>
+              <span>Planos</span>
+              </a>
+            <ul class="sub">
+              <li><a href="/admin/planos/create/">Cadastrar</a></li>
+              <li><a href="/admin/planos/">Listar</a></li>
+            </ul>
+          </li>
         </ul>
         <!-- sidebar menu end-->
       </div>

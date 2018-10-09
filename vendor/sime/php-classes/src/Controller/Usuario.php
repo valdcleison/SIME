@@ -32,7 +32,7 @@ class Usuario extends Control{
 		session_unset($_SESSION[Usuario::SESSION]);
 	}
 
-	public function verifyLogin($nivelAdmin){
+	public static function verifyLogin($nivelAdmin){
 
 		if(
 			!isset($_SESSION[Usuario::SESSION])||
@@ -45,18 +45,166 @@ class Usuario extends Control{
 		}
 	}
 
-	public static function list(){
+	public static function validaCPF($cpf = null) {
+
+		if(empty($cpf)) {
+			return false;
+		}
+
+		$cpf = preg_replace("/[^0-9]/", "", $cpf);
+		$cpf = str_pad($cpf, 11, '0', STR_PAD_LEFT);
+		
+
+		if (strlen($cpf) != 11) {
+			return false;
+		}
+
+		else if ($cpf == '00000000000' || 
+			$cpf == '11111111111' || 
+			$cpf == '22222222222' || 
+			$cpf == '33333333333' || 
+			$cpf == '44444444444' || 
+			$cpf == '55555555555' || 
+			$cpf == '66666666666' || 
+			$cpf == '77777777777' || 
+			$cpf == '88888888888' || 
+			$cpf == '99999999999') {
+			return false;
+
+		 } else {   
+			
+			for ($t = 9; $t < 11; $t++) {
+				
+				for ($d = 0, $c = 0; $c < $t; $c++) {
+					$d += $cpf{$c} * (($t + 1) - $c);
+				}
+				$d = ((10 * $d) % 11) % 10;
+				if ($cpf{$c} != $d) {
+					return false;
+				}
+			}
+
+			return true;
+		}
+	}
+
+	public static function validaCNPJ($cnpj = null) {
+
+		// Verifica se um número foi informado
+		if(empty($cnpj)) {
+			return false;
+		}
+
+		// Elimina possivel mascara
+		$cnpj = preg_replace("/[^0-9]/", "", $cnpj);
+		$cnpj = str_pad($cnpj, 14, '0', STR_PAD_LEFT);
+		
+		// Verifica se o numero de digitos informados é igual a 11 
+		if (strlen($cnpj) != 14) {
+			return false;
+		}
+		
+		// Verifica se nenhuma das sequências invalidas abaixo 
+		// foi digitada. Caso afirmativo, retorna falso
+		else if ($cnpj == '00000000000000' || 
+			$cnpj == '11111111111111' || 
+			$cnpj == '22222222222222' || 
+			$cnpj == '33333333333333' || 
+			$cnpj == '44444444444444' || 
+			$cnpj == '55555555555555' || 
+			$cnpj == '66666666666666' || 
+			$cnpj == '77777777777777' || 
+			$cnpj == '88888888888888' || 
+			$cnpj == '99999999999999') {
+			return false;
+			
+		 // Calcula os digitos verificadores para verificar se o
+		 // CPF é válido
+		 } else {   
+		 
+			$j = 5;
+			$k = 6;
+			$soma1 = "";
+			$soma2 = "";
+
+			for ($i = 0; $i < 13; $i++) {
+
+				$j = $j == 1 ? 9 : $j;
+				$k = $k == 1 ? 9 : $k;
+
+				$soma2 += ($cnpj{$i} * $k);
+
+				if ($i < 12) {
+					$soma1 += ($cnpj{$i} * $j);
+				}
+
+				$k--;
+				$j--;
+
+			}
+
+			$digito1 = $soma1 % 11 < 2 ? 0 : 11 - $soma1 % 11;
+			$digito2 = $soma2 % 11 < 2 ? 0 : 11 - $soma2 % 11;
+
+			return (($cnpj{12} == $digito1) and ($cnpj{13} == $digito2));
+		 
+		}
+	}
+
+	public function listarPorEmail(){
+		$userDao = new UsuarioDao();
+
+		if($userDao->getUserByEmail($this->getemailpessoa()) !== null){
+			throw new \Exception("Usuario já Existe!");	
+		}
+	}
+
+	public function listarPorCpf(){
+		$userDao = new UsuarioDao();
+
+		if($userDao->getUserByCpf($this->getcpfpessoa()) !== null){
+			throw new \Exception("Usuario já Existe!");	
+		}
+		
+	}
+
+	public function checkUsuario($id){
+		$userDao = new UsuarioDao();
+		$escola = $userDao->checkUsuario($id);
+
+		$this->setData($escola);
+
+		
+		if((int)$this->getstatusescola() === 0){
+			throw new \Exception("Escola bloqueada, por favor entre em contato com o suporte do sistema!!", 1);
+			
+		}
+	}
+
+	public function listarPorUser(){
+		$userDao = new UsuarioDao();
+
+		if($userDao->getUserByUser($this->getusuario()) !== null){
+			throw new \Exception("Usuario já Existe!");	
+		}
+	}
+
+	public static function listar(){
 		return UsuarioDao::listAll();
 	}
 
 	public function salvarAdmin(){
 		$userDao = new UsuarioDao();
 
+		$this->listarPorCpf();
+		$this->listarPorEmail();
+		$this->listarPorUser();
+
 		$password = password_hash($this->getpass(), PASSWORD_DEFAULT, [
 			'cost'=>12
 		]);
 
-		var_dump($password);
+		
 		
 		$this->setpass($password);
 
@@ -74,7 +222,7 @@ class Usuario extends Control{
 					
 	public function atualizarAdmin(){
 		$userDao = new UsuarioDao();
-		
+
 		$userDao->updateAdmin($this);
 	}
 
@@ -123,11 +271,51 @@ class Usuario extends Control{
 		$userDao->setForgotUsed($id);
 	}
 
+
 	public function atualizarSenha($senha){
 		$userDao = new UsuarioDao();
 		
 		$userDao->changePassword($this->getidusuario(),$senha);
 	}
+
+	public function alterarSenha($senhaAtual, $novaSenha){
+		$atual = password_hash($senhaAtual, PASSWORD_DEFAULT, [
+			'cost'=>12
+		]);
+
+		$nova = password_hash($novaSenha, PASSWORD_DEFAULT, [
+			'cost'=>12
+		]);
+
+
+
+		if(!password_verify($senhaAtual, $this->getsenha())){
+			throw new \Exception("Senha Atual não confere!");
+		}else{
+			$userDao = new UsuarioDao();
+		
+			$userDao->changePassword($this->getidusuario(),$nova);
+		}
+	}
+
+	public function atualizarStatus($statusAtual){
+
+		if($statusAtual === 0){
+			
+			$userDao = new UsuarioDao();
+			$userDao->changeStatus($this, 1);
+
+		}else if($statusAtual === 1){
+			
+			$userDao = new UsuarioDao();
+			$userDao->changeStatus($this, 0);
+
+		}else{
+			throw new \Exception("Não foi possivel editar o status");			
+		}
+	}
+
+
 
 	public static function setError($msg){
 

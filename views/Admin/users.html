@@ -19,7 +19,7 @@
                   <br>
 
                   <div class="alert alert-success"><b>{$succes}</b></div>
-              {/if}
+                  {/if}
                 </div>
 
               </div>
@@ -47,6 +47,14 @@
                         <td data-title="Nome de Usuario">{$value.usuario}</td>
                         <td data-title="Nivel"><span class="label label-primary label-mini">{if="$value.niveladmin == 0"}Aluno/Responsavel{elseif="$value.niveladmin == 1"}Funcionario Escola{else}Administrador do Sistema{/if}</span></td>
                         <td>
+                          {if="$value.statususuario == 0"}
+                          <a class="btn btn-info btn-xs" onclick="return confirm('Deseja desbloquear o acesso ao usuario: {$value.nomepessoa}?')" href="/admin/usuario/{$value.idusuario}/status/{$value.statususuario}">
+                            
+                              <i class="fa fa-lock"></i> Bloqueado</a>
+                            {else}
+                             <a class="btn btn-info btn-xs" onclick="return confirm('Deseja bloquear o acesso ao usuario: {$value.nomepessoa}?')" href="/admin/usuario/{$value.idusuario}/status/{$value.statususuario}">
+                              <i class="fa fa-unlock"></i> Desbloqueado</a>
+                            {/if}
                           <a class="btn btn-info btn-xs" href="/admin/users/{$value.idusuario}/password"><i class="fa fa-lock"></i> Alterar Senha</a>
                           <a class="btn btn-primary btn-xs" href="/admin/users/{$value.idusuario}"><i class="fa fa-pencil"></i> Editar</a>
                           <a class="btn btn-danger btn-xs" onclick="return confirm('Deseja excluir o usuario: {$value.usuario}?')" href="/admin/users/{$value.idusuario}/delete"><i class="fa fa-trash-o "></i> Deletar</a>

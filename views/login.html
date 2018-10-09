@@ -71,7 +71,7 @@
               	
               <div class="modal-body">
                 <p>Informe o seu email para recuperar sua senha!</p>
-                <input type="text" name="emailpessoa" placeholder="Email" autocomplete="off" class="form-control placeholder-no-fix" required>
+                <input type="text" name="emailpessoa" placeholder="Email"  class="form-control placeholder-no-fix" required>
               </div>
               <div class="modal-footer">
                 <button data-dismiss="modal" class="btn btn-default" type="button">Cancelar</button>

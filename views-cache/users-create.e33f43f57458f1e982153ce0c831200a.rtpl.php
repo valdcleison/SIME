@@ -8,6 +8,14 @@
           
             <div class="form-panel">
               <div class=" form">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <?php if( $error != '' ){ ?>
+                        <br>
+                        <div class="alert alert-danger"><b>Algo deu errado!</b> <?php echo htmlspecialchars( $error, ENT_COMPAT, 'UTF-8', FALSE ); ?>.</div>
+                        <?php } ?>
+                    </div>
+                </div>
                 <form class="cmxform form-horizontal style-form" id="commentForm" method="post" action="/admin/users/create/">
                   <div class="form-group ">
                     <label for="cname" class="control-label col-lg-2">Nome</label>
@@ -34,13 +42,13 @@
                     </div>
                   </div>
                   <div class="form-group ">
-                    <label for="curl" class="control-label col-lg-2">Senha</label>
+                    <label for="csenha" class="control-label col-lg-2">Senha</label>
                     <div class="col-lg-10">
                       <input class="form-control " id="cpass" type="password" name="pass" />
                     </div>
                   </div>
                   <div class="form-group ">
-                    <label for="curl" class="control-label col-lg-2">Repita a Senha</label>
+                    <label for="csenha" class="control-label col-lg-2">Repita a Senha</label>
                     <div class="col-lg-10">
                       <input class="form-control " id="crepass" type="password" name="repass" />
                     </div>

@@ -62,7 +62,7 @@ CREATE TABLE `anoletivo` (
   `anoletivo` int(11) NOT NULL,
   `dtinicio` date NOT NULL,
   PRIMARY KEY (`idanoletivo`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -71,6 +71,7 @@ CREATE TABLE `anoletivo` (
 
 LOCK TABLES `anoletivo` WRITE;
 /*!40000 ALTER TABLE `anoletivo` DISABLE KEYS */;
+INSERT INTO `anoletivo` VALUES (1,0,'0000-00-00'),(2,2018,'2018-01-01');
 /*!40000 ALTER TABLE `anoletivo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -87,7 +88,7 @@ CREATE TABLE `contato` (
   `celular` varchar(13) DEFAULT NULL,
   `email` varchar(75) DEFAULT NULL,
   PRIMARY KEY (`idcontato`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -96,6 +97,7 @@ CREATE TABLE `contato` (
 
 LOCK TABLES `contato` WRITE;
 /*!40000 ALTER TABLE `contato` DISABLE KEYS */;
+INSERT INTO `contato` VALUES (1,'123456','1234566','exemplo'),(2,'12345678978','1111111111','a@fmnd.com'),(3,'12345678978','1111111111','a@fmnd.com'),(4,'12345678978','1111111111','a@fmnd.com'),(5,'12345678978','1111111111','a@fmnd.com'),(6,'12345678978','1111111111','a@fmnd.com'),(7,'12345678978','1111111111','a@fmnd.com'),(8,'12345678978','1111111111','a@fmnd.com'),(9,'','',''),(10,'12345678978','1111111111','a@fmnd.com'),(11,'','',''),(12,'','',''),(13,'','',''),(14,'','',''),(15,'','',''),(16,'','',''),(17,'','',''),(18,'12345678978','1111111111','a@fmnd.com'),(19,'12345678978','1111111111','a@fmnd.com');
 /*!40000 ALTER TABLE `contato` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -115,7 +117,7 @@ CREATE TABLE `endereco` (
   `estado` varchar(45) NOT NULL,
   `cep` varchar(45) NOT NULL,
   PRIMARY KEY (`idendereco`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -124,6 +126,7 @@ CREATE TABLE `endereco` (
 
 LOCK TABLES `endereco` WRITE;
 /*!40000 ALTER TABLE `endereco` DISABLE KEYS */;
+INSERT INTO `endereco` VALUES (1,'Rua A','1','Centro','Cedro','Pernambuco','56130000'),(2,'Rua Santa Cruz, 566','566','sadd','Cedro','PE','56130000'),(3,'Rua Santa Cruz, 566','566','sadd','Cedro','PE','56130000'),(4,'Rua Santa Cruz, 566','566','sadd','Cedro','PE','56130000'),(5,'Rua Santa Cruz, 566','22','ada','Cedro','PE','56130000'),(6,'Rua Santa Cruz, 566','22','ada','Cedro','PE','56130000'),(7,'Rua Santa Cruz, 566','22','ada','Cedro','PE','56130000'),(8,'Rua Santa Cruz, 566','22','ada','Cedro','PE','56130000'),(9,'',', ','','','',''),(10,'Rua Santa Cruz, 566','22','ada','Cedro','PE','56130000'),(11,', ','','','','',''),(12,', ','','','','',''),(13,', ','','','','',''),(14,', ','','','','',''),(15,', ','','','','',''),(16,', ','','','','',''),(17,', ','','','','',''),(18,'Rua Santa Cruz, 566','22','ada','Cedro','PE','56130000'),(19,'asdsad','232','sadad','Cedro','PE','56130000');
 /*!40000 ALTER TABLE `endereco` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -139,20 +142,18 @@ CREATE TABLE `escola` (
   `nomeescola` varchar(100) NOT NULL,
   `cnpj` varchar(14) NOT NULL,
   `nomegestor` varchar(75) DEFAULT NULL,
+  `statusescola` int(11) NOT NULL DEFAULT '0',
   `contato_idcontato` int(11) NOT NULL,
   `anoletivo_idanoletivo` int(11) NOT NULL,
   `endereco_idendereco` int(11) NOT NULL,
-  `usuario_idusuario` int(11) NOT NULL,
   PRIMARY KEY (`idescola`,`contato_idcontato`),
   KEY `fk_escola_contato1_idx` (`contato_idcontato`),
   KEY `fk_escola_anoletivo1_idx` (`anoletivo_idanoletivo`),
   KEY `fk_escola_endereco1_idx` (`endereco_idendereco`),
-  KEY `usuario_idusuaio_idx` (`usuario_idusuario`),
   CONSTRAINT `fk_escola_anoletivo1` FOREIGN KEY (`anoletivo_idanoletivo`) REFERENCES `anoletivo` (`idanoletivo`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_escola_contato1` FOREIGN KEY (`contato_idcontato`) REFERENCES `contato` (`idcontato`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_escola_endereco1` FOREIGN KEY (`endereco_idendereco`) REFERENCES `endereco` (`idendereco`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_usuario_idusuaio` FOREIGN KEY (`usuario_idusuario`) REFERENCES `usuario` (`idusuario`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  CONSTRAINT `fk_escola_endereco1` FOREIGN KEY (`endereco_idendereco`) REFERENCES `endereco` (`idendereco`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -161,7 +162,68 @@ CREATE TABLE `escola` (
 
 LOCK TABLES `escola` WRITE;
 /*!40000 ALTER TABLE `escola` DISABLE KEYS */;
+INSERT INTO `escola` VALUES (1,'Escola de nos','12345678912345','Willian',1,1,1,1),(7,'gdfgdgdfgdg','11111111111111',NULL,1,19,2,19);
 /*!40000 ALTER TABLE `escola` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `escola_plano`
+--
+
+DROP TABLE IF EXISTS `escola_plano`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `escola_plano` (
+  `idescola_plano` int(11) NOT NULL AUTO_INCREMENT,
+  `escola_idescola` int(11) NOT NULL,
+  `plano_idplano` int(11) NOT NULL,
+  `dtinicio` datetime DEFAULT CURRENT_TIMESTAMP,
+  `dttermino` datetime DEFAULT NULL,
+  PRIMARY KEY (`idescola_plano`),
+  KEY `escola_idescola_idx` (`escola_idescola`),
+  KEY `plano_idplano_idx` (`plano_idplano`),
+  CONSTRAINT `escola_idescola` FOREIGN KEY (`escola_idescola`) REFERENCES `escola` (`idescola`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `plano_idplano` FOREIGN KEY (`plano_idplano`) REFERENCES `planos` (`idplano`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `escola_plano`
+--
+
+LOCK TABLES `escola_plano` WRITE;
+/*!40000 ALTER TABLE `escola_plano` DISABLE KEYS */;
+INSERT INTO `escola_plano` VALUES (4,5,1,'2018-10-09 12:35:45',NULL),(5,6,1,'2018-10-09 12:36:20',NULL),(6,7,1,'2018-10-09 12:41:33',NULL);
+/*!40000 ALTER TABLE `escola_plano` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `escola_usuario`
+--
+
+DROP TABLE IF EXISTS `escola_usuario`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `escola_usuario` (
+  `idescola_usuario` int(11) NOT NULL AUTO_INCREMENT,
+  `escola_idescola` int(11) NOT NULL,
+  `usuario_idusuario` int(11) NOT NULL,
+  PRIMARY KEY (`idescola_usuario`),
+  KEY `fk_escola_idescola_idx` (`escola_idescola`),
+  KEY `fk_usuario_idusuario_idx` (`usuario_idusuario`),
+  CONSTRAINT `fk_escola_idescola` FOREIGN KEY (`escola_idescola`) REFERENCES `escola` (`idescola`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_usuario_idusuario` FOREIGN KEY (`usuario_idusuario`) REFERENCES `usuario` (`idusuario`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `escola_usuario`
+--
+
+LOCK TABLES `escola_usuario` WRITE;
+/*!40000 ALTER TABLE `escola_usuario` DISABLE KEYS */;
+INSERT INTO `escola_usuario` VALUES (1,7,12);
+/*!40000 ALTER TABLE `escola_usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -320,7 +382,7 @@ CREATE TABLE `pessoa` (
   `nomepessoa` varchar(150) NOT NULL,
   `cpfpessoa` varchar(11) DEFAULT NULL,
   PRIMARY KEY (`idpessoa`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -329,8 +391,34 @@ CREATE TABLE `pessoa` (
 
 LOCK TABLES `pessoa` WRITE;
 /*!40000 ALTER TABLE `pessoa` DISABLE KEYS */;
-INSERT INTO `pessoa` VALUES (1,'valdcleison','11958005410'),(4,'jpessoa','jpessoa'),(5,'da','da'),(6,'a','a'),(7,'David Gomes','123321654'),(8,'jbr','jbr'),(9,'jj','jj'),(10,'ed','ed'),(11,'nkjnk','nkjnk'),(12,'bjhb','bjhb'),(13,'dasdad','dasdad'),(14,'sadad','sadad'),(24,'Junior Alexandre','12345678912');
+INSERT INTO `pessoa` VALUES (1,'valdcleison','11958005410'),(4,'jpessoa','jpessoa'),(5,'da','da'),(6,'a','a'),(7,'David Gomes','123321654'),(8,'jbr','jbr'),(9,'jj','jj'),(10,'ed','ed'),(11,'nkjnk','nkjnk'),(12,'bjhb','bjhb'),(13,'dasdad','dasdad'),(14,'sadad','sadad'),(24,'Junior Alexandre','12345678912'),(26,'Willian Jeferson','00812806450'),(27,'cvdcdc','11111111111'),(28,'cvdcdc','11111111111'),(29,'cvdcdc','11111111111'),(30,'cvdcdc','11111111111'),(31,'cvdcdc','11111111111'),(32,'cvdcdc','11111111111'),(33,'cvdcdc','11111111111'),(34,'',''),(35,'cvdcdc','11111111111'),(36,'',''),(37,'',''),(38,'',''),(39,'',''),(40,'',''),(41,'',''),(42,'',''),(43,'cvdcdc','11111111111'),(44,'cvdcdc','11111111111');
 /*!40000 ALTER TABLE `pessoa` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `planos`
+--
+
+DROP TABLE IF EXISTS `planos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `planos` (
+  `idplano` int(11) NOT NULL AUTO_INCREMENT,
+  `descricao` varchar(100) NOT NULL,
+  `preco` double NOT NULL,
+  `tipo` int(11) NOT NULL,
+  PRIMARY KEY (`idplano`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `planos`
+--
+
+LOCK TABLES `planos` WRITE;
+/*!40000 ALTER TABLE `planos` DISABLE KEYS */;
+INSERT INTO `planos` VALUES (1,'Plano basico',13.99,1);
+/*!40000 ALTER TABLE `planos` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -411,13 +499,13 @@ DROP TABLE IF EXISTS `solicitacoes`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `solicitacoes` (
   `idsolicitacoes` int(11) NOT NULL AUTO_INCREMENT,
-  `dtsolicitacoes` date NOT NULL,
+  `dtsolicitacoes` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `escola_idescola` int(11) NOT NULL,
-  `status` tinyint(1) NOT NULL,
+  `statussolicitacao` tinyint(1) NOT NULL,
   PRIMARY KEY (`idsolicitacoes`),
   KEY `fk_solicitacoes_escola_idx` (`escola_idescola`),
   CONSTRAINT `fk_solicitacoes_escola` FOREIGN KEY (`escola_idescola`) REFERENCES `escola` (`idescola`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -426,6 +514,7 @@ CREATE TABLE `solicitacoes` (
 
 LOCK TABLES `solicitacoes` WRITE;
 /*!40000 ALTER TABLE `solicitacoes` DISABLE KEYS */;
+INSERT INTO `solicitacoes` VALUES (1,'2018-10-09 12:35:45',5,0),(2,'2018-10-09 12:36:20',6,0),(3,'2018-10-09 12:41:33',7,0);
 /*!40000 ALTER TABLE `solicitacoes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -442,11 +531,12 @@ CREATE TABLE `usuario` (
   `usuario` varchar(150) NOT NULL,
   `senha` varchar(150) NOT NULL,
   `niveladmin` int(11) NOT NULL,
+  `statususuario` int(11) NOT NULL DEFAULT '0',
   `idpessoa` int(11) NOT NULL,
   PRIMARY KEY (`idusuario`),
   KEY `idpessoa_idx` (`idpessoa`),
   CONSTRAINT `idpessoa` FOREIGN KEY (`idpessoa`) REFERENCES `pessoa` (`idpessoa`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -455,7 +545,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (1,'valdcleisonvaldeci@gmail.com','admin','$2y$12$0UbavQYybGYyOkpwKLfFQeTh2BNlQZSTT2XBlFnV85goNQM6UuWCK',2,1);
+INSERT INTO `usuario` VALUES (1,'valdcleisonvaldeci@gmail.com','admin','$2y$12$.gdqmhgj4IhuLUkoYwSul.g/zQaceTTBpLgkA31dNyFu77SBO.Z12',2,1,1),(3,'ioik0o@gmail.com','admin2','$2y$12$napy18JiA9t.g.xPBHTKOetP.D8IlpovTYUiJeM4SBgzrPQyUfb0C',2,1,26),(4,'admin@escola.com','adminescola','adminescola',1,1,26),(6,'',':psenhaescola','',1,0,38),(7,'',':psenhaescola','',1,0,39),(8,'',':psenhaescola','',1,0,40),(9,'',':psenhaescola','',1,0,41),(10,'',':psenhaescola','',1,0,42),(11,'a@s.sk','adminescola2','$2y$12$.gdqmhgj4IhuLUkoYwSul.g/zQaceTTBpLgkA31dNyFu77SBO.Z12',1,0,43),(12,'a@s.sk','123456789','$2y$12$.gdqmhgj4IhuLUkoYwSul.g/zQaceTTBpLgkA31dNyFu77SBO.Z12',1,1,44);
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -475,7 +565,7 @@ CREATE TABLE `usuariorecuperarsenha` (
   PRIMARY KEY (`idusuariorecuperarsenha`),
   KEY `fk_usuariorecuperarsenha_usuario1_idx` (`usuario_idusuario`),
   CONSTRAINT `fk_usuariorecuperarsenha_usuario1` FOREIGN KEY (`usuario_idusuario`) REFERENCES `usuario` (`idusuario`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -484,13 +574,118 @@ CREATE TABLE `usuariorecuperarsenha` (
 
 LOCK TABLES `usuariorecuperarsenha` WRITE;
 /*!40000 ALTER TABLE `usuariorecuperarsenha` DISABLE KEYS */;
-INSERT INTO `usuariorecuperarsenha` VALUES (30,'2018-09-23 13:01:29','127.0.0.1','2018-09-23 15:29:16',1),(31,NULL,'127.0.0.1','2018-09-25 13:31:13',1),(32,'2018-09-25 12:24:28','127.0.0.1','2018-09-25 14:56:50',1),(33,NULL,'127.0.0.1','2018-09-25 15:43:21',1),(34,'0000-00-00 00:00:00','127.0.0.1','2018-09-25 15:46:24',1);
+INSERT INTO `usuariorecuperarsenha` VALUES (30,'2018-09-23 13:01:29','127.0.0.1','2018-09-23 15:29:16',1),(31,NULL,'127.0.0.1','2018-09-25 13:31:13',1),(32,'2018-09-25 12:24:28','127.0.0.1','2018-09-25 14:56:50',1),(33,NULL,'127.0.0.1','2018-09-25 15:43:21',1),(34,'0000-00-00 00:00:00','127.0.0.1','2018-09-25 15:46:24',1),(35,NULL,'127.0.0.1','2018-09-29 19:37:59',1),(36,NULL,'127.0.0.1','2018-09-29 19:39:50',1),(37,NULL,'127.0.0.1','2018-09-29 19:41:48',1),(38,'2018-09-29 16:51:12','127.0.0.1','2018-09-29 19:46:32',1),(39,'2018-09-29 16:54:37','127.0.0.1','2018-09-29 19:52:22',1);
 /*!40000 ALTER TABLE `usuariorecuperarsenha` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
 -- Dumping routines for database 'db_sime'
 --
+/*!50003 DROP PROCEDURE IF EXISTS `sp_escola_changestatus` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_escola_changestatus`(
+statusescola INT,
+statususuario INT,
+idescola INT
+)
+BEGIN
+
+
+
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_escola_create` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_escola_create`(
+pnomeescola varchar(50),
+pcnpj varchar(14),
+pnomegestor varchar(30),
+pcpfgestor varchar(11),
+pemailgestor varchar(50),
+ptelefone varchar(11),
+pcelular varchar(11),
+pemail varchar(11),
+prua varchar(30),
+pnumero varchar(5),
+pbairro varchar(20),
+pcidade varchar(15),
+pestado varchar(15),
+pcep varchar(15),
+pplano INT,
+pusuarioescola varchar (30),
+psenhaescola varchar(50)
+)
+BEGIN
+	DECLARE videndereco INT;
+    DECLARE vidcontato INT;
+    DECLARE vidanoletivo INT;
+    DECLARE vidpessoa INT;
+    DECLARE vidusuario INT;
+    DECLARE videscola INT;
+	
+    INSERT INTO contato(telefone, celular, email) VALUES (ptelefone, pcelular, pemail);
+    
+    SET vidcontato = LAST_INSERT_ID();
+    
+	SELECT idanoletivo INTO vidanoletivo FROM anoletivo ORDER BY idanoletivo DESC LIMIT 1; 
+    
+    INSERT INTO endereco(rua, numero, bairro, cidade, estado, cep) VALUES (prua, pnumero, pbairro, pcidade, pestado, pcep);
+    
+    SET videndereco = LAST_INSERT_ID();
+    
+    INSERT INTO pessoa(nomepessoa, cpfpessoa) VALUES (pnomegestor, pcpfgestor);
+    
+    SET vidpessoa = LAST_INSERT_ID();
+    
+    INSERT INTO usuario(emailpessoa, usuario, senha, niveladmin, statususuario,idpessoa) VALUES (pemailgestor, pusuarioescola,psenhaescola, 1, 0, vidpessoa);
+
+	SET vidusuario = LAST_INSERT_ID();
+    
+    INSERT INTO escola(nomeescola, cnpj, statusescola, contato_idcontato, anoletivo_idanoletivo, endereco_idendereco, usuario_idusuario) 
+    VALUES (pnomeescola, pcnpj, 0, vidcontato, vidanoletivo, videndereco);
+    
+    SET videscola = LAST_INSERT_ID();
+    
+    INSERT INTO escola_usuario(escola_idescola, usuario_usuario) VALUES (videscola, vidusuario);
+    
+    INSERT INTO escola_plano(escola_idescola, plano_idplano) VALUES (videscola, pplano);
+    
+    INSERT INTO solicitacoes(escola_idescola, statussolicitacao) VALUES (videscola, 0);
+    
+    SELECT * FROM escola es
+		INNER JOIN endereco en ON es.endereco_idendereco = en.idendereco
+		INNER JOIN contato co ON es.contato_idcontato = co.idcontato
+		INNER JOIN anoletivo anl ON es.anoletivo_idanoletivo = anl.idanoletivo
+		INNER JOIN usuario us ON es.usuario_idusuario = us.idusuario
+        WHERE idescola = videscola;
+	 
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `sp_userspasswordsrecoveries_create` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -597,10 +792,8 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_user_update`(
 piduser INT,
-pnomepessoa varchar(100),
-pcpfpessoa varchar(14),
-pemailpessoa varchar(150),
-pusuario varchar(60)
+pnomepessoa varchar(100)
+
 )
 BEGIN
 	DECLARE vidpessoa INT;
@@ -610,15 +803,9 @@ BEGIN
 	WHERE idusuario = piduser;
 
 	UPDATE pessoa
-	SET nomepessoa = pnomepessoa,
-	cpfpessoa  = pcpfpessoa
+	SET nomepessoa = pnomepessoa
 	WHERE idpessoa = vidpessoa;
 
-	UPDATE usuario
-	SET emailpessoa = pemailpessoa,
-	usuario = pusuario 
-	WHERE idusuario = piduser;
-	
 	SELECT * FROM usuario a INNER JOIN pessoa b USING(idpessoa) WHERE a.idusuario = piduser;
 END ;;
 DELIMITER ;
@@ -636,4 +823,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-09-26 14:06:02
+-- Dump completed on 2018-10-09 14:13:16

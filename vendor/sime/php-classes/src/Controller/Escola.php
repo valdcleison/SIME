@@ -2,6 +2,7 @@
 namespace Sime\Controller;
 
 use \Sime\Control;
+use \Sime\Model\EscolaDao;
 
 class Escola extends Control{
 	
@@ -11,7 +12,15 @@ class Escola extends Control{
 	
 	public function salvarEscola(){
 		$escolaDao = new EscolaDao();
+
+
+		$password = password_hash($this->getsenhaescola(), PASSWORD_DEFAULT, [
+			'cost'=>12
+		]);
+		$this->setsenhaescola($password);
+		
 		$escolaDao->saveEscola($this);
+
 	}
 
 	public function editarEscola(){
@@ -23,11 +32,29 @@ class Escola extends Control{
 	}
 
 	public static function buscarEscola(){
-
+		return EscolaDao::listAll();
 	}
 
-	public static function buscarEscolaPorId(){
+	public function buscarEscolaPorId($id){
+		$escolaDao = new EscolaDao();
+		$dados =  $escolaDao->listById((int)$id);
+
+		$this->setData($dados);
+	}
+
+	public function alterarStatusEscola($status){
 		
+		if($status === 0){
+			$escolaDao = new EscolaDao();
+			$escolaDao->changeStatus($this, (int)1);
+
+		}else if($status === 1){
+			$escolaDao = new EscolaDao();
+			$escolaDao->changeStatus($this, (int)0);
+		}else{
+			throw new \Exception("Não foi possivel alterar o status!", 1);
+			
+		}
 	}
 
 	public static function setError($msg){

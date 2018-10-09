@@ -52,14 +52,35 @@ $app->post('/login/', function(){
 		$user = Usuario::login($_POST["user"], $_POST['pass']);
 		switch ($user->getniveladmin()) {
 			case '0':
+				if((int)$user->getstatususuario() === 0){
+					Usuario::logout();
+					Usuario::setError("Usuario bloqueado, por favor entre em contato com o gestor da escola!");
+					header("Location: /login/",1000);
+					exit;
+				}
 				header("Location: /portal/aluno");
 				exit;
 			break;
 			case '1':
+
+				$user->checkUsuario($user->getidusuario());
+					
+				if((int)$user->getstatususuario() === 0){
+					Usuario::logout();
+					Usuario::setError("Usuario bloqueado, por favor entre em contato com o gestor da escola!");
+					header("Location: /login/",1000);
+					exit;
+				}
 				header("Location: /portal/");
 				exit;
 			break;
 			case '2':
+				if((int)$user->getstatususuario() === 0){
+					Usuario::logout();
+					Usuario::setError("Usuario bloqueado, por favor entre em contato com o administrador do sistema!");
+					header("Location: /login/",1000);
+					exit;
+				}
 				header("Location: /admin/");
 				exit;
 			break;
@@ -78,11 +99,16 @@ $app->get("/logout/", function(){
 });
 
 $app->post("/forgot/", function(){
+	if(empty($_POST['emailpessoa'])){
+		Usuario::setError("Preencha todos os campos!");
+		header("Location: /login/");
+		exit;
+	}
 	try{
 		$email = $_POST['emailpessoa'];
 
 		$user = Usuario::reSenha($email);
-		Usuario::codigoValidado($id);
+		
 	}catch(Exception $e){
 		Usuario::setError("Não foi possivel recuperar sua senha!");
 		header("Location: /login/");
@@ -118,6 +144,12 @@ $app->post("/forgot/reset-password/", function(){
 		header("Location: /forgot/reset-password?code=".$_POST['code']."");
 		exit;
 	}
+	if(empty($_POST['senha']) || empty($_POST['comsenha'])){
+	
+		Usuario::setError("Preencha todos os campos");
+		header("Location: /forgot/reset-password?code=".$_POST['code']."");
+		exit;
+	}
 	try{
 		$code = $_POST['code'];
 		$senha = password_hash($_POST['senha'], PASSWORD_DEFAULT, [
@@ -139,14 +171,17 @@ $app->post("/forgot/reset-password/", function(){
 		header("Location: /login");
 		exit;
 	}
+
+	Usuario::setSuccess("Senha alterada com sucesso!");
+	header("Location: /login/");
+	exit;
+
 });
 
 require_once("site.php");
 require_once("admin.php");
 
-$app->get("/:notfound/", function($not){
-	echo "A pagina <b>www.sime.com.br/".$not."</b> não foi encontrada!";
-});
+
 
 $app->run();
  ?>

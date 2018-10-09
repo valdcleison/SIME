@@ -5,7 +5,22 @@ use \Sime\DB\Sql;
 
 class UsuarioDao {
 
+public function checkUsuario($id){
+	$sql = new Sql();
 
+		$results =  $sql->select("SELECT * FROM escola es
+				INNER JOIN endereco en ON es.endereco_idendereco = en.idendereco
+				INNER JOIN contato co ON es.contato_idcontato = co.idcontato
+				INNER JOIN anoletivo anl ON es.anoletivo_idanoletivo = anl.idanoletivo
+				INNER JOIN escola_usuario eu ON es.idescola = eu.escola_idescola
+				INNER JOIN usuario u ON eu.usuario_idusuario = u.idusuario
+				WHERE u.idusuario = :id
+		", array(
+			":id"=>$id
+
+		));
+		return $results[0];
+}
 
 public function saveAdmin($user){
 
@@ -27,16 +42,26 @@ public function updateAdmin($user){
 	$sql = new Sql();
 
 	
-	$results = $sql->select("CALL sp_user_update(:piduser, :pnomepessoa, :pcpfpessoa, :pemailpessoa, :puser)", array(
+	$results = $sql->select("CALL sp_user_update(:piduser, :pnomepessoa)", array(
 		":piduser" => $user->getidusuario(),
 		":pnomepessoa" => $user->getnomepessoa(),
-		":pcpfpessoa" => $user->getcpfpessoa(),
-		":pemailpessoa" => $user->getemailpessoa(),
-		":puser" => $user->getusuario()
 	));
 	
 	
 	$user->setData($results[0]);
+}
+
+public function changeStatus($user, $newStatus){
+	$sql = new Sql();
+	
+
+	$sql->query("UPDATE usuario SET statususuario = :status WHERE idusuario = :idusuario", array(
+		":status" => $newStatus,
+		":idusuario" => $user->getidusuario()
+	));
+
+
+
 }
 
 public function deleteAdmin($user){
@@ -98,7 +123,31 @@ public function login($user, $pass){
 		));
 
 		if(count($result) <= 0){
-			throw new \Exception("Não foi possivel recuperar a senha!");
+			return null;
+		}
+		return $result[0];
+	}
+
+	public function getUserByCpf($cpf){
+		$sql = new Sql();
+		$result = $sql->select("SELECT * FROM usuario u INNER JOIN pessoa p USING(idpessoa) WHERE p.cpfpessoa = :cpf", array(
+			":cpf"=>$cpf
+		));
+
+		if(count($result) <= 0){
+			return null;
+		}
+		return $result[0];
+	}
+
+	public function getUserByUser($user){
+		$sql = new Sql();
+		$result = $sql->select("SELECT * FROM usuario u INNER JOIN pessoa p USING(idpessoa) WHERE u.usuario = :usuario", array(
+			":usuario"=>$user
+		));
+
+		if(count($result) <= 0){
+			return null;
 		}
 		return $result[0];
 	}

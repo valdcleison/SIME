@@ -6,18 +6,41 @@ $app->get('/solicitacao/', function(){
 	
 	$page = new Page("/views/");	
 	
-	$page->setTpl("solicitacao");
+	$page->setTpl("solicitacao",[
+		"error" => Escola::getError(),
+		"success" => Escola::getSuccess()		
+	]);
 });
 
 $app->post('/solicitacao/', function(){
+	
+
+	foreach ($_POST as $key => $value) {
+		if(!isset($key) || $key == ""){
+			Escola::setError("Preencha todos os campos!");
+			echo "<script>javascript:history.back()</script>";
+			exit;
+		}
+		if((int) strlen($_POST['cpfgestor']) !== 11){
+			Escola::setError("O cpf precisa conter 11 numeros!");
+			echo "<script>javascript:history.back()</script>";
+			exit;
+		}
+
+		if((int) strlen($_POST['cnpjescola']) !== 14){
+			Escola::setError("O cnpj precisa conter 14 numeros!");
+			echo "<script>javascript:history.back()</script>";
+			exit;
+		}
+	}
+	
+
 	try{
 	$escola = new Escola();
 
 	$escola->setData($_POST);
 
-
-	var_dump($escola);
-	exit;
+	
 
 	$escola->salvarEscola();
 	
@@ -26,7 +49,12 @@ $app->post('/solicitacao/', function(){
 		header("Location: /solicitacao/");
 		exit;
 	}
+	Escola::setSuccess("Cadastro realizado com sucesso, por favor aguarde o nosso contato!");
+	echo "<script>javascript:history.back()</script>";
+	exit;
 });
+
+
 
 
 
