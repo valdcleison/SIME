@@ -9,6 +9,7 @@ class EscolaDao {
 	public function saveEscola($escola){
 		$sql = new Sql();
 		
+		
 
 		$results = $sql->select("CALL sp_escola_create(:pnomeescola, :pcnpj, :pnomegestor, :pcpfgestor, :pemailgestor, :ptelefone, :pcelular, :pemail, :prua, :pnumero, :pbairro, :pcidade, :pestado, :pcep, :pplano, :pusuarioescola, :psenhaescola)", array(
 
@@ -31,8 +32,25 @@ class EscolaDao {
 			":psenhaescola"=> $escola->getsenhaescola()		
 		));
 		
+
 		$escola->setData($results);
 	
+	}
+
+	public function deleteEscola($escola){
+		
+		$sql = new Sql();
+
+		$retorno = $sql->query("CALL sp_escola_delete(:idescola, :idusuario, :idendereco, :idcontato)",array(
+			":idescola"=>(int)$escola->getidescola(),
+			":idusuario"=>(int)$escola->getidusuario(),
+			":idendereco"=>(int)$escola->getidendereco(),
+			":idcontato"=>(int)$escola->getidcontato()
+
+		));
+
+		
+		
 	}
 
 	public static function listAll(){
@@ -66,13 +84,11 @@ class EscolaDao {
 		$sql = new Sql();
 		
 
-		$sql->query("CALL sp_escola_changestatus() UPDATE usuario u, escola e SET e.statusescola = :statusescola, u.statususuario = :statususuario 
-				WHERE e.usuario_idusuario = u.idusuario
-				AND e.idescola = :idescola", 
+		$sql->query("CALL sp_escola_changestatus(:idusuario, :idescola, :status)", 
 				array(
-					":statusescola"=>$newStatus,
-					":statususuario"=>$newStatus,
-					":idescola"=>$escola->getidescola()			
+					":idusuario"=>$escola->getidusuario(),
+					":idescola"=>$escola->getidescola(),
+					":status"=>$newStatus			
 				));
 		
 	}

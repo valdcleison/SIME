@@ -1,0 +1,202 @@
+<section id="main-content">
+      <section class="wrapper">
+        
+        <div class="row mt">
+          <div class="col-sm-12">
+            <div class="content-panel">
+              <div class="container">
+
+                <form action="/admin/escola/{$escola.idescola}/update/" method="POST"> 
+
+                   <div class="row form-group" id="content">
+                      
+                              
+                      <div class="col-md-10">
+                        {if="$error != ''"}
+                        <br>
+
+                        <div class="alert alert-danger"><b>Algo deu errado!</b> {$error}.</div>
+                        {/if}
+                        {if="$success != ''"}
+                        <br>
+
+                        <div class="alert alert-success"><b>{$success}</b></div>
+                        {/if}
+                      </div>
+
+                      
+                      <div class="col-md-6 form-group">
+                        <h3>DADOS DA ESCOLA</h3>
+                        <hr>
+                        <div class="row">
+                          <div class="col-md-12">
+                            <span><b>Nome da Instituição</b></span>
+                          </div>
+                        </div>
+                        <div class="row">
+                          
+                          <div class="col-md-12">
+                            <input type="text" name="nomeescola" id="nomeescola" class="form-control" value="{$escola.nomeescola}" required>  
+                          </div>
+                        </div>
+                        <br>
+
+                        <div class="row">
+                          <div class="col-md-12">
+                            <span><b>Nome do Gestor</b></span>
+                          </div>
+                        </div>
+                        <div class="row">
+                          
+                          <div class="col-md-12">
+                            <input type="text" name="nomegestor" class="form-control" value="{$escola.nomegestor}" required>
+                          </div>
+                        </div>
+                        <br>
+
+                        <div class="row">
+                          <div class="col-md-12">
+                            <span><b>Email do Gestor</b></span>
+                          </div>
+                        </div>
+                        <div class="row">
+                          
+                          <div class="col-md-12">
+                            <input type="email" name="emailgestor" class="form-control" value="{$escola.emailpessoa}" required>
+                          </div>
+                        </div>
+                        <br>
+
+                        <div class="row">
+                          <div class="col-md-12">
+                            <span><b>Plano</b></span>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          
+                          <div class="col-md-12">
+                            <select class="form-control" name="planos">
+                              <option value="1">Plano Basico - R$39,90 Mensal ou R$459,90 Anual</option>
+                              <option value="2">Plano Médio - R$69,90 Mensal ou R$799,90 Anual</option>
+                              <option value="3">Plano Avançado - R$99,90 Mensal ou R$1099,90 Anual</option>
+                            </select>
+                          </div>
+                          
+                        </div>
+                        <br>
+                        <hr>
+
+                        <div class="row">
+                          <div class="col-md-12">
+                            <span><b>Nome de Usuario</b></span>
+                          </div>
+                        </div>
+                        <div class="row">
+                          
+                          <div class="col-md-12">
+                            <input type="text" name="usuarioescola" class="form-control" value="{$escola.usuario}" required>
+                          </div>
+                        </div>
+          
+                      </div>
+                  
+                      <div class="col-md-5">
+                        <h3>ENDEREÇO E CONTATO</h3>
+                        <hr>
+                        
+                        <div class="row">
+                          
+                          <div class="col-md-6">
+                            <span><b>Logradouro</b></span>
+                            <input type="text" name="logradouro" id="log" class="form-control" value="{$escola.rua}" required>
+                          </div>
+                          <div class="col-md-3">
+                            <span><b>Bairro</b></span>
+                            <input type="text" name="bairro" id="bairro" class="form-control" value="{$escola.bairro}" required>
+                          </div>
+                          <div class="col-md-3">
+                            <span><b>Numero</b></span>  
+                            <input type="number" name="numero" id="numero" class="form-control" value="{$escola.numero}" required>
+                          </div>
+                        </div>
+                        <br>
+
+                        <div class="row">
+                          
+                          <div class="col-md-6">
+                             <span><b>Cidade</b></span>
+                            <input type="text" name="cidade" id="cidade" class="form-control" readonly value="{$escola.cidade}" required>
+                          </div>
+                          <div class="col-md-3">
+                            <span><b>Estado</b></span>
+                            <input type="text" name="estado" id="estado" class="form-control" minlength="8" maxlength="8" readonly value="{$escola.estado}" required>
+                          </div>
+                          <div class="col-md-3">
+                            <span><b>CEP</b></span>
+                            <input type="text" name="cep" id="cep" class="form-control" minlength="8" maxlength="8" value="{$escola.cep}"  required>
+                          </div>
+                        </div>
+                        <hr>
+                        
+
+                        <div class="row">
+                          <div class="col-md-12">
+                            <span><b>Email</b></span>
+                          </div>
+                        </div>
+                        
+
+                        <div class="row">
+                          
+                          <div class="col-md-12">
+                            <input type="email" name="emailescola" id="emailescola" class="form-control" value="{$escola.email}" required>
+                          </div>
+                          
+                        </div>
+                        <br>
+                        
+                        
+
+                        
+                    
+                        <div class="row">
+                          
+                          <div class="col-md-6">
+                            <span><b>Telefone</b></span>  (Apenas numeros) 
+                            <input type="text" name="telefone" id="telefone" class="form-control" value="{$escola.telefone}" >
+                          </div>
+                          <div class="col-md-6">
+                            <span><b>Celular</b></span>  (Apenas numeros) 
+                            <input type="text" name="celular" id="celular" class="form-control" required value="{$escola.celular}" >
+                          </div>
+                        </div>
+
+
+                      </div>
+
+                          <br>
+
+                          <div class="col-md-12">
+                            
+                          <input type="submit" class="btn btn-primary" id="btnEscola" value="Salvar"></input>
+                          </div>
+                          <br>
+                          <br>
+                          <br>
+
+                  </div>
+                </form>
+              </div>
+              
+              
+              
+            </div>
+            <!-- /content-panel -->
+          </div>
+          <!-- /col-lg-12 -->
+        </div>
+        <!-- /row -->
+      </section>
+      <!-- /wrapper -->
+    </section>

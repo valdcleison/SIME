@@ -51,7 +51,7 @@ class Sql {
 
 		$this->setParams($stmt, $params);
 
-		$stmt->execute();
+		return $stmt->execute();
 
 	}
 

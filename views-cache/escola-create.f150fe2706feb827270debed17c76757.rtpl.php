@@ -6,22 +6,26 @@
             <div class="content-panel">
               <div class="container">
 
-                <form action="/solicitacao/" method="POST"> 
+                <form action="/admin/escola/create/" method="POST"> 
 
                    <div class="row form-group" id="content">
                       
                               
                       <div class="col-md-10">
                         <?php if( $error != '' ){ ?>
+
                         <br>
 
                         <div class="alert alert-danger"><b>Algo deu errado!</b> <?php echo htmlspecialchars( $error, ENT_COMPAT, 'UTF-8', FALSE ); ?>.</div>
                         <?php } ?>
+
                         <?php if( $success != '' ){ ?>
+
                         <br>
 
                         <div class="alert alert-success"><b><?php echo htmlspecialchars( $success, ENT_COMPAT, 'UTF-8', FALSE ); ?></b></div>
                         <?php } ?>
+
                       </div>
 
                       
@@ -222,7 +226,7 @@
 
                           <div class="col-md-12">
                             
-                          <input type="submit" class="btn btn-primary" id="btnEscola" value="Enviar Solicitação"></input>
+                          <input type="submit" class="btn btn-primary" id="btnEscola" value="Salvar"></input>
                           </div>
                           <br>
                           <br>

@@ -13,10 +13,11 @@ class Escola extends Control{
 	public function salvarEscola(){
 		$escolaDao = new EscolaDao();
 
-
+		
 		$password = password_hash($this->getsenhaescola(), PASSWORD_DEFAULT, [
 			'cost'=>12
 		]);
+
 		$this->setsenhaescola($password);
 		
 		$escolaDao->saveEscola($this);
@@ -28,7 +29,12 @@ class Escola extends Control{
 	}
 
 	public function deletarEscola(){
+		$escolaDao = new EscolaDao();
 
+		
+
+		$escolaDao->deleteEscola($this);
+			
 	}
 
 	public static function buscarEscola(){

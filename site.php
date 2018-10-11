@@ -39,9 +39,7 @@ $app->post('/solicitacao/', function(){
 	$escola = new Escola();
 
 	$escola->setData($_POST);
-
 	
-
 	$escola->salvarEscola();
 	
 	}catch(Exception $e){

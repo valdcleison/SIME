@@ -214,6 +214,28 @@ $app->post("/admin/users/:id/password/", function($id){
 	}
 });
 
+$app->get("/admin/usuario/:id/status/:status", function($id, $status){
+	Usuario::verifyLogin(2);
+
+	try{
+		$user = new Usuario();
+		$user->buscarAdmin((int)$id);
+		
+		$user->atualizarStatus((int)$status);
+		
+	} catch (\Exception $e){
+		Usuario::setError($e->getmessage());
+		echo "<script>javascript:history.back()</script>";
+		exit;
+	}	
+
+	Usuario::setSuccess("Status alterado com sucesso!");
+	header("Location: /admin/users/");
+	exit;
+
+
+});
+
 $app->get("/admin/escola/", function(){
 	Usuario::verifyLogin(2);
 		
@@ -250,27 +272,49 @@ $app->get("/admin/escola/create/", function(){
 	]);
 });
 
-$app->get("/admin/usuario/:id/status/:status", function($id, $status){
+$app->post("/admin/escola/create/", function(){
 	Usuario::verifyLogin(2);
-
 	try{
-		$user = new Usuario();
-		$user->buscarAdmin((int)$id);
-		
-		$user->atualizarStatus((int)$status);
-		
-	} catch (\Exception $e){
-		Usuario::setError($e->getmessage());
-		echo "<script>javascript:history.back()</script>";
-		exit;
-	}	
 
-	Usuario::setSuccess("Status alterado com sucesso!");
-	header("Location: /admin/users/");
+	$escola = new Escola();
+
+	$escola->setData($_POST);
+
+	$escola->salvarEscola();
+	
+	}catch(\Exception $e){
+		Usuario::setError($e->getmessage());
+		header("Location: /admin/escola/create/");
+		exit;
+	}
+
+	Usuario::setSuccess("Escola Cadastrada com sucesso!");
+	header("Location: /admin/escola/");
 	exit;
 
+});
+
+$app->get("/admin/escola/:id/delete/", function($idEscola){
+	Usuario::verifyLogin(2);
+	try{
+		$escola = new Escola();
+		$escola->buscarEscolaPorId((int)$idEscola);
+
+
+
+		$escola->deletarEscola();
+
+	}catch(\Exception $e){
+		Usuario::setError($e->getmessage());
+		header("Location: /admin/escola/");
+		exit;
+	}
+    Usuario::setSuccess("Status alterado com sucesso!");
+	header("Location: /admin/escola/");
+	exit;
 
 });
+
 
 $app->get("/admin/escola/:id/status/:statusescola/", function($id, $statusescola){
 	Usuario::verifyLogin(2);

@@ -29,7 +29,7 @@ class Usuario extends Control{
 	}
 
 	public static function logout(){
-		session_unset($_SESSION[Usuario::SESSION]);
+		$_SESSION[Usuario::SESSION] = NULL;   
 	}
 
 	public static function verifyLogin($nivelAdmin){

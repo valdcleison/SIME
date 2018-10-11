@@ -32,7 +32,7 @@
                       <th ><i class="fa fa-user"> </i> Nome da Escola</th>
                       <th><i class="fa fa-envelope-o"> </i> Email</th>
                       <th><i class="fa fa-envelope-o"> </i> CNPJ</th>
-                      <th><i class=" fa fa-user"> </i> Nome do Gestor</th>
+                      <th><i class=" fa fa-user"> </i> Nome de Usuario</th>
                       <th><i class=" fa fa-adress"> </i> Endereço</th>
                       <th></th>
                     </tr>
@@ -46,7 +46,7 @@
                         <td data-title="Nome da Escola" class="hidden-phone">{$value.nomeescola}</td>
                         <td data-title="Email">{$value.email}</td>
                         <td data-title="CNPJ">{$value.cnpj}</td>
-                        <td data-title="Nome do Gestor">{$value.nomegestor}</td>
+                        <td data-title="Nome de Usuario">{$value.usuario}</td>
                         <td data-title="Endereço">{$value.rua}, {$value.cidade}, {$value.estado}</td>
                         <td>
                           
@@ -62,7 +62,7 @@
 
                             {/if}
                           <a class="btn btn-primary btn-xs" href="/admin/escola/{$value.idescola}"><i class="fa fa-pencil"></i> Editar</a>
-                          <a class="btn btn-danger btn-xs" onclick="return confirm('Deseja excluir a escola: {$value.nomeescola}?')" href="/admin/users/{$value.idescola}/delete"><i class="fa fa-trash-o "></i> Deletar</a>
+                          <a class="btn btn-danger btn-xs" onclick="return confirm('Deseja excluir a escola: {$value.nomeescola}?')" href="/admin/escola/{$value.idescola}/delete"><i class="fa fa-trash-o "></i> Deletar</a>
                         </td>
                       </tr>
                    {/loop}

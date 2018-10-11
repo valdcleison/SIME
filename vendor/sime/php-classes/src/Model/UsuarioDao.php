@@ -14,12 +14,11 @@ public function checkUsuario($id){
 				INNER JOIN anoletivo anl ON es.anoletivo_idanoletivo = anl.idanoletivo
 				INNER JOIN escola_usuario eu ON es.idescola = eu.escola_idescola
 				INNER JOIN usuario u ON eu.usuario_idusuario = u.idusuario
-				WHERE u.idusuario = :id
-		", array(
+				WHERE u.idusuario = :id", array(
 			":id"=>$id
 
 		));
-		return $results[0];
+		return $results;
 }
 
 public function saveAdmin($user){
@@ -88,15 +87,14 @@ public function login($user, $pass){
 	}
 	$data = $results[0];
 
-
-	if(password_verify($pass, $data['senha']) === true){
+	
+	if(password_verify($pass, $data['senha'])){
 		
 		return $data;
 
 	}else{
 
-
-		throw new \Exception("Usuario Inexistente ou Senha Invalida!");
+		throw new \Exception("Inexistente ou Senha Invalida!");
 
 	}
 }
