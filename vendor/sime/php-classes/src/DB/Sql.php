@@ -4,14 +4,15 @@ namespace Sime\DB;
 
 class Sql {
 
-	/*const HOSTNAME = "br876.hostgator.com.br";
+	const HOSTNAME = "br876.hostgator.com.br";
 	const USERNAME = "simeesco_admin";
 	const PASSWORD = "sime250499";
-	const DBNAME = "simeesco_db_sime";*/
+	const DBNAME = "simeesco_db_sime";
+	/*
 	const HOSTNAME = "127.0.0.1";
 	const USERNAME = "root";
 	const PASSWORD = "";
-	const DBNAME = "db_sime";
+	const DBNAME = "db_sime";*/
 
 	private $conn;
 

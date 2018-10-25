@@ -26,6 +26,26 @@ $app->post('/solicitacao/', function(){
 			echo "<script>javascript:history.back()</script>";
 			exit;
 		}
+		if((int) strlen($_POST['telefone']) !== 11){
+			Escola::setError("O numero de telefone precisa conter 11 numeros!");
+			echo "<script>javascript:history.back()</script>";
+			exit;
+		}
+		if((int) strlen($_POST['celular']) !== 11){
+			Escola::setError("O numero de cellular precisa conter 11 numeros!");
+			echo "<script>javascript:history.back()</script>";
+			exit;
+		}
+		if(!is_numeric($_POST['telefone'])){
+			Escola::setError("digite apenas numeros para o numero de telefone!");
+			echo "<script>javascript:history.back()</script>";
+			exit;
+		}
+		if(is_numeric($_POST['celular'])){
+			Escola::setError("Digite apenas numeros para o numero de cellular!");
+			echo "<script>javascript:history.back()</script>";
+			exit;
+		}
 
 		if((int) strlen($_POST['cnpjescola']) !== 14){
 			Escola::setError("O cnpj precisa conter 14 numeros!");
@@ -44,11 +64,11 @@ $app->post('/solicitacao/', function(){
 	
 	}catch(Exception $e){
 		Escola::setError($e->getmessage());
-		header("Location: /solicitacao/");
+		echo "<script>javascript:history.back()</script>";
 		exit;
 	}
-	Escola::setSuccess("Cadastro realizado com sucesso, por favor aguarde o nosso contato!");
-	echo "<script>javascript:history.back()</script>";
+	
+	header("Location: /");
 	exit;
 });
 

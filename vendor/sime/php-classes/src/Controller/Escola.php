@@ -3,6 +3,7 @@ namespace Sime\Controller;
 
 use \Sime\Control;
 use \Sime\Model\EscolaDao;
+use \Sime\Model\UsuarioDao;
 
 class Escola extends Control{
 	
@@ -11,6 +12,11 @@ class Escola extends Control{
 	const SUCCESS = "EscolaSucesss";
 	
 	public function salvarEscola(){
+
+		$this->listarPorEmail();
+		$this->listarPorCpf();
+		$this->listarPorUser();
+		$this->listarPorCnpj();
 		$escolaDao = new EscolaDao();
 
 		
@@ -19,12 +25,61 @@ class Escola extends Control{
 		]);
 
 		$this->setsenhaescola($password);
+
 		
 		$escolaDao->saveEscola($this);
 
+		echo "<script>alert('Escola Cadastrada com sucesso aguarde o nosso contato!');</script>";
+
+	}
+
+	public function listarPorEmail(){
+		$userDao = new UsuarioDao();
+
+		if($userDao->getUserByEmail($this->getemailgestor()) !== null){
+			throw new \Exception("Email já Cadastrado!");	
+		}
+	}
+
+	public function listarPorCpf(){
+		$userDao = new UsuarioDao();
+
+		if($userDao->getUserByCpf($this->getcpfgestor()) !== null){
+			throw new \Exception("Cpf já Cadastrado!");	
+		}
+		
+	}
+
+	public function listarPorCnpj(){
+
+		
+
+		$escolaDao = new EscolaDao();
+
+		$dado =  $escolaDao->getEscolaByCnpj($this->getcnpjescola());
+
+
+
+		if($dado !== null){
+			
+			throw new \Exception("Escola já Cadastrada!");	
+		}
+		
+		
+	}
+
+	public function listarPorUser(){
+		$userDao = new UsuarioDao();
+
+		if($userDao->getUserByUser($this->getusuarioescola()) !== null){
+			throw new \Exception("Usuario já Cadastrado, escolha outro!");	
+		}
 	}
 
 	public function editarEscola(){
+		$escolaDao = new EscolaDao();
+
+		$escolaDao->updateEscola($this);
 
 	}
 
@@ -44,9 +99,15 @@ class Escola extends Control{
 	public function buscarEscolaPorId($id){
 		$escolaDao = new EscolaDao();
 		$dados =  $escolaDao->listById((int)$id);
-
+		if($dados === null){
+			throw new \Exception("Dados não encontrados!", 1);
+			
+		}
 		$this->setData($dados);
 	}
+
+	
+
 
 	public function alterarStatusEscola($status){
 		

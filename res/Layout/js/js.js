@@ -1,6 +1,13 @@
 
 $(document).ready(function() {
-    
+    $("#nomeescola").blur(function(){
+        if($("#nomeescola").val() == ""){
+            $("#fg-nomeescola").addClass("has-error");
+        }else{
+            $("#fg-nomeescola").removeClass("has-error");
+        }
+        
+    });
 
     function limpa_formulário_cep() {
         // Limpa valores do formulário de cep.
@@ -61,5 +68,21 @@ $(document).ready(function() {
         }
     });
 
-    
+
+
+    $("#btnEscola").click(function() {
+        alert("OK");
+        var cep = $("#cep");
+
+        $.getJSON("https://viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
+
+            if (("erro" in dados)) {
+                alert("CEP Invalido");
+                return false;
+            } 
+           
+        });
+    });
+
 });
+

@@ -25,9 +25,9 @@ $app->get("/admin/users/", function(){
 	Usuario::verifyLogin(2);
 		
 
-	$users = Usuario::listar();
+	$users = Usuario::listar(2);
 	
-	$page = new Page("/views/admin/",[
+	$page = new Page("/views/Admin/",[
 		"header"=>true,
 		"footer"=>true,
 		"data"=>array(
@@ -45,7 +45,7 @@ $app->get("/admin/users/", function(){
 $app->get("/admin/users/create/", function(){
 	Usuario::verifyLogin(2);
 
-	$page = new Page("/views/admin/",[
+	$page = new Page("/views/Admin/",[
 		"header"=>true,
 		"footer"=>true,
 		"data"=>array(
@@ -148,7 +148,33 @@ $app->get("/admin/users/:id", function($id){
 
 $app->post("/admin/users/:id", function($id){
 	Usuario::verifyLogin(2);
-	
+	if(strlen($_POST['cpfpessoa']) !== 11){
+		Usuario::setError("Cpf invalido!");
+		echo "<script>javascript:history.back()</script>";
+		exit;
+	}
+
+	if(empty($_POST['nomepessoa']) && $_POST['nomepessoa'] === ""
+		|| empty($_POST['cpfpessoa']) && $_POST['cpfpessoa'] ===""
+		|| empty($_POST['emailpessoa']) && $_POST['emailpessoa'] === ""
+		|| empty($_POST['usuario']) && $_POST['usuario'] ===""
+		|| empty($_POST['pass']) && $_POST['pass'] ===""
+		|| empty($_POST['repass']) && $_POST['repass'] === "")
+	{	
+		Usuario::setError("Preencha todos os campos");
+		echo "<script>javascript:history.back()</script>";
+		exit;
+	}else if($_POST['pass'] !== $_POST['repass']){
+		Usuario::setError("Senhas não conferem!");
+		echo "<script>javascript:history.back()</script>";
+		exit;
+	}
+
+	if(!Usuario::validaCPF($_POST['cpfpessoa'])){
+		Usuario::setError("CPF Invalido!");
+		echo "<script>javascript:history.back()</script>";
+		exit;
+	}
 	try{
 		$user = new Usuario();
 		$user->buscarAdmin((int)$id);
@@ -170,7 +196,7 @@ $app->get("/admin/users/:id/password/", function($id){
 	Usuario::verifyLogin(2);
 
 
-	$page = new Page("/views/admin/",[
+	$page = new Page("/views/Admin/",[
 		"header"=>true,
 		"footer"=>true,
 		"data"=>array(
@@ -243,7 +269,7 @@ $app->get("/admin/escola/", function(){
 	$escola = Escola::buscarEscola();
 
 	
-	$page = new Page("/views/admin/",[
+	$page = new Page("/views/Admin/",[
 		"header"=>true,
 		"footer"=>true,
 		"data"=>array(
@@ -265,7 +291,8 @@ $app->get("/admin/escola/create/", function(){
 		"footer"=>true,
 		"data"=>array(
 			"name"=> $_SESSION['User']['nomepessoa']
-		)]);
+	)]);
+
 	$page->setTpl("escola-create", [
 		"error"=>Usuario::getError(),
 		"success"=>Usuario::getSuccess()
@@ -275,12 +302,52 @@ $app->get("/admin/escola/create/", function(){
 $app->post("/admin/escola/create/", function(){
 	Usuario::verifyLogin(2);
 	try{
+		if((int) strlen($_POST['telefone']) < 11 || (int) strlen($_POST['telefone']) > 11){
+			Escola::setError("O numero de telefone precisa conter 11 numeros!");
+			echo "<script>javascript:history.back()</script>";
+			exit;
+		}
+		if((int) strlen($_POST['celular']) < 11 || (int) strlen($_POST['celular']) > 11){
+			Escola::setError("O numero de cellular precisa conter 11 numeros!");
+			echo "<script>javascript:history.back()</script>";
+			exit;
+		}
+		if(!is_numeric($_POST['telefone'])){
+			Escola::setError("digite apenas numeros para o numero de telefone!");
+			echo "<script>javascript:history.back()</script>";
+			exit;
+		}
+		if(is_numeric($_POST['celular'])){
+			Escola::setError("Digite apenas numeros para o numero de cellular!");
+			echo "<script>javascript:history.back()</script>";
+			exit;
+		}
 
-	$escola = new Escola();
+		foreach ($_POST as $key => $value) {
+			if(empty($key)){
+				Usuario::setError("Preencha todos os campos");
+				echo "<script>javascript:history.back()</script>";
+				exit;
+			}
+		}
 
-	$escola->setData($_POST);
+		if(!Usuario::validaCPF($_POST['cpfgestor'])){
+			Usuario::setError("CPF Invalido!");
+			echo "<script>javascript:history.back()</script>";
+			exit;
+		}
 
-	$escola->salvarEscola();
+		if(!Usuario::validaCNPJ($_POST['cnpjescola'])){
+			Usuario::setError("CNPJ Invalido!");
+			echo "<script>javascript:history.back()</script>";
+			exit;
+		}
+
+		$escola = new Escola();
+
+		$escola->setData($_POST);
+
+		$escola->salvarEscola();
 	
 	}catch(\Exception $e){
 		Usuario::setError($e->getmessage());
@@ -309,9 +376,60 @@ $app->get("/admin/escola/:id/delete/", function($idEscola){
 		header("Location: /admin/escola/");
 		exit;
 	}
-    Usuario::setSuccess("Status alterado com sucesso!");
+    Usuario::setSuccess("Escola deletada alterado com sucesso!");
 	header("Location: /admin/escola/");
 	exit;
+
+});
+
+$app->get("/admin/escola/:idEscola/", function($idEscola){
+	Usuario::verifyLogin(2);
+
+	try {
+		$escola = new Escola();
+		$escola->buscarEscolaPorId((int)$idEscola);
+
+	} catch (\Exception $e) {
+		Usuario::setError($e->getmessage());
+		header("Location: /admin/escola/");
+		exit;
+	}
+
+
+	$page = new Page("/views/Admin/",[
+		"header"=>true,
+		"footer"=>true,
+		"data"=>array(
+			"name"=> $_SESSION['User']['nomepessoa']
+	)]);
+	
+	$page->setTpl("escola-update", [
+		"escola"=>$escola->getValues(),
+		"error"=>Usuario::getError(),
+		"success"=>Usuario::getSuccess()
+	]);
+});
+
+$app->post("/admin/escola/:idEscola/", function($idEscola){
+	Usuario::verifyLogin(2);
+	try {
+		$escola = new Escola();
+		$escola->buscarEscolaPorId((int)$idEscola);
+
+		$escola->setData($_POST);
+		
+		$escola->editarEscola();
+
+	} catch (\Exception $e) {
+		Usuario::setError($e->getmessage());
+		header("Location: /admin/escola/");
+		exit;
+	}
+
+	Usuario::setSuccess("Dados alterado com sucesso!");
+	header("Location: /admin/escola/");
+	exit;
+	
 
 });
 
@@ -341,7 +459,7 @@ $app->get("/admin/planos/", function(){
 	$planos = Planos::buscarPlanos();
 
 
-	$page = new Page("/views/admin/",[
+	$page = new Page("/views/Admin/",[
 		"header"=>true,
 		"footer"=>true,
 		"data"=>array(
@@ -356,6 +474,134 @@ $app->get("/admin/planos/", function(){
 	));
 });
 
+$app->get("/admin/planos/create/", function(){
+	Usuario::verifyLogin(2);
 
+	$planos = Planos::buscarPlanos();
+
+
+	$page = new Page("/views/Admin/",[
+		"header"=>true,
+		"footer"=>true,
+		"data"=>array(
+			"name"=> $_SESSION['User']['nomepessoa']
+		)]
+	);
+
+	$page->setTpl("planos-create", array(
+		"error"=>Usuario::getError(),
+		"succes"=>Usuario::getSuccess()
+	));
+});
+
+$app->post("/admin/planos/create/", function(){
+	Usuario::verifyLogin(2);
+	if(empty($_POST['preco'] || empty($_POST['descricao']))){
+		Usuario::setError("Preencha Todos os campos!");
+		echo "<script>javascript:history.back()</script>";
+		exit;
+	}
+	
+	if(!strpos($_POST['preco'],".")){
+		Usuario::setError("Por favor digite um preço valido!");
+		echo "<script>javascript:history.back()</script>";
+		exit;
+	}
+	str_replace(",", ".", $_POST['preco']);
+	try {
+		$planos = new Planos();
+		$planos->setData($_POST);
+		$planos->salvarPlanos();
+	} catch (\Exception $e) {
+		Usuario::setError($e->getmessage());
+		echo "<script>javascript:history.back()</script>";
+		exit;
+	}
+	Usuario::setSuccess("Plano Cadastrado com sucesso!");
+	header("Location: /admin/planos/");
+	exit;
+
+
+	
+});
+
+$app->get("/admin/planos/:id/delete/", function($id){
+	Usuario::verifyLogin(2);
+	try {
+
+
+		$planos = new Planos();
+		$planos->buscarPlanosPorId($id);
+
+		$planos->deletarPlanos();
+
+	} catch (\Exception $e) {
+		Usuario::setError($e->getmessage());
+		header("Location: /admin/planos/");
+		exit;
+	}
+
+	Usuario::setSuccess("Plano Deletado com sucesso!");
+	header("Location: /admin/planos/");
+	exit;
+});
+
+$app->get("/admin/planos/:id", function($id){
+	Usuario::verifyLogin(2);
+
+	$planos = new Planos();
+	$planos->buscarPlanosPorId($id);
+
+	$page = new Page("/views/Admin/",[
+		"header"=>true,
+		"footer"=>true,
+		"data"=>array(
+			"name"=> $_SESSION['User']['nomepessoa']
+		)]
+	);
+	
+	$page->setTpl("planos-update", array(
+		"plano"=>$planos->getValues(),
+		"error"=>Usuario::getError(),
+		"succes"=>Usuario::getSuccess()
+	));
+});
+
+$app->post("/admin/planos/:id", function($id){
+	Usuario::verifyLogin(2);
+	try {
+
+
+		if(empty($_POST['preco'] || empty($_POST['descricao']))){
+			Usuario::setError("Preencha Todos os campos!");
+			echo "<script>javascript:history.back()</script>";
+			exit;
+		}
+		
+		if(!strpos($_POST['preco'],".")){
+			Usuario::setError("Por favor digite um preço valido!");
+			echo "<script>javascript:history.back()</script>";
+			exit;
+		}
+		str_replace(",", ".", $_POST['preco']);
+
+		$planos = new Planos();
+		$planos->buscarPlanosPorId($id);
+		$planos->setData($_POST);
+
+		$planos->atualizarPlanos();
+
+	} catch (\Exception $e) {
+		Usuario::setError($e->getmessage());
+		header("Location: /admin/planos/");
+		exit;
+	}
+
+	Usuario::setSuccess("Plano Alterado com sucesso!");
+	header("Location: /admin/planos/");
+	exit;
+
+	
+});
 
  ?>

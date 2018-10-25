@@ -181,7 +181,7 @@ $app->post("/forgot/reset-password/", function(){
 require_once("site.php");
 require_once("admin.php");
 require_once("escola.php");
-
+require_once("webservice.php");
 
 $app->run();
  ?>

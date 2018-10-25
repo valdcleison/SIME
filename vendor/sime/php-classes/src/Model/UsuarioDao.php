@@ -5,114 +5,140 @@ use \Sime\DB\Sql;
 
 class UsuarioDao {
 
-public function checkUsuario($id){
-	$sql = new Sql();
-
-		$results =  $sql->select("SELECT * FROM escola es
-				INNER JOIN endereco en ON es.endereco_idendereco = en.idendereco
-				INNER JOIN contato co ON es.contato_idcontato = co.idcontato
-				INNER JOIN anoletivo anl ON es.anoletivo_idanoletivo = anl.idanoletivo
-				INNER JOIN escola_usuario eu ON es.idescola = eu.escola_idescola
-				INNER JOIN usuario u ON eu.usuario_idusuario = u.idusuario
-				WHERE u.idusuario = :id", array(
-			":id"=>$id
-
-		));
-		return $results;
-}
-
-public function saveAdmin($user){
-
-	$sql = new Sql();
-	
-	$results = $sql->select("CALL sp_users_create(:pnomepessoa, :pcpfpessoa, :pemailpessoa, :user, :pass)", array(
-		":pnomepessoa"=>$user->getnomepessoa(),
-		":pcpfpessoa"=>$user->getcpfpessoa(),
-		":pemailpessoa"=>$user->getemailpessoa(),
-		":user"=>$user->getusuario(),
-		":pass"=>$user->getpass()
-	));
-	
-	$user->setData($results[0]);
-}
-
-public function updateAdmin($user){
-	
-	$sql = new Sql();
-
-	
-	$results = $sql->select("CALL sp_user_update(:piduser, :pnomepessoa)", array(
-		":piduser" => $user->getidusuario(),
-		":pnomepessoa" => $user->getnomepessoa(),
-	));
-	
-	
-	$user->setData($results[0]);
-}
-
-public function changeStatus($user, $newStatus){
-	$sql = new Sql();
-	
-
-	$sql->query("UPDATE usuario SET statususuario = :status WHERE idusuario = :idusuario", array(
-		":status" => $newStatus,
-		":idusuario" => $user->getidusuario()
-	));
-
-
-
-}
-
-public function deleteAdmin($user){
-	
-	$sql = new Sql();
-
-	
-	$sql->query("CALL sp_user_delete(:iduser)", array(
-		":iduser" => $user->getidusuario()
-	));
-	
-}
-
-public function login($user, $pass){
-	$sql = new Sql();
-
-	$results = $sql->select("SELECT * FROM usuario u  INNER JOIN pessoa p USING (idpessoa) WHERE u.usuario = :user", array(
-		":user"=>$user
-	));
-
-	if(count($results) === 0){
-		throw new \Exception("Usuario Inexistente ou Senha Invalida!");
-		
-	}
-	$data = $results[0];
-
-	
-	if(password_verify($pass, $data['senha'])){
-		
-		return $data;
-
-	}else{
-
-		throw new \Exception("Inexistente ou Senha Invalida!");
-
-	}
-}
-	public static function listAll(){
+	public function checkUsuario($id){
 		$sql = new Sql();
 
-		return $sql->select("SELECT * FROM usuario a INNER JOIN pessoa b USING(idpessoa) WHERE a.niveladmin = 2 ORDER BY a.idusuario");
+			$results =  $sql->select("SELECT * FROM escola es
+					INNER JOIN endereco en ON es.endereco_idendereco = en.idendereco
+					INNER JOIN contato co ON es.contato_idcontato = co.idcontato
+					INNER JOIN anoletivo anl ON es.anoletivo_idanoletivo = anl.idanoletivo
+					INNER JOIN escola_usuario eu ON es.idescola = eu.escola_idescola
+					INNER JOIN usuario u ON eu.usuario_idusuario = u.idusuario
+					WHERE u.idusuario = :id", array(
+				":id"=>(int)$id
+
+			));
+			
+			return $results;
+	}
+
+	public function saveAdmin($user){
+		
+
+		$sql = new Sql();
+		
+		$results = $sql->select("CALL sp_users_create(:pnomepessoa, :pcpfpessoa, :pemailpessoa, :user, :pass)", array(
+			":pnomepessoa"=>$user->getnomepessoa(),
+			":pcpfpessoa"=>$user->getcpfpessoa(),
+			":pemailpessoa"=>$user->getemailpessoa(),
+			":user"=>$user->getusuario(),
+			":pass"=>$user->getpass()
+		));
+		
+		$user->setData($results[0]);
+	}
+
+	public function updateAdmin($user){
+		
+		$sql = new Sql();
+
+		
+		$results = $sql->select("CALL sp_user_update(:piduser, :pnomepessoa)", array(
+			":piduser" => $user->getidusuario(),
+			":pnomepessoa" => $user->getnomepessoa(),
+		));
+		
+		
+		$user->setData($results[0]);
+	}
+
+	public function changeStatus($user, $newStatus){
+		$sql = new Sql();
+		
+
+		$sql->query("UPDATE usuario SET statususuario = :status WHERE idusuario = :idusuario", array(
+			":status" => $newStatus,
+			":idusuario" => $user->getidusuario()
+		));
+
+
+
+	}
+
+	public function deleteAdmin($user){
+		
+		$sql = new Sql();
+		
+		
+		$sql->query("CALL sp_user_delete(:iduser)", array(
+			":iduser" => (int)$user->getidusuario()
+		));
+		
+	}
+
+	public function login($user, $pass){
+		$sql = new Sql();
+
+		$results = $sql->select("SELECT * FROM usuario u  INNER JOIN pessoa p USING (idpessoa) WHERE u.usuario = :user", array(
+			":user"=>$user
+		));
+
+		if(count($results) === 0){
+			throw new \Exception("Dados Inexistente!");
+			
+		}
+		$data = $results[0];
+
+		
+		if(password_verify($pass, $data['senha'])){
+			
+			return $data;
+
+		}else{
+
+			throw new \Exception("Dados Inexistente!");
+
+		}
+	}
+	public function listByEscola($id){
+		$sql = new Sql();
+		
+		$resuts = $sql->select("SELECT * FROM usuario u 
+				INNER JOIN escola_usuario eu ON eu.usuario_idusuario = u.idusuario
+				WHERE eu.escola_idescola = :id", array(
+			":id"=>$id
+		));
+
+
+		
+		return $resuts;
+	}
+	public static function listAll($nivel){
+		$sql = new Sql();
+
+		return $sql->select("SELECT * FROM usuario a INNER JOIN pessoa b USING(idpessoa) WHERE a.niveladmin = :nivel ORDER BY a.idusuario", array(
+			":nivel"=>$nivel
+		));
 	}
 
 	public function getAdmin($id){
 		$sql = new Sql();
 
-		$resuts = $sql->select("SELECT * FROM usuario a INNER JOIN pessoa b USING(idpessoa) WHERE a.idusuario = :iduser", array(
+		$results = $sql->select("SELECT * FROM usuario a INNER JOIN pessoa b USING(idpessoa) WHERE a.idusuario = :iduser", array(
 			":iduser"=>$id
 		));
+
 		
-		return $resuts[0];
+
+		if(count($results) < 1){
+			throw new \Exception("Usuário não encontrado!");
+			
+		}
+		
+		return $results[0];
 	}
+
+
 
 	public function getUserByEmail($email){
 		$sql = new Sql();

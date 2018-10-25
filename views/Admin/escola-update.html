@@ -1,12 +1,12 @@
 <section id="main-content">
-      <section class="wrapper">
+      <section class="wrapper site-min-height">
         
         <div class="row mt">
           <div class="col-sm-12">
-            <div class="content-panel">
-              <div class="container">
+            <div class="form-panel">
+              <div class="form">
 
-                <form action="/admin/escola/{$escola.idescola}/update/" method="POST"> 
+                <form action="/admin/escola/{$escola.idescola}/" method="POST"> 
 
                    <div class="row form-group" id="content">
                       
@@ -54,18 +54,7 @@
                         </div>
                         <br>
 
-                        <div class="row">
-                          <div class="col-md-12">
-                            <span><b>Email do Gestor</b></span>
-                          </div>
-                        </div>
-                        <div class="row">
-                          
-                          <div class="col-md-12">
-                            <input type="email" name="emailgestor" class="form-control" value="{$escola.emailpessoa}" required>
-                          </div>
-                        </div>
-                        <br>
+                      
 
                         <div class="row">
                           <div class="col-md-12">
@@ -87,17 +76,7 @@
                         <br>
                         <hr>
 
-                        <div class="row">
-                          <div class="col-md-12">
-                            <span><b>Nome de Usuario</b></span>
-                          </div>
-                        </div>
-                        <div class="row">
-                          
-                          <div class="col-md-12">
-                            <input type="text" name="usuarioescola" class="form-control" value="{$escola.usuario}" required>
-                          </div>
-                        </div>
+                    
           
                       </div>
                   
@@ -109,7 +88,7 @@
                           
                           <div class="col-md-6">
                             <span><b>Logradouro</b></span>
-                            <input type="text" name="logradouro" id="log" class="form-control" value="{$escola.rua}" required>
+                            <input type="text" name="rua" id="log" class="form-control" value="{$escola.rua}" required>
                           </div>
                           <div class="col-md-3">
                             <span><b>Bairro</b></span>
@@ -126,11 +105,11 @@
                           
                           <div class="col-md-6">
                              <span><b>Cidade</b></span>
-                            <input type="text" name="cidade" id="cidade" class="form-control" readonly value="{$escola.cidade}" required>
+                            <input type="text" name="cidade" id="cidade" class="form-control"  value="{$escola.cidade}" required>
                           </div>
                           <div class="col-md-3">
                             <span><b>Estado</b></span>
-                            <input type="text" name="estado" id="estado" class="form-control" minlength="8" maxlength="8" readonly value="{$escola.estado}" required>
+                            <input type="text" name="estado" id="estado" class="form-control" minlength="8" maxlength="8"  value="{$escola.estado}" required>
                           </div>
                           <div class="col-md-3">
                             <span><b>CEP</b></span>
@@ -150,7 +129,7 @@
                         <div class="row">
                           
                           <div class="col-md-12">
-                            <input type="email" name="emailescola" id="emailescola" class="form-control" value="{$escola.email}" required>
+                            <input type="email" name="email" id="emailescola" class="form-control" value="{$escola.email}" required>
                           </div>
                           
                         </div>

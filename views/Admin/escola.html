@@ -1,7 +1,7 @@
 
 
      <section id="main-content">
-      <section class="wrapper">
+      <section class="wrapper site-min-height">
         
         <div class="row mt">
           <div class="col-lg-12">
@@ -32,7 +32,6 @@
                       <th ><i class="fa fa-user"> </i> Nome da Escola</th>
                       <th><i class="fa fa-envelope-o"> </i> Email</th>
                       <th><i class="fa fa-envelope-o"> </i> CNPJ</th>
-                      <th><i class=" fa fa-user"> </i> Nome de Usuario</th>
                       <th><i class=" fa fa-adress"> </i> Endereço</th>
                       <th></th>
                     </tr>
@@ -46,8 +45,7 @@
                         <td data-title="Nome da Escola" class="hidden-phone">{$value.nomeescola}</td>
                         <td data-title="Email">{$value.email}</td>
                         <td data-title="CNPJ">{$value.cnpj}</td>
-                        <td data-title="Nome de Usuario">{$value.usuario}</td>
-                        <td data-title="Endereço">{$value.rua}, {$value.cidade}, {$value.estado}</td>
+                        <td data-title="Endereço">{$value.rua}, {$value.bairro}, {$value.cidade}, {$value.estado}</td>
                         <td>
                           
                             {if="$value.statusescola == 0"}

@@ -30,32 +30,23 @@
                     <tr>
                       <th>#</th>
                       <th ><i class="fa fa-user"> </i> Nome</th>
+                      <th><i class="fa fa-envelope-o"> </i> CPF</th>
+                      <th><i class="fa fa-envelope-o"> </i> Numero da matricula</th>
                       <th><i class="fa fa-envelope-o"> </i> Email</th>
-                      <th><i class=" fa fa-user"> </i> Nome de Usuario</th>
-                      <th><i class=" fa fa-flag"> </i> Nivel</th>
                       <th></th>
                     </tr>
                   </thead>
                   <tbody>
-                    {loop="$users"}
+                    {loop="$alunos"}
                       <tr>
                         <td data-title="#">
-                          {$value.idusuario}
+                          {$value.idaluno}
                         </td>
                         <td data-title="Nome" class="hidden-phone">{$value.nomepessoa}</td>
+                        <td data-title="CPF" class="hidden-phone">{$value.cpfpessoa}</td>
+                        <td data-title="Numero da matricula" class="hidden-phone">{$value.numeromatricula}</td>
                         <td data-title="Email">{$value.emailpessoa}</td>
-                        <td data-title="Nome de Usuario">{$value.usuario}</td>
-                        <td data-title="Nivel"><span class="label label-primary label-mini">{if="$value.niveladmin == 0"}Aluno/Responsavel{elseif="$value.niveladmin == 1"}Funcionario Escola{else}Administrador do Sistema{/if}</span></td>
                         <td>
-                          {if="$value.statususuario == 0"}
-                          <a class="btn btn-info btn-xs" onclick="return confirm('Deseja desbloquear o acesso ao usuario: {$value.nomepessoa}?')" href="/portal/alunos/{$value.idusuario}/status/{$value.statususuario}">
-                            
-                              <i class="fa fa-lock"></i> Bloqueado</a>
-                            {else}
-                             <a class="btn btn-info btn-xs" onclick="return confirm('Deseja bloquear o acesso ao usuario: {$value.nomepessoa}?')" href="/portal/alunos/{$value.idusuario}/status/{$value.statususuario}">
-                              <i class="fa fa-unlock"></i> Desbloqueado</a>
-                            {/if}
-                          <a class="btn btn-info btn-xs" href="/portal/alunos/{$value.idusuario}/password"><i class="fa fa-lock"></i> Alterar Senha</a>
                           <a class="btn btn-primary btn-xs" href="/portal/alunos/{$value.idusuario}"><i class="fa fa-pencil"></i> Editar</a>
                           <a class="btn btn-danger btn-xs" onclick="return confirm('Deseja excluir o usuario: {$value.usuario}?')" href="/portal/alunos/{$value.idusuario}/delete"><i class="fa fa-trash-o "></i> Deletar</a>
                         </td>

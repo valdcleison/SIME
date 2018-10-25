@@ -38,8 +38,9 @@ class Usuario extends Control{
 			!isset($_SESSION[Usuario::SESSION])||
 			!$_SESSION[Usuario::SESSION]||
 			!(int)$_SESSION[Usuario::SESSION]["idusuario"] > 0 ||
-			!(int)$_SESSION[Usuario::SESSION]["niveladmin"] === $nivelAdmin
+			(int)$_SESSION[Usuario::SESSION]["niveladmin"] !== $nivelAdmin
 		){
+			Usuario::setError("Necessario realizar login");
 			header("Location: /login/");
 			exit;
 		}
@@ -150,6 +151,15 @@ class Usuario extends Control{
 		 
 		}
 	}
+	public function listarPorEscola($idusuario){
+
+		$userDao = new UsuarioDao();
+		$dados = $userDao->checkUsuario($idusuario);
+		
+		$escola = $userDao->listByEscola($dados[0]['idescola']);
+
+		return $escola;
+	}
 
 	public function listarPorEmail(){
 		$userDao = new UsuarioDao();
@@ -168,11 +178,13 @@ class Usuario extends Control{
 		
 	}
 
+
+
 	public function checkUsuario($id){
 		$userDao = new UsuarioDao();
 		$escola = $userDao->checkUsuario($id);
 
-		$this->setData($escola);
+		$this->setData($escola[0]);
 
 		
 		if((int)$this->getstatusescola() === 0){
@@ -189,8 +201,9 @@ class Usuario extends Control{
 		}
 	}
 
-	public static function listar(){
-		return UsuarioDao::listAll();
+	public static function listar($nivel){
+
+		return UsuarioDao::listAll($nivel);
 	}
 
 	public function salvarAdmin(){
@@ -210,6 +223,11 @@ class Usuario extends Control{
 
 		$userDao->saveAdmin($this);
 
+	}
+
+	public function salvarEscola($idescola){
+		$userDao = new UsuarioDao();
+		$userDao->saveEscola($this, $idescola);
 	}
 
 	public function buscarAdmin($id){
