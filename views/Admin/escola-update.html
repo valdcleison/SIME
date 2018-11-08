@@ -66,18 +66,15 @@
                           
                           <div class="col-md-12">
                             <select class="form-control" name="planos">
-                              <option value="1">Plano Basico - R$39,90 Mensal ou R$459,90 Anual</option>
-                              <option value="2">Plano Médio - R$69,90 Mensal ou R$799,90 Anual</option>
-                              <option value="3">Plano Avançado - R$99,90 Mensal ou R$1099,90 Anual</option>
+                              {loop="$planos"}
+                              <option value="{$value.idplano}">{$value.descricao} - R${$value.preco}/Mês ou R${$value.preco * 12}/Ano</option>
+                              {/loop}
                             </select>
                           </div>
                           
                         </div>
                         <br>
                         <hr>
-
-                    
-          
                       </div>
                   
                       <div class="col-md-5">
@@ -95,7 +92,7 @@
                             <input type="text" name="bairro" id="bairro" class="form-control" value="{$escola.bairro}" required>
                           </div>
                           <div class="col-md-3">
-                            <span><b>Numero</b></span>  
+                            <span><b>Número</b></span>  
                             <input type="number" name="numero" id="numero" class="form-control" value="{$escola.numero}" required>
                           </div>
                         </div>
@@ -142,11 +139,11 @@
                         <div class="row">
                           
                           <div class="col-md-6">
-                            <span><b>Telefone</b></span>  (Apenas numeros) 
+                            <span><b>Telefone</b></span>  (Apenas números) 
                             <input type="text" name="telefone" id="telefone" class="form-control" value="{$escola.telefone}" >
                           </div>
                           <div class="col-md-6">
-                            <span><b>Celular</b></span>  (Apenas numeros) 
+                            <span><b>Celular</b></span>  (Apenas números) 
                             <input type="text" name="celular" id="celular" class="form-control" required value="{$escola.celular}" >
                           </div>
                         </div>

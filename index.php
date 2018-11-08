@@ -104,21 +104,21 @@ $app->post("/forgot/", function(){
 		header("Location: /login/");
 		exit;
 	}
-	try{
+	//try{
 		$email = $_POST['emailpessoa'];
 
 		$user = Usuario::reSenha($email);
 		
-	}catch(Exception $e){
-		Usuario::setError("Não foi possivel recuperar sua senha!");
-		header("Location: /login/");
-		exit;
-	}
+	//}catch(Exception $e){
+		//Usuario::setError("Não foi possivel recuperar sua senha!");
+		//header("Location: /login/");
+		//exit;
+	//}
 
 
-	Usuario::setSuccess("Acese seu email para recuperar sua senha!");
-	header("Location: /login/");
-	exit;
+	//Usuario::setSuccess("Acese seu email para recuperar sua senha!");
+	//header("Location: /login/");
+	//exit;
 });
 
 $app->get("/forgot/reset-password", function(){

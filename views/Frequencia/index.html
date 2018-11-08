@@ -46,11 +46,20 @@
                         <td data-title="#">
                           {$value.idfrequencia}
                         </td>
-                        <td data-title="Nome" class="hidden-phone">{$value.nomeescola}</td>
-                        <td data-title="Email">{$value.hrinicio}</td>
-                        <td data-title="Nome de Usuario">{$value.hrtermino}</td>
-                        <td data-title="Nivel">{$value.qtalunospresentes}</td>
-                        <td data-title="Nivel">{$value.qtalunosausentes}</td>
+                        <td data-title="Escola" class="hidden-phone">{$value.nomeescola}</td>
+                        {if="$value.hrinicio == null"}
+                          <td data-title="Inicio">Frequência não realizada</td>
+                        {else}
+                          <td data-title="Inicio">{$value.hrinicio}</td>
+                        {/if}
+                        {if="$value.hrtermino == null"}
+                          <td data-title="Inicio">Frequência não realizada</td>
+                        {else}
+                          <td data-title="Final">{$value.hrtermino}</td>
+                        {/if}
+                        
+                        <td data-title="Alunos Presentes">{$value.qtalunospresentes}</td>
+                        <td data-title="Alunos Ausentes">{$value.qtalunosausentes}</td>
                         <td>
                           <a class="btn btn-primary btn-xs" href="/portal/frequencia/{$value.idfrequencia}/detalhes"><i class="fa fa-pencil"></i> Detalhes</a>
                           <a class="btn btn-primary btn-xs" href="/portal/frequencia/{$value.idfrequencia}"><i class="fa fa-pencil"></i> Editar</a>

@@ -5,7 +5,7 @@ use \Sime\DB\Sql;
 
 class FrequenciaAlunoDao{
 	
-	function wsBuscarFrequenciaAluno($idescola){
+	function wsBuscarFrequenciaAlunoPorEscola($idescola){
 		
 		$sql = new Sql();
 		$results = $sql->select("SELECT * FROM frequenciaaluno frea
@@ -22,6 +22,15 @@ class FrequenciaAlunoDao{
 		return $results;
 	}
 
+	public function wsAlterarPorId($idfrequenciaaluno, $hrentrada){
+		
+		$sql = new Sql();
+		$sql->query("UPDATE frequenciaaluno SET hrentrada = :hrentrada WHERE idfrequenciaaluno = :idfrequenciaaluno", array(
+			":hrentrada"=>$hrentrada,
+			":idfrequenciaaluno"=>$idfrequenciaaluno
+		));
+	}
+
 	public function BuscarPorFrequencia($idfrequencia){
 		$sql = new Sql();
 		$results = $sql->select("SELECT * FROM frequenciaaluno frea
@@ -29,6 +38,8 @@ class FrequenciaAlunoDao{
 		    INNER JOIN escola es ON fre.escola_idescola = es.idescola
 		    INNER JOIN matricula ma ON frea.matricula_idmatricula = ma.idmatricula
 		    INNER JOIN aluno al ON ma.aluno_idaluno = al.idaluno
+		    INNER JOIN responsavel r ON al.responsavel_idresponsavel = r.idresponsavel
+		    INNER JOIN contato cr ON cr.idcontato = r.contato_idcontato
 		    INNER JOIN pessoa pa ON al.pessoa_idpessoa = pa.idpessoa
 		    AND fre.idfrequencia = :idfrequencia", array(
 		    	":idfrequencia"=>$idfrequencia
@@ -36,6 +47,8 @@ class FrequenciaAlunoDao{
 		
 		return $results;
 	}
+
+
 }
 
 

@@ -6,7 +6,7 @@
         <div class="row mt">
           <div class="col-lg-12">
             <div class="content-panel">
-              <h4><i class="fa fa-angle-right"></i> Lista de Usuarios</h4>
+              <h4><i class="fa fa-angle-right"></i> Lista de Usuários</h4>
               <div class="row">
                 
                 <div class="col-md-6">
@@ -31,7 +31,8 @@
                       <th>#</th>
                       <th ><i class="fa fa-user"> </i> Nome</th>
                       <th><i class="fa fa-envelope-o"> </i> Email</th>
-                      <th><i class=" fa fa-user"> </i> Nome de Usuario</th>
+                      <th><i class=" fa fa-user"> </i> Nome de Usuário</th>
+                      <th><i class=" fa fa-user"> </i> Avatar</th>
                       <th><i class=" fa fa-flag"> </i> Nivel</th>
                       <th></th>
                     </tr>
@@ -42,22 +43,26 @@
                         <td data-title="#">
                           {$value.idusuario}
                         </td>
-                        <td data-title="Nome" class="hidden-phone"></td>
+                        <td data-title="Nome">{$value.nomepessoa}</td>
                         <td data-title="Email">{$value.emailpessoa}</td>
-                        <td data-title="Nome de Usuario">{$value.usuario}</td>
-                        <td data-title="Nivel"><span class="label label-primary label-mini">{if="$value.niveladmin == 0"}Aluno/Responsavel{elseif="$value.niveladmin == 1"}Funcionario Escola{else}Administrador do Sistema{/if}</span></td>
+                        <td data-title="Nome de Usuário">{$value.usuario}</td>
+                        {if="$value.avatar == null"}
+                          {$value.avatar = "user"}
+                        {/if}
+                        <td data-title="Avatar" class="center"><img src="/res/Admin/img/user-avatar/{$value.usuario}.jpg" width="30" height="30"></td>
+                        <td data-title="Nivel"><span class="label label-primary label-mini">{if="$value.inadmin == 0"}Usuario{else}Administrador{/if}</span></td>
                         <td>
                           {if="$value.statususuario == 0"}
-                          <a class="btn btn-info btn-xs" onclick="return confirm('Deseja desbloquear o acesso ao usuario: {$value.usuario}?')" href="/portal/usuario/{$value.idusuario}/status/{$value.statususuario}">
+                          <a class="btn btn-info btn-xs" onclick="return confirm('Deseja desbloquear o acesso ao usuário: {$value.usuario}?')" href="/portal/usuario/{$value.idusuario}/status/{$value.statususuario}">
                             
                               <i class="fa fa-lock"></i> Bloqueado</a>
                             {else}
-                             <a class="btn btn-info btn-xs" onclick="return confirm('Deseja bloquear o acesso ao usuario: {$value.usuario}?')" href="/portal/usuario/{$value.idusuario}/status/{$value.statususuario}">
+                             <a class="btn btn-info btn-xs" onclick="return confirm('Deseja bloquear o acesso ao usuário: {$value.usuario}?')" href="/portal/usuario/{$value.idusuario}/status/{$value.statususuario}">
                               <i class="fa fa-unlock"></i> Desbloqueado</a>
                             {/if}
                           <a class="btn btn-info btn-xs" href="/portal/users/{$value.idusuario}/password"><i class="fa fa-lock"></i> Alterar Senha</a>
                           <a class="btn btn-primary btn-xs" href="/portal/users/{$value.idusuario}"><i class="fa fa-pencil"></i> Editar</a>
-                          <a class="btn btn-danger btn-xs" onclick="return confirm('Deseja excluir o usuario: {$value.usuario}?')" href="/portal/users/{$value.idusuario}/delete"><i class="fa fa-trash-o "></i> Deletar</a>
+                          <a class="btn btn-danger btn-xs" onclick="return confirm('Deseja excluir o usuário: {$value.usuario}?')" href="/portal/users/{$value.idusuario}/delete"><i class="fa fa-trash-o "></i> Deletar</a>
                         </td>
                       </tr>
                    {/loop}

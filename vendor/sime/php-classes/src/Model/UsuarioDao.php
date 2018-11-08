@@ -38,6 +38,22 @@ class UsuarioDao {
 		$user->setData($results[0]);
 	}
 
+	public function saveUserEscola($user){
+		$sql = new Sql();
+		
+		$results = $sql->select("CALL sp_escola_user_create(:pnomepessoa, :pcpfpessoa, :pemailpessoa, :user, :pass, :inadmin, :idescola)", array(
+			":pnomepessoa"=>$user->getnomepessoa(),
+			":pcpfpessoa"=>$user->getcpfpessoa(),
+			":pemailpessoa"=>$user->getemailpessoa(),
+			":user"=>$user->getusuario(),
+			":pass"=>$user->getpass(),
+			":inadmin"=>$user->getinadmin(),
+			":idescola"=>$user->getidescola()
+		));
+		
+		$user->setData($results[0]);
+	}
+
 	public function updateAdmin($user){
 		
 		$sql = new Sql();
@@ -105,12 +121,11 @@ class UsuarioDao {
 		
 		$resuts = $sql->select("SELECT * FROM usuario u 
 				INNER JOIN escola_usuario eu ON eu.usuario_idusuario = u.idusuario
+				INNER JOIN pessoa p ON u.idpessoa = p.idpessoa
 				WHERE eu.escola_idescola = :id", array(
 			":id"=>$id
 		));
 
-
-		
 		return $resuts;
 	}
 	public static function listAll($nivel){
@@ -166,7 +181,7 @@ class UsuarioDao {
 
 	public function getUserByUser($user){
 		$sql = new Sql();
-		$result = $sql->select("SELECT * FROM usuario u INNER JOIN pessoa p USING(idpessoa) WHERE u.usuario = :usuario", array(
+		$result = $sql->select("SELECT * FROM usuario WHERE usuario = :usuario", array(
 			":usuario"=>$user
 		));
 

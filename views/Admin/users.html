@@ -32,7 +32,7 @@
                       <th ><i class="fa fa-user"> </i> Nome</th>
                       <th><i class="fa fa-envelope-o"> </i> Email</th>
                       <th><i class=" fa fa-user"> </i> CPF</th>
-                      <th><i class=" fa fa-user"> </i> Nome de Usuario</th>
+                      <th><i class=" fa fa-user"> </i> Nome de Usuário</th>
                       <th></th>
                     </tr>
                   </thead>
@@ -45,20 +45,20 @@
                         <td data-title="Nome" class="hidden-phone">{$value.nomepessoa}</td>
                         <td data-title="Email">{$value.emailpessoa}</td>
                         <td data-title="CPF">{$value.cpfpessoa}</td>
-                        <td data-title="Nome de Usuario">{$value.usuario}</td>
+                        <td data-title="Nome de Usuário">{$value.usuario}</td>
                         
                         <td>
                           {if="$value.statususuario == 0"}
-                          <a class="btn btn-info btn-xs" onclick="return confirm('Deseja desbloquear o acesso ao usuario: {$value.nomepessoa}?')" href="/admin/usuario/{$value.idusuario}/status/{$value.statususuario}">
+                          <a class="btn btn-info btn-xs" onclick="return confirm('Deseja desbloquear o acesso ao usuário: {$value.nomepessoa}?')" href="/admin/usuario/{$value.idusuario}/status/{$value.statususuario}">
                             
                               <i class="fa fa-lock"></i> Bloqueado</a>
                             {else}
-                             <a class="btn btn-info btn-xs" onclick="return confirm('Deseja bloquear o acesso ao usuario: {$value.nomepessoa}?')" href="/admin/usuario/{$value.idusuario}/status/{$value.statususuario}">
+                             <a class="btn btn-info btn-xs" onclick="return confirm('Deseja bloquear o acesso ao usuário: {$value.nomepessoa}?')" href="/admin/usuario/{$value.idusuario}/status/{$value.statususuario}">
                               <i class="fa fa-unlock"></i> Desbloqueado</a>
                             {/if}
                           <a class="btn btn-info btn-xs" href="/admin/users/{$value.idusuario}/password"><i class="fa fa-lock"></i> Alterar Senha</a>
                           <a class="btn btn-primary btn-xs" href="/admin/users/{$value.idusuario}"><i class="fa fa-pencil"></i> Editar</a>
-                          <a class="btn btn-danger btn-xs" onclick="return confirm('Deseja excluir o usuario: {$value.usuario}?')" href="/admin/users/{$value.idusuario}/delete"><i class="fa fa-trash-o "></i> Deletar</a>
+                          <a class="btn btn-danger btn-xs" onclick="return confirm('Deseja excluir o usuário: {$value.usuario}?')" href="/admin/users/{$value.idusuario}/delete"><i class="fa fa-trash-o "></i> Deletar</a>
                         </td>
                       </tr>
                    {/loop}

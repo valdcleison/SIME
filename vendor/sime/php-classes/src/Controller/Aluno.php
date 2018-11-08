@@ -13,6 +13,18 @@ class Aluno extends Control{
 		$dados = $alunoDao->listar($idescola);
 		return $dados;
 	}
+
+	public function listarPorNumMatricula($numMatricula, $idescola){
+		$alunoDao = new AlunoDao();
+		$dados = $alunoDao->listarPorNumMatricula($numMatricula, $idescola);
+		return $dados;
+	}
+
+	public function salvarAluno($idescola){
+		$alunoDao = new AlunoDao();
+		$dados = $alunoDao->salvarAluno($this, $idescola);
+	}
+	
 }
 
 

@@ -53,11 +53,26 @@
                           <?php echo htmlspecialchars( $value1["idfrequencia"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
 
                         </td>
-                        <td data-title="Nome" class="hidden-phone"><?php echo htmlspecialchars( $value1["nomeescola"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
-                        <td data-title="Email"><?php echo htmlspecialchars( $value1["hrinicio"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
-                        <td data-title="Nome de Usuario"><?php echo htmlspecialchars( $value1["hrtermino"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
-                        <td data-title="Nivel"><?php echo htmlspecialchars( $value1["qtalunospresentes"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
-                        <td data-title="Nivel"><?php echo htmlspecialchars( $value1["qtalunosausentes"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                        <td data-title="Escola" class="hidden-phone"><?php echo htmlspecialchars( $value1["nomeescola"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                        <?php if( $value1["hrinicio"] == null ){ ?>
+
+                          <td data-title="Inicio">Frequência não realizada</td>
+                        <?php }else{ ?>
+
+                          <td data-title="Inicio"><?php echo htmlspecialchars( $value1["hrinicio"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                        <?php } ?>
+
+                        <?php if( $value1["hrtermino"] == null ){ ?>
+
+                          <td data-title="Inicio">Frequência não realizada</td>
+                        <?php }else{ ?>
+
+                          <td data-title="Final"><?php echo htmlspecialchars( $value1["hrtermino"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                        <?php } ?>
+
+                        
+                        <td data-title="Alunos Presentes"><?php echo htmlspecialchars( $value1["qtalunospresentes"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                        <td data-title="Alunos Ausentes"><?php echo htmlspecialchars( $value1["qtalunosausentes"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                         <td>
                           <a class="btn btn-primary btn-xs" href="/portal/frequencia/<?php echo htmlspecialchars( $value1["idfrequencia"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/detalhes"><i class="fa fa-pencil"></i> Detalhes</a>
                           <a class="btn btn-primary btn-xs" href="/portal/frequencia/<?php echo htmlspecialchars( $value1["idfrequencia"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><i class="fa fa-pencil"></i> Editar</a>

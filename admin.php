@@ -7,7 +7,7 @@ use \Sime\Controller\Planos;
 
 $app->get("/admin/", function(){
 	
-
+	
 	Usuario::verifyLogin(2);
 
 	$page = new Page("/views/Admin/",[
@@ -63,7 +63,7 @@ $app->post("/admin/users/create/", function(){
 	Usuario::verifyLogin(2);
 
 	if(strlen($_POST['cpfpessoa']) !== 11){
-		Usuario::setError("Cpf invalido!");
+		Usuario::setError("Cpf inválido!");
 		echo "<script>javascript:history.back()</script>";
 		exit;
 	}
@@ -85,7 +85,7 @@ $app->post("/admin/users/create/", function(){
 	}
 
 	if(!Usuario::validaCPF($_POST['cpfpessoa'])){
-		Usuario::setError("CPF Invalido!");
+		Usuario::setError("CPF inválido!");
 		echo "<script>javascript:history.back()</script>";
 		exit;
 	}
@@ -148,37 +148,19 @@ $app->get("/admin/users/:id", function($id){
 
 $app->post("/admin/users/:id", function($id){
 	Usuario::verifyLogin(2);
-	if(strlen($_POST['cpfpessoa']) !== 11){
-		Usuario::setError("Cpf invalido!");
-		echo "<script>javascript:history.back()</script>";
-		exit;
-	}
+	
 
-	if(empty($_POST['nomepessoa']) && $_POST['nomepessoa'] === ""
-		|| empty($_POST['cpfpessoa']) && $_POST['cpfpessoa'] ===""
-		|| empty($_POST['emailpessoa']) && $_POST['emailpessoa'] === ""
-		|| empty($_POST['usuario']) && $_POST['usuario'] ===""
-		|| empty($_POST['pass']) && $_POST['pass'] ===""
-		|| empty($_POST['repass']) && $_POST['repass'] === "")
+	if(empty($_POST['nomepessoa']) && $_POST['nomepessoa'] === "")
 	{	
 		Usuario::setError("Preencha todos os campos");
 		echo "<script>javascript:history.back()</script>";
 		exit;
-	}else if($_POST['pass'] !== $_POST['repass']){
-		Usuario::setError("Senhas não conferem!");
-		echo "<script>javascript:history.back()</script>";
-		exit;
 	}
 
-	if(!Usuario::validaCPF($_POST['cpfpessoa'])){
-		Usuario::setError("CPF Invalido!");
-		echo "<script>javascript:history.back()</script>";
-		exit;
-	}
 	try{
 		$user = new Usuario();
 		$user->buscarAdmin((int)$id);
-		$user->setData($_POST);
+		$user->setnomepessoa($_POST['nomepessoa']);
 
 		$user->atualizarAdmin($id);
 	} catch (\Exception $e){
@@ -218,7 +200,7 @@ $app->post("/admin/users/:id/password/", function($id){
 		exit;
 	}
 
-	if ($_POST['newpass'] !== $_POST['repass']) {
+	if ((String)$_POST['newpass'] !== (String)$_POST['repass']) {
 		Usuario::setError("Senhas não conferem!");
 		header("Location: /admin/users/$id/password/");
 		exit;
@@ -286,6 +268,8 @@ $app->get("/admin/escola/", function(){
 
 $app->get("/admin/escola/create/", function(){
 	Usuario::verifyLogin(2);
+	$planos = Planos::buscarPlanos();
+
 	$page = new Page("/views/Admin/",[
 		"header"=>true,
 		"footer"=>true,
@@ -294,6 +278,7 @@ $app->get("/admin/escola/create/", function(){
 	)]);
 
 	$page->setTpl("escola-create", [
+		"planos"=>$planos,
 		"error"=>Usuario::getError(),
 		"success"=>Usuario::getSuccess()
 	]);
@@ -302,26 +287,17 @@ $app->get("/admin/escola/create/", function(){
 $app->post("/admin/escola/create/", function(){
 	Usuario::verifyLogin(2);
 	try{
-		if((int) strlen($_POST['telefone']) < 11 || (int) strlen($_POST['telefone']) > 11){
+		if((int) strlen($_POST['telefone']) < 11){
 			Escola::setError("O numero de telefone precisa conter 11 numeros!");
 			echo "<script>javascript:history.back()</script>";
 			exit;
 		}
-		if((int) strlen($_POST['celular']) < 11 || (int) strlen($_POST['celular']) > 11){
+		if((int) strlen($_POST['celular']) < 11 ){
 			Escola::setError("O numero de cellular precisa conter 11 numeros!");
 			echo "<script>javascript:history.back()</script>";
 			exit;
 		}
-		if(!is_numeric($_POST['telefone'])){
-			Escola::setError("digite apenas numeros para o numero de telefone!");
-			echo "<script>javascript:history.back()</script>";
-			exit;
-		}
-		if(is_numeric($_POST['celular'])){
-			Escola::setError("Digite apenas numeros para o numero de cellular!");
-			echo "<script>javascript:history.back()</script>";
-			exit;
-		}
+		
 
 		foreach ($_POST as $key => $value) {
 			if(empty($key)){
@@ -332,13 +308,21 @@ $app->post("/admin/escola/create/", function(){
 		}
 
 		if(!Usuario::validaCPF($_POST['cpfgestor'])){
-			Usuario::setError("CPF Invalido!");
+			Usuario::setError("CPF inválido!");
+			echo "<script>javascript:history.back()</script>";
+			exit;
+		}
+		
+		if(!Usuario::validaCNPJ($_POST['cnpjescola'])){
+			Usuario::setError("CNPJ inválido!");
 			echo "<script>javascript:history.back()</script>";
 			exit;
 		}
 
-		if(!Usuario::validaCNPJ($_POST['cnpjescola'])){
-			Usuario::setError("CNPJ Invalido!");
+		$xml = simplexml_load_file("https://viacep.com.br/ws/".$_POST['cep']."/xml/");
+
+		if($xml === null){
+			Usuario::setError("CEP inválido!");
 			echo "<script>javascript:history.back()</script>";
 			exit;
 		}
@@ -366,6 +350,7 @@ $app->get("/admin/escola/:id/delete/", function($idEscola){
 	try{
 		$escola = new Escola();
 		$escola->buscarEscolaPorId((int)$idEscola);
+		
 
 
 
@@ -384,7 +369,7 @@ $app->get("/admin/escola/:id/delete/", function($idEscola){
 
 $app->get("/admin/escola/:idEscola/", function($idEscola){
 	Usuario::verifyLogin(2);
-
+	$planos = Planos::buscarPlanos();
 	try {
 		$escola = new Escola();
 		$escola->buscarEscolaPorId((int)$idEscola);
@@ -404,6 +389,7 @@ $app->get("/admin/escola/:idEscola/", function($idEscola){
 	)]);
 	
 	$page->setTpl("escola-update", [
+		"planos"=>$planos,
 		"escola"=>$escola->getValues(),
 		"error"=>Usuario::getError(),
 		"success"=>Usuario::getSuccess()

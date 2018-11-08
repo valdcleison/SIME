@@ -8,6 +8,51 @@ $(document).ready(function() {
         }
         
     });
+    function validaCep(){
+        $("#btnEscola").click(function() {
+        alert("OK");
+        return false;
+        
+        //Nova variável "cep" somente com dígitos.
+        var cep = $("#cep").val();
+        var options = $('#estado');
+        
+        //Verifica se campo cep possui valor informado.
+            if (cep != "") {
+
+                //Expressão regular para validar o CEP.
+                var validacep = /^[0-9]{8}$/;
+
+                //Valida o formato do CEP.
+                if(validacep.test(cep)) {
+
+                    
+
+                    //Consulta o webservice viacep.com.br/
+                    $.getJSON("https://viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
+
+                        if (!("erro" in dados)) {
+                            return true;
+                        } 
+                        else {
+                            alert("CEP não encontrado.");
+                            return false;
+                        }
+                    });
+                } 
+                else {
+                    alert("Formato de CEP inválido.");
+                    return false;
+                }
+            } 
+            else {
+                limpa_formulário_cep();
+                return false;
+            }
+        });
+    }
+
+    
 
     function limpa_formulário_cep() {
         // Limpa valores do formulário de cep.
@@ -70,19 +115,7 @@ $(document).ready(function() {
 
 
 
-    $("#btnEscola").click(function() {
-        alert("OK");
-        var cep = $("#cep");
 
-        $.getJSON("https://viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
-
-            if (("erro" in dados)) {
-                alert("CEP Invalido");
-                return false;
-            } 
-           
-        });
-    });
 
 });
 

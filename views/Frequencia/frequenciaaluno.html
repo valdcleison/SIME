@@ -36,7 +36,6 @@
                       <th ><i class="fa fa-user"> </i> Aluno</th>
                       <th><i class=" fa fa-flag"> </i> CPF</th>
                       <th><i class="fa fa-envelope-o"> </i> Hora Entrada</th>
-                      <th><i class=" fa fa-user"> </i> Hora Saida</th>
                       <th><i class=" fa fa-flag"> </i> Status</th>
                       <th></th>
                     </tr>
@@ -49,8 +48,11 @@
                         </td>
                         <td data-title="Aluno" class="hidden-phone">{$value.nomepessoa}</td>
                         <td data-title="CPF" class="hidden-phone">{$value.cpfpessoa}</td>
-                        <td data-title="Hora Entrada">{$value.hrentrada}</td>
-                        <td data-title="Hora Saida">{$value.hrsaida}</td>
+                        {if="$value.hrentrada == null"}
+                          <td data-title="Hora Entrada">Sem entrada registrada</td>
+                        {else}
+                          <td data-title="Hora Entrada">{$value.hrentrada}</td>
+                        {/if}
                         <td data-title="Status">
                             {if="$value.hrentrada == null"}
                                 Ausente
@@ -63,15 +65,15 @@
                         </td>
                         <td>
                           {if="$value.hrentrada == null"}
-                              <a class="btn btn-primary btn-xs" href="/portal/frequencia/{$value.idfrequencia}/detalhes/justificar/"><i class="fa fa-pencil"></i> Justificar Ausencia</a>
+                              <a class="btn btn-primary btn-xs" href="/portal/value/{$idfrequencia}/detalhes/justificar/"><i class="fa fa-pencil"></i> Justificar Ausencia</a>
                           {elseif="$value.hrentrada != null && $value.hrsaida == null"}
-                              <a class="btn btn-primary btn-xs" href="/portal/frequencia/{$value.idfrequencia}/detalhes/justificar/"><i class="fa fa-pencil"></i> Justificar Ausencia</a>
+                              <a class="btn btn-primary btn-xs" href="/portal/frequencia/{$idfrequencia}/detalhes/justificar/"><i class="fa fa-pencil"></i> Justificar Ausencia</a>
                           {else}
                               <a class="btn btn-primary btn-xs disabled" ><i class="fa fa-pencil"></i> Justificar Ausencia</a>
                           {/if}
                           
-                          <a class="btn btn-primary btn-xs" href="/portal/frequencia/{$value.idfrequencia}/detalhes/{$value.idfrequenciaaluno}"><i class="fa fa-pencil"></i> Editar</a>
-                          <a class="btn btn-danger btn-xs" onclick="return confirm('Deseja excluir a frequencia?')" href="/portal/frequencia/{$value.idfrequencia}/detalhes/{$value.idfrequenciaaluno}/delete"><i class="fa fa-trash-o "></i> Deletar</a>
+                          <a class="btn btn-primary btn-xs" href="/portal/frequencia/{$idfrequencia}/detalhes/{$value.idfrequenciaaluno}"><i class="fa fa-pencil"></i> Editar</a>
+                          <a class="btn btn-danger btn-xs" onclick="return confirm('Deseja excluir a frequencia?')" href="/portal/frequencia/{$idfrequencia}/detalhes/{$value.idfrequenciaaluno}/delete"><i class="fa fa-trash-o "></i> Deletar</a>
                         </td>
                       </tr>
                    {/loop}

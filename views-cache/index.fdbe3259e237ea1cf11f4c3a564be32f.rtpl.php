@@ -1,4 +1,5 @@
 <?php if(!class_exists('Rain\Tpl')){exit;}?>
+
     <header class="masthead text-center text-white">
       <div class="masthead-content">
         <div class="container">

@@ -7,7 +7,7 @@
         <div class="row mt">
           <div class="col-lg-12">
             <div class="content-panel">
-              <h4><i class="fa fa-angle-right"></i> Lista de Usuarios</h4>
+              <h4><i class="fa fa-angle-right"></i> Lista de Usuários</h4>
               <div class="row">
                 
                 <div class="col-md-6">
@@ -34,9 +34,10 @@
                   <thead class="cf">
                     <tr>
                       <th>#</th>
-                      
+                      <th ><i class="fa fa-user"> </i> Nome</th>
                       <th><i class="fa fa-envelope-o"> </i> Email</th>
-                      <th><i class=" fa fa-user"> </i> Nome de Usuario</th>
+                      <th><i class=" fa fa-user"> </i> Nome de Usuário</th>
+                      <th><i class=" fa fa-user"> </i> Avatar</th>
                       <th><i class=" fa fa-flag"> </i> Nivel</th>
                       <th></th>
                     </tr>
@@ -49,25 +50,32 @@
                           <?php echo htmlspecialchars( $value1["idusuario"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
 
                         </td>
-                        
+                        <td data-title="Nome"><?php echo htmlspecialchars( $value1["nomepessoa"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                         <td data-title="Email"><?php echo htmlspecialchars( $value1["emailpessoa"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
-                        <td data-title="Nome de Usuario"><?php echo htmlspecialchars( $value1["usuario"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
-                        <td data-title="Nivel"><span class="label label-primary label-mini"><?php if( $value1["niveladmin"] == 0 ){ ?>Aluno/Responsavel<?php }elseif( $value1["niveladmin"] == 1 ){ ?>Funcionario Escola<?php }else{ ?>Administrador do Sistema<?php } ?></span></td>
+                        <td data-title="Nome de Usuário"><?php echo htmlspecialchars( $value1["usuario"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                        <?php if( $value1["avatar"] == null ){ ?>
+
+                          <?php $value1["avatar"] = "user"; ?>
+
+                        <?php } ?>
+
+                        <td data-title="Avatar" class="center"><img src="/res/Admin/img/user-avatar/<?php echo htmlspecialchars( $value1["usuario"], ENT_COMPAT, 'UTF-8', FALSE ); ?>.jpg" width="30" height="30"></td>
+                        <td data-title="Nivel"><span class="label label-primary label-mini"><?php if( $value1["inadmin"] == 0 ){ ?>Usuario<?php }else{ ?>Administrador<?php } ?></span></td>
                         <td>
                           <?php if( $value1["statususuario"] == 0 ){ ?>
 
-                          <a class="btn btn-info btn-xs" onclick="return confirm('Deseja desbloquear o acesso ao usuario: <?php echo htmlspecialchars( $value1["usuario"], ENT_COMPAT, 'UTF-8', FALSE ); ?>?')" href="/portal/usuario/<?php echo htmlspecialchars( $value1["idusuario"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/status/<?php echo htmlspecialchars( $value1["statususuario"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+                          <a class="btn btn-info btn-xs" onclick="return confirm('Deseja desbloquear o acesso ao usuário: <?php echo htmlspecialchars( $value1["usuario"], ENT_COMPAT, 'UTF-8', FALSE ); ?>?')" href="/portal/usuario/<?php echo htmlspecialchars( $value1["idusuario"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/status/<?php echo htmlspecialchars( $value1["statususuario"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
                             
                               <i class="fa fa-lock"></i> Bloqueado</a>
                             <?php }else{ ?>
 
-                             <a class="btn btn-info btn-xs" onclick="return confirm('Deseja bloquear o acesso ao usuario: <?php echo htmlspecialchars( $value1["usuario"], ENT_COMPAT, 'UTF-8', FALSE ); ?>?')" href="/portal/usuario/<?php echo htmlspecialchars( $value1["idusuario"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/status/<?php echo htmlspecialchars( $value1["statususuario"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+                             <a class="btn btn-info btn-xs" onclick="return confirm('Deseja bloquear o acesso ao usuário: <?php echo htmlspecialchars( $value1["usuario"], ENT_COMPAT, 'UTF-8', FALSE ); ?>?')" href="/portal/usuario/<?php echo htmlspecialchars( $value1["idusuario"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/status/<?php echo htmlspecialchars( $value1["statususuario"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
                               <i class="fa fa-unlock"></i> Desbloqueado</a>
                             <?php } ?>
 
                           <a class="btn btn-info btn-xs" href="/portal/users/<?php echo htmlspecialchars( $value1["idusuario"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/password"><i class="fa fa-lock"></i> Alterar Senha</a>
                           <a class="btn btn-primary btn-xs" href="/portal/users/<?php echo htmlspecialchars( $value1["idusuario"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><i class="fa fa-pencil"></i> Editar</a>
-                          <a class="btn btn-danger btn-xs" onclick="return confirm('Deseja excluir o usuario: <?php echo htmlspecialchars( $value1["usuario"], ENT_COMPAT, 'UTF-8', FALSE ); ?>?')" href="/portal/users/<?php echo htmlspecialchars( $value1["idusuario"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/delete"><i class="fa fa-trash-o "></i> Deletar</a>
+                          <a class="btn btn-danger btn-xs" onclick="return confirm('Deseja excluir o usuário: <?php echo htmlspecialchars( $value1["usuario"], ENT_COMPAT, 'UTF-8', FALSE ); ?>?')" href="/portal/users/<?php echo htmlspecialchars( $value1["idusuario"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/delete"><i class="fa fa-trash-o "></i> Deletar</a>
                         </td>
                       </tr>
                    <?php } ?>

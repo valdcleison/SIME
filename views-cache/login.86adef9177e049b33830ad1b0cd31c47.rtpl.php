@@ -30,7 +30,7 @@
       <form class="form-login" action="/login/" method="post">
         <h2 class="form-login-heading">Acesse o sistema</h2>
         <div class="login-wrap">
-          <input type="text" name="user" class="form-control" placeholder="USUARIO" autofocus required>
+          <input type="text" name="user" class="form-control" placeholder="USUÁRIO" autofocus required>
           <br>
           <input type="password" name="pass" class="form-control" placeholder="SENHA" minlength="8" required> 
           <label class="checkbox">

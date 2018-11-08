@@ -31,8 +31,9 @@
                       <th>#</th>
                       <th ><i class="fa fa-user"> </i> Nome</th>
                       <th><i class="fa fa-envelope-o"> </i> CPF</th>
-                      <th><i class="fa fa-envelope-o"> </i> Numero da matricula</th>
-                      <th><i class="fa fa-envelope-o"> </i> Email</th>
+                      <th><i class="fa fa-envelope-o"> </i> Número da Matrícula</th>
+                      <th><i class="fa fa-envelope-o"> </i> Responsavel</th>
+                      <th><i class="fa fa-envelope-o"> </i> Endereco</th>
                       <th></th>
                     </tr>
                   </thead>
@@ -44,11 +45,12 @@
                         </td>
                         <td data-title="Nome" class="hidden-phone">{$value.nomepessoa}</td>
                         <td data-title="CPF" class="hidden-phone">{$value.cpfpessoa}</td>
-                        <td data-title="Numero da matricula" class="hidden-phone">{$value.numeromatricula}</td>
-                        <td data-title="Email">{$value.emailpessoa}</td>
+                        <td data-title="Número da matrícula" class="hidden-phone">{$value.numeromatricula}</td>
+                        <td data-title="Responsavel">{$value.nomeresponsavel}</td>
+                        <td data-title="Endereco">{$value.rua}, {$value.numero} - {$value.cidade} - {$value.estado}</td>
                         <td>
-                          <a class="btn btn-primary btn-xs" href="/portal/alunos/{$value.idusuario}"><i class="fa fa-pencil"></i> Editar</a>
-                          <a class="btn btn-danger btn-xs" onclick="return confirm('Deseja excluir o usuario: {$value.usuario}?')" href="/portal/alunos/{$value.idusuario}/delete"><i class="fa fa-trash-o "></i> Deletar</a>
+                          <a class="btn btn-primary btn-xs" href="/portal/alunos/{$value.idaluno}"><i class="fa fa-pencil"></i> Editar</a>
+                          <a class="btn btn-danger btn-xs" onclick="return confirm('Deseja excluir o Aluno: {$value.idaluno}?')" href="/portal/alunos/{$value.idaluno}/delete"><i class="fa fa-trash-o "></i> Deletar</a>
                         </td>
                       </tr>
                    {/loop}

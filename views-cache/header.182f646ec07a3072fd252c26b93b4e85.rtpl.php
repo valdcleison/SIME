@@ -29,7 +29,7 @@
         <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
       </div>
 
-      <a href="/admin/" class="logo"><img src="/res/Admin/images/logo.png" height="30" width="120"></a>
+     
 
       
       <div class="top-menu">
@@ -42,8 +42,8 @@
       <div id="sidebar" class="nav-collapse ">
         <!-- sidebar menu start-->
         <ul class="sidebar-menu" id="nav-accordion">
-          <p class="centered"><a href="/admin/profile/"><img src="" class="img-circle" width="80"></a></p>
-          <h5 class="centered">Diretor Amilton</h5>
+          <p class="centered"><img src="/res/Admin/images/user.png" class="img-circle" width="80"></p>
+          <h5 class="centered"><?php echo htmlspecialchars( $name, ENT_COMPAT, 'UTF-8', FALSE ); ?></h5>
           <li class="mt">
             <a href="/portal/profile/">
               <i class="fa fa-user"></i>
@@ -53,7 +53,7 @@
           <li class="sub-menu">
             <a href="javascript:;">
               <i class="fa fa-group"></i>
-              <span>Usuarios</span>
+              <span>Usuários</span>
               </a>
             <ul class="sub">
               <li><a href="/portal/users/create/">Cadastrar</a></li>
@@ -73,7 +73,7 @@
           <li >
             <a href="/portal/frequencia">
               <i class="fa fa-book  "></i>
-              <span>Frequencia</span>
+              <span>Frequência</span>
               </a>
           </li>
         </ul>

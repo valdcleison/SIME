@@ -43,7 +43,7 @@
 
           <div class="row">
             <div class="col-md-12">
-              <span><b>CNPJ da Instituição</b> </span> (Apenas numeros) 
+              <span><b>CNPJ da Instituição</b> </span> (Apenas números) 
             </div>
           </div>
           <div class="row">
@@ -87,7 +87,7 @@
 
           <div class="row">
             <div class="col-md-12">
-              <span><b>CPF do Gestor</b></span>  (Apenas numeros) 
+              <span><b>CPF do Gestor</b></span>  (Apenas números) 
             </div>
           </div>
 
@@ -120,7 +120,7 @@
 
           <div class="row">
             <div class="col-md-12">
-              <span><b>Nome de Usuario</b></span>
+              <span><b>Nome de Usuário</b></span>
             </div>
           </div>
           <div class="row">
@@ -159,7 +159,7 @@
               <input type="text" name="bairro" id="bairro" class="form-control" required>
             </div>
             <div class="col-md-3">
-              <span><b>Numero</b></span>  
+              <span><b>Número</b></span>  
               <input type="number" name="numero" id="numero" class="form-control" required>
             </div>
           </div>
@@ -206,11 +206,11 @@
           <div class="row">
             
             <div class="col-md-6">
-              <span><b>Telefone</b></span>  (Apenas numeros) 
+              <span><b>Telefone</b></span>  (Apenas números) 
               <input type="text" name="telefone" id="telefone" class="form-control">
             </div>
             <div class="col-md-6">
-              <span><b>Celular</b></span>  (Apenas numeros) 
+              <span><b>Celular</b></span>  (Apenas números) 
               <input type="text" name="celular" id="celular" class="form-control" required>
             </div>
           </div>

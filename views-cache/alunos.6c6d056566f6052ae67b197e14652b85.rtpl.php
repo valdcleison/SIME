@@ -35,39 +35,29 @@
                     <tr>
                       <th>#</th>
                       <th ><i class="fa fa-user"> </i> Nome</th>
-                      <th><i class="fa fa-envelope-o"> </i> Email</th>
-                      <th><i class=" fa fa-user"> </i> Nome de Usuario</th>
-                      <th><i class=" fa fa-flag"> </i> Nivel</th>
+                      <th><i class="fa fa-envelope-o"> </i> CPF</th>
+                      <th><i class="fa fa-envelope-o"> </i> Número da Matrícula</th>
+                      <th><i class="fa fa-envelope-o"> </i> Responsavel</th>
+                      <th><i class="fa fa-envelope-o"> </i> Endereco</th>
                       <th></th>
                     </tr>
                   </thead>
                   <tbody>
-                    <?php $counter1=-1;  if( isset($users) && ( is_array($users) || $users instanceof Traversable ) && sizeof($users) ) foreach( $users as $key1 => $value1 ){ $counter1++; ?>
+                    <?php $counter1=-1;  if( isset($alunos) && ( is_array($alunos) || $alunos instanceof Traversable ) && sizeof($alunos) ) foreach( $alunos as $key1 => $value1 ){ $counter1++; ?>
 
                       <tr>
                         <td data-title="#">
-                          <?php echo htmlspecialchars( $value1["idusuario"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
+                          <?php echo htmlspecialchars( $value1["idaluno"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
 
                         </td>
                         <td data-title="Nome" class="hidden-phone"><?php echo htmlspecialchars( $value1["nomepessoa"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
-                        <td data-title="Email"><?php echo htmlspecialchars( $value1["emailpessoa"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
-                        <td data-title="Nome de Usuario"><?php echo htmlspecialchars( $value1["usuario"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
-                        <td data-title="Nivel"><span class="label label-primary label-mini"><?php if( $value1["niveladmin"] == 0 ){ ?>Aluno/Responsavel<?php }elseif( $value1["niveladmin"] == 1 ){ ?>Funcionario Escola<?php }else{ ?>Administrador do Sistema<?php } ?></span></td>
+                        <td data-title="CPF" class="hidden-phone"><?php echo htmlspecialchars( $value1["cpfpessoa"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                        <td data-title="Número da matrícula" class="hidden-phone"><?php echo htmlspecialchars( $value1["numeromatricula"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                        <td data-title="Responsavel"><?php echo htmlspecialchars( $value1["nomeresponsavel"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                        <td data-title="Endereco"><?php echo htmlspecialchars( $value1["rua"], ENT_COMPAT, 'UTF-8', FALSE ); ?>, <?php echo htmlspecialchars( $value1["numero"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["cidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["estado"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                         <td>
-                          <?php if( $value1["statususuario"] == 0 ){ ?>
-
-                          <a class="btn btn-info btn-xs" onclick="return confirm('Deseja desbloquear o acesso ao usuario: <?php echo htmlspecialchars( $value1["nomepessoa"], ENT_COMPAT, 'UTF-8', FALSE ); ?>?')" href="/portal/alunos/<?php echo htmlspecialchars( $value1["idusuario"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/status/<?php echo htmlspecialchars( $value1["statususuario"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
-                            
-                              <i class="fa fa-lock"></i> Bloqueado</a>
-                            <?php }else{ ?>
-
-                             <a class="btn btn-info btn-xs" onclick="return confirm('Deseja bloquear o acesso ao usuario: <?php echo htmlspecialchars( $value1["nomepessoa"], ENT_COMPAT, 'UTF-8', FALSE ); ?>?')" href="/portal/alunos/<?php echo htmlspecialchars( $value1["idusuario"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/status/<?php echo htmlspecialchars( $value1["statususuario"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
-                              <i class="fa fa-unlock"></i> Desbloqueado</a>
-                            <?php } ?>
-
-                          <a class="btn btn-info btn-xs" href="/portal/alunos/<?php echo htmlspecialchars( $value1["idusuario"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/password"><i class="fa fa-lock"></i> Alterar Senha</a>
-                          <a class="btn btn-primary btn-xs" href="/portal/alunos/<?php echo htmlspecialchars( $value1["idusuario"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><i class="fa fa-pencil"></i> Editar</a>
-                          <a class="btn btn-danger btn-xs" onclick="return confirm('Deseja excluir o usuario: <?php echo htmlspecialchars( $value1["usuario"], ENT_COMPAT, 'UTF-8', FALSE ); ?>?')" href="/portal/alunos/<?php echo htmlspecialchars( $value1["idusuario"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/delete"><i class="fa fa-trash-o "></i> Deletar</a>
+                          <a class="btn btn-primary btn-xs" href="/portal/alunos/<?php echo htmlspecialchars( $value1["idaluno"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><i class="fa fa-pencil"></i> Editar</a>
+                          <a class="btn btn-danger btn-xs" onclick="return confirm('Deseja excluir o Aluno: <?php echo htmlspecialchars( $value1["idaluno"], ENT_COMPAT, 'UTF-8', FALSE ); ?>?')" href="/portal/alunos/<?php echo htmlspecialchars( $value1["idaluno"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/delete"><i class="fa fa-trash-o "></i> Deletar</a>
                         </td>
                       </tr>
                    <?php } ?>

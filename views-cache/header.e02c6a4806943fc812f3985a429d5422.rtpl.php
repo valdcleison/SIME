@@ -36,7 +36,10 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-              <a class="nav-link" href="/">Home</a>
+              <a class="nav-link" href="/login"><b>LOGIN</b></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/solicitacao"><b>SOLICITAR ACESSO</b></a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">Serviço</a>
@@ -47,13 +50,7 @@
             <li class="nav-item">
               <a class="nav-link" href="#">Contato</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/login">LOGIN</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/solicitacao">SOLICITAR ACESSO</a>
-            </li>
-            
+                        
           </ul>
         </div>
       </div>

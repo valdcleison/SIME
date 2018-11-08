@@ -42,13 +42,17 @@
       <div id="sidebar" class="nav-collapse ">
         <!-- sidebar menu start-->
         <ul class="sidebar-menu" id="nav-accordion">
-          <p class="centered"><a href="/admin/profile/"><img src="" class="img-circle" width="80"></a></p>
+          <p class="centered"><img src="/res/Admin/images/user.png" class="img-circle" width="80"></p>
           <h5 class="centered"><?php echo htmlspecialchars( $name, ENT_COMPAT, 'UTF-8', FALSE ); ?></h5>
+          <li class="mt">
+            
+          </li>
+          
           
           <li class="sub-menu">
             <a href="javascript:;">
               <i class="fa fa-group"></i>
-              <span>Usuarios</span>
+              <span>Usuários</span>
               </a>
             <ul class="sub">
               <li><a href="/admin/users/create/">Cadastrar</a></li>

@@ -30,7 +30,7 @@
       <form class="form-login" action="/login/" method="post">
         <h2 class="form-login-heading">Acesse o sistema</h2>
         <div class="login-wrap">
-          <input type="text" name="user" class="form-control" placeholder="USUARIO" autofocus required>
+          <input type="text" name="user" class="form-control" placeholder="USUÁRIO" autofocus required>
           <br>
           <input type="password" name="pass" class="form-control" placeholder="SENHA" minlength="8" required> 
           <label class="checkbox">
@@ -41,15 +41,19 @@
           </label>
           <input class="btn btn-theme btn-block" type="submit" value="ENTRAR"/>
           <?php if( $error != '' ){ ?>
+
           <br>
 
           <div class="alert alert-danger"><b>Algo deu errado!</b> <?php echo htmlspecialchars( $error, ENT_COMPAT, 'UTF-8', FALSE ); ?>.</div>
           <?php } ?>
+
           <?php if( $succes != '' ){ ?>
+
           <br>
 
           <div class="alert alert-success"><b><?php echo htmlspecialchars( $succes, ENT_COMPAT, 'UTF-8', FALSE ); ?></b></div>
           <?php } ?>
+
           <hr>
           
           <div class="registration">

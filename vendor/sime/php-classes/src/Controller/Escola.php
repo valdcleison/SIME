@@ -29,7 +29,7 @@ class Escola extends Control{
 		
 		$escolaDao->saveEscola($this);
 
-		echo "<script>alert('Escola Cadastrada com sucesso aguarde o nosso contato!');</script>";
+	
 
 	}
 
@@ -72,7 +72,7 @@ class Escola extends Control{
 		$userDao = new UsuarioDao();
 
 		if($userDao->getUserByUser($this->getusuarioescola()) !== null){
-			throw new \Exception("Usuario já Cadastrado, escolha outro!");	
+			throw new \Exception("Usuário já Cadastrado, escolha outro!");	
 		}
 	}
 

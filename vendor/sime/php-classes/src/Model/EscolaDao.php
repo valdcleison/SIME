@@ -9,8 +9,9 @@ class EscolaDao {
 	public function saveEscola($escola){
 		$sql = new Sql();
 		
-
+		
 		$results = $sql->select("CALL sp_escola_create(:pnomeescola, :pcnpj, :pnomegestor, :pcpfgestor, :pemailgestor, :ptelefone, :pcelular, :pemail, :prua, :pnumero, :pbairro, :pcidade, :pestado, :pcep, :pplano, :pusuarioescola, :psenhaescola)", array(
+
 
 			":pnomeescola"=> $escola->getnomeescola() ,
 			":pcnpj"=> $escola->getcnpjescola() ,
@@ -30,9 +31,11 @@ class EscolaDao {
 			":pusuarioescola"=> $escola->getusuarioescola(),
 			":psenhaescola"=> $escola->getsenhaescola()		
 		));
+	
+
 		
 
-		$escola->setData($results);
+		$escola->setData($results[0]);
 	
 	}
 
@@ -69,6 +72,7 @@ class EscolaDao {
 
 	public function deleteEscola($escola){
 		
+		
 		$sql = new Sql();
 
 		$retorno = $sql->query("CALL sp_escola_delete(:idescola, :idusuario, :idendereco, :idcontato)",array(
@@ -79,7 +83,6 @@ class EscolaDao {
 
 		));
 
-		
 		
 	}
 
@@ -102,8 +105,7 @@ class EscolaDao {
 				INNER JOIN anoletivo anl ON es.anoletivo_idanoletivo = anl.idanoletivo
 				INNER JOIN escola_usuario eu ON eu.escola_idescola = es.idescola
 				INNER JOIN usuario u ON eu.usuario_idusuario = u.idusuario
-				WHERE es.idescola = :idescola
-				AND eu.inadmin = 1", 
+				WHERE es.idescola = :idescola", 
 				array(
 					":idescola"=>$id
 				));
