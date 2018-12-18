@@ -4,10 +4,11 @@
     
     <div class="row mt">
       <div class="col-sm-12">
+         <br><h3><i class="fa fa-angle-right"></i> Edição de Aluno</h3></b>
         <div class="form-panel">
           <div class="form">
 
-            <form action="/admin/escola/create/" method="POST"> 
+            <form action="/portal/alunos/{$aluno.idaluno}/" method="POST"> 
 
                <div class="row form-group" id="content">
                   
@@ -33,20 +34,24 @@
                     <div class="row">
                       
                       <div class="col-md-12">
-                        <input type="text" name="nomealuno" id="nomeescola" class="form-control" required>  
+                        <input type="text" name="nomealuno" id="nomeescola" class="form-control" value="{$aluno.nomepessoa}" required>  
                       </div>
                     </div>
                     <br>
 
                     <div class="row">
                       <div class="col-md-12">
-                        <span><b>CPF do Aluno</b> </span> (Apenas numeros) 
+                        <span><b>CPF do Aluno</b> </span> (Apenas números) 
                       </div>
                     </div>
                     <div class="row">
-                      <div class="col-md-10">
-
-                          <input type="text" name="cpfaluno" id="cnpj" class="form-control" placeholder="000.000.000-00" aria-describedby="button-addon2" minlength="11" maxlength="11" required>
+                      <div class="col-md-12">
+                          {$cpf = $aluno.cpfpessoa}
+                          {if="$cpf == null"}
+                            <input type="text" name="cpfaluno" id="cpf" class="form-control" placeholder="000.000.000-00" aria-describedby="button-addon2" minlength="11" maxlength="11" >
+                          {else}
+                            <input type="text" id="cpf" name="cpfaluno" class="form-control" placeholder="000.000.000-00" aria-describedby="button-addon2" minlength="11" maxlength="11" value="{$aluno.cpfpessoa}" readonly>
+                          {/if}
                           
                       </div>
                     </div>
@@ -54,21 +59,26 @@
 
                     <div class="row">
                       <div class="col-md-12">
-                        <span><b>Número Matrícula</b></span> (Apenas numeros) 
+                        <span><b>Número Matrícula</b></span> (Apenas números) 
                       </div>
                     </div>
                     <div class="row">
-                      <div class="col-md-10">
-                        <input type="text" name="numeromatricula" class="form-control" required>
+                      <div class="col-md-12">
+                        <input type="text" name="numeromatricula" class="form-control"  value="{$aluno.numeromatricula}" readonly required>
                       </div>
                       <!--<div class="col-md-4">
                         <input type="button" name="btngerar" value="Gerar Matricula" class="btn btn-primary  form-control" required>
                       </div>-->
                     </div>
+                    <br>
+                
 
-
+                  </div>
+              
+                  <div class="col-md-6">
                     <h3>DADOS DO RESPONSÁVEL</h3>
                     <hr>
+                    
                     <div class="row">
                       <div class="col-md-12">
                         <span><b>Nome do Responsável</b></span>
@@ -77,31 +87,24 @@
                     <div class="row">
                       
                       <div class="col-md-12">
-                        <input type="text" name="nomeresponsavel" id="nomeescola" class="form-control" required>  
+                        <input type="text" name="nomeresponsavel" id="nomeescola" value="{$aluno.nomeresponsavel}" class="form-control" required>  
                       </div>
                     </div>
                     <br>
 
                     <div class="row">
                       <div class="col-md-12">
-                        <span><b>CPF do Responsável</b> </span> (Apenas numeros) 
+                        <span><b>CPF do Responsável</b> </span> (Apenas números) 
                       </div>
                     </div>
                     <div class="row">
                       <div class="col-md-12">
 
-                          <input type="text" name="cpfresponsavel" id="cnpj" class="form-control" placeholder="000.000.000-00" aria-describedby="button-addon2" minlength="11" maxlength="11" required>
+                          <input type="text" name="cpfresponsavel" id="cnpj" class="form-control" placeholder="000.000.000-00" aria-describedby="button-addon2" minlength="11" maxlength="11" value="{$aluno.cpfresponsavel}" readonly required>
                           
                       </div>
                     </div>
                     <br>
-
-                    <br>
-                
-
-                  </div>
-              
-                  <div class="col-md-6">
                     <h3>ENDEREÇO E CONTATO</h3>
                     <hr>
                     
@@ -109,15 +112,15 @@
                       
                       <div class="col-md-6">
                         <span><b>Logradouro</b></span>
-                        <input type="text" name="rua" id="log" class="form-control" required>
+                        <input type="text" name="rua" id="log" class="form-control"  value="{$aluno.rua}" required>
                       </div>
                       <div class="col-md-3">
                         <span><b>Bairro</b></span>
-                        <input type="text" name="bairro" id="bairro" class="form-control" required>
+                        <input type="text" name="bairro" id="bairro" class="form-control" value="{$aluno.bairro}" required>
                       </div>
                       <div class="col-md-3">
                         <span><b>Número</b></span>  
-                        <input type="number" name="numero" id="numero" class="form-control" required>
+                        <input type="text" name="numero" id="numero" class="form-control" value="{$aluno.numero}" required>
                       </div>
                     </div>
                     <br>
@@ -126,15 +129,15 @@
                       
                       <div class="col-md-6">
                          <span><b>Cidade</b></span>
-                        <input type="text" name="cidade" id="cidade" class="form-control"  required>
+                        <input type="text" name="cidade" id="cidade" class="form-control" value="{$aluno.cidade}" required>
                       </div>
                       <div class="col-md-3">
                         <span><b>Estado</b></span>
-                        <input type="text" name="estado" id="estado" class="form-control" minlength="8" maxlength="8"  required>
+                        <input type="text" name="estado" id="estado" class="form-control" value="{$aluno.estado}" required>
                       </div>
                       <div class="col-md-3">
                         <span><b>CEP</b></span>
-                        <input type="text" name="cep" id="cep" class="form-control" minlength="8" maxlength="8" required>
+                        <input type="text" name="cep" id="cep" class="form-control" minlength="8" maxlength="8" value="{$aluno.cep}" required>
                       </div>
                     </div>
                     <hr>
@@ -150,7 +153,7 @@
                     <div class="row">
                       
                       <div class="col-md-12">
-                        <input type="email" name="emailresponsavel" id="emailescola" class="form-control" required>
+                        <input type="email" name="emailresponsavel" id="emailescola" class="form-control" value="{$aluno.email}" required>
                       </div>
                       
                     </div>
@@ -158,29 +161,25 @@
                     <div class="row">
                       
                       <div class="col-md-6">
-                        <span><b>Telefone</b></span>  (Apenas numeros) 
-                        <input type="text" name="telefone" id="telefone" class="form-control">
+                        <span><b>Celular</b></span>  (Apenas números) 
+                        <input type="text" name="telefone" id="celular" class="form-control" value="{$aluno.telefone}" minlength="10" maxlength="11" required>
                       </div>
                       <div class="col-md-6">
-                        <span><b>Celular</b></span>  (Apenas numeros) 
-                        <input type="text" name="celular" id="celular" class="form-control" required>
+                        <span><b>Celular(Alternativo)</b></span>  (Apenas números) 
+                        <input type="text" name="celular" id="telefone" value="{$aluno.celular}" class="form-control" minlength="11" maxlength="11">
                       </div>
                     </div>
-
-
+                    <br>
                   </div>
-                  
-                  
 
-                      <br>
-
-                      <div class="col-md-12">
-                        
-                        <input type="submit" class="btn btn-primary" id="btnEscola" value="Salvar"></input>
-                      </div>
-                      <br>
-                      <br>
-                      <br>
+                    <div class="col-md-10">
+                    </div>
+                    <div class="col-md-2">
+                      <input type="submit" class="btn btn-primary" id="btnEscola" value="Salvar"></input>
+                      <a href="/portal/alunos/" class="btn btn-danger">Cancelar</a>
+                    </div>
+                  
+                                         
               </div>
               
             </form>

@@ -1,14 +1,13 @@
 
-
      <section id="main-content">
-      <section class="wrapper">
+      <section class="wrapper site-min-height">
         <br>
         <a href="/portal/frequencia/new/" class="btn btn-success" id="btnEscola" ><i class="fa fa-plus-circle"></i> Nova Frequencia</a>
 
         <div class="row mt">
           <div class="col-lg-12">
             <div class="content-panel">
-              <h4><i class="fa fa-angle-right"></i> Lista de Frequencia</h4>
+              <h4><i class="fa fa-angle-right"></i> Lista de Frequência</h4>
               <div class="row">
                 
                 <div class="col-md-6">
@@ -31,39 +30,33 @@
                 <table class="table table-bordered table-striped cf">
                   <thead class="cf">
                     <tr>
-                      <th>#</th>
-                      <th ><i class="fa fa-user"> </i> Escola</th>
-                      <th><i class="fa fa-envelope-o"> </i> Inicio</th>
-                      <th><i class=" fa fa-user"> </i> Final</th>
-                      <th><i class=" fa fa-flag"> </i> Alunos Presentes</th>
-                      <th><i class=" fa fa-flag"> </i> Alunos Ausentes</th>
+                      <th ><i class="fa fa-home"> </i> Escola</th>
+                      <th ><i class="fa fa-calendar"> </i> Data</th>
+                      <th><i class="fa fa-clock-o"> </i> Hora Inicio</th>
+                      <th><i class="fa fa-clock-o"> </i> Hora Final</th>
                       <th></th>
                     </tr>
                   </thead>
                   <tbody>
                     {loop="$frequencia"}
                       <tr>
-                        <td data-title="#">
-                          {$value.idfrequencia}
-                        </td>
-                        <td data-title="Escola" class="hidden-phone">{$value.nomeescola}</td>
+                        
+                        <td data-title="Escola">{$value.nomeescola}</td>
+                        <td data-title="Data" >{function="formatarData($value.dtfrequencia)"}</td>
                         {if="$value.hrinicio == null"}
-                          <td data-title="Inicio">Frequência não realizada</td>
+                          <td data-title="Hora Inicio">Frequência não realizada</td>
                         {else}
-                          <td data-title="Inicio">{$value.hrinicio}</td>
+                          <td data-title="Hora Inicio">{function="formatarHora($value.hrinicio)"}</td>
                         {/if}
                         {if="$value.hrtermino == null"}
-                          <td data-title="Inicio">Frequência não realizada</td>
+                          <td data-title="Hora Final">Frequência não realizada</td>
                         {else}
-                          <td data-title="Final">{$value.hrtermino}</td>
+                          <td data-title="Hora Final">{function="formatarHora($value.hrtermino)"}</td>
                         {/if}
                         
-                        <td data-title="Alunos Presentes">{$value.qtalunospresentes}</td>
-                        <td data-title="Alunos Ausentes">{$value.qtalunosausentes}</td>
                         <td>
                           <a class="btn btn-primary btn-xs" href="/portal/frequencia/{$value.idfrequencia}/detalhes"><i class="fa fa-pencil"></i> Detalhes</a>
-                          <a class="btn btn-primary btn-xs" href="/portal/frequencia/{$value.idfrequencia}"><i class="fa fa-pencil"></i> Editar</a>
-                          <a class="btn btn-danger btn-xs" onclick="return confirm('Deseja excluir a frequencia?')" href="/portal/frequencia/{$value.idfrequencia}/delete"><i class="fa fa-trash-o "></i> Deletar</a>
+                        
                         </td>
                       </tr>
                    {/loop}

@@ -35,7 +35,7 @@ class Mailer{
 		// 0 = off (for production use)
 		// 1 = client messages
 		// 2 = client and server messages
-		$this->mail->SMTPDebug = 0;
+		$this->mail->SMTPDebug = 2;
 
 		//Ask for HTML-friendly debug output
 		$this->mail->Debugoutput = 'html';
@@ -65,7 +65,7 @@ class Mailer{
 		$this->mail->setFrom(Mailer::USERNAME, Mailer::NAME_FROM);
 
 		//Set an alternative reply-to address
-		$this->mail->addReplyTo('noreply@sime.com.br', 'NÃ£o Resonda');
+		$this->mail->addReplyTo('noreply@simeescola.com.br', 'Não Resonda');
 
 		//Set who the message is to be sent to
 		$this->mail->addAddress($toAddress, $toName);

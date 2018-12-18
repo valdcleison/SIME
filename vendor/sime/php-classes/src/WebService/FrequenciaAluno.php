@@ -12,6 +12,12 @@ class FrequenciaAluno extends Control{
 		
 		return $dados;
 	}
+	function buscarFrequenciaAlunoPorE($idescola){
+		$frequenciaAlunoDao = new FrequenciaAlunoDao();
+		$dados = $frequenciaAlunoDao->wsBuscarFrequenciaAlunoPorE($idescola);
+		
+		return $dados;
+	}
 
 	public function AlterarPorId($idfrequenciaaluno, $hrentrada){
 		

@@ -2,7 +2,8 @@
 <html lang="pt-br">
 
 <head>
-  <meta charset="utf-8">
+  <meta http-equiv="content-Type" content="text/html; charset=iso-8859-1" />
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="">
   <meta name="author" content="Dashboard">
@@ -20,7 +21,11 @@
   <link href="/res/Admin/css/style-responsive.css" rel="stylesheet">
   <link href="/res/Admin/css/table-responsive.css" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="lib/bootstrap-fileupload/bootstrap-fileupload.css" />
+  
+  <script src="/res/Admin/lib/chart-master/Chart.js"></script>
   <link href="css/style.css" rel="stylesheet">
+   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  
 
 <body>
   <section id="container">
@@ -43,7 +48,17 @@
       <div id="sidebar" class="nav-collapse ">
         <!-- sidebar menu start-->
         <ul class="sidebar-menu" id="nav-accordion">
-          <p class="centered"><img src="/res/Admin/images/user.png" class="img-circle" width="80"></p>
+          
+          <?php if( $avatar == null ){ ?>
+
+            <p class="centered"><img src="/res/Admin/img/user-avatar/user.jpg" class="img-circle" width="100" height="100"></p> 
+          <?php }else{ ?>
+
+            <p class="centered"><img src="/res/Admin/img/user-avatar/<?php echo htmlspecialchars( $avatar, ENT_COMPAT, 'UTF-8', FALSE ); ?>.jpg" class="img-circle" width="100" height="100"></p> 
+            
+          <?php } ?>
+
+          
           <h5 class="centered"><?php echo htmlspecialchars( $name, ENT_COMPAT, 'UTF-8', FALSE ); ?></h5>
           <li class="mt">
             <a href="/portal/profile/">
@@ -77,6 +92,16 @@
               <span>Frequência</span>
               </a>
           </li>
+          <li class="sub-menu">
+            <a href="javascript:;">
+              <i class="fa fa-book"></i>
+              <span>Relatorio</span>
+              </a>
+            <ul class="sub">
+              <li><a href="/portal/relatorios/"><i class="fa fa-angle-right"></i>Diário</a></li>
+            </ul>
+          </li>
+         
         </ul>
         <!-- sidebar menu end-->
       </div>

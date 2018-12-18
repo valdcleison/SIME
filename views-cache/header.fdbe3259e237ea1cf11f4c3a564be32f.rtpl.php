@@ -1,13 +1,12 @@
 <?php if(!class_exists('Rain\Tpl')){exit;}?><!DOCTYPE html>
-<html lang="en">
+<html>
 
   <head>
-
-    <meta charset="utf-8">
+	<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-
+	
     <title>SIME</title>
 
     <!-- Bootstrap core CSS -->
@@ -21,7 +20,7 @@
 
     <!-- Custom styles for this template -->
     <link href="/res/Layout/css/style.css" rel="stylesheet">
-
+	
   </head>
 
   <body>
@@ -33,22 +32,23 @@
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon "><i class="fa fa-bars";"></i></span>
         </button>
+      
         <div class="collapse navbar-collapse" id="navbarResponsive">
-          <ul class="navbar-nav ml-auto">
+          <ul class="navbar-nav ml-auto top-menu">
             <li class="nav-item">
-              <a class="nav-link" href="/login"><b>LOGIN</b></a>
+              <a class="nav-link" href="/login">LOGIN</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/solicitacao"><b>SOLICITAR ACESSO</b></a>
+              <a class="nav-link " href="/solicitacao">SOLICITAR ACESSO</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Serviço</a>
+              <a class="nav-link" href="#about">Sobre</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Preços</a>
+              <a class="nav-link" href="#price">Preços</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Contato</a>
+              <a class="nav-link" href="#contact">Contato</a>
             </li>
                         
           </ul>

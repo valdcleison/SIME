@@ -1,0 +1,124 @@
+
+
+     <section id="main-content">
+      <section class="wrapper site-min-height">
+        <br>
+        
+
+        <div class="row mt">
+          <div class="col-lg-12">
+            <div class="content-panel">
+              <div class="col-md-10">
+                <h4><i class="fa fa-angle-right"></i> Relatorio Diário</h4>
+              </div>
+              <div class="col-md-2">
+               
+              </div>
+              
+              <div class="row">
+                
+                <div class="col-md-6">
+                  {if="$error != ''"}
+                  <br>
+
+                  <div class="alert alert-danger"><b>Algo deu errado!</b> {$error}.</div>
+                  {/if}
+                  {if="$succes != ''"}
+                  <br>
+
+                  <div class="alert alert-success"><b>{$succes}</b></div>
+                  {/if}
+                </div>
+    
+                  
+            
+        
+                
+                 
+              </div>
+              <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                  <div id="piechart_3d" style="height: 300px;"></div>
+                </div>
+                <div class="col-md-2"></div>
+              </div>
+              
+              <section id="no-more-tables">
+                <table class="table table-bordered table-striped cf">
+                  <thead class="cf">
+                    <tr>
+                      <th ><i class="fa fa-user"> </i> Aluno</th>
+                      <th><i class=" fa fa-card"> </i> CPF</th>
+                      <th><i class="fa fa-clock-o"> </i> Hora Entrada</th>
+                      <th><i class=" fa fa-flag"> </i> Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {loop="$frequencia"}
+                      <tr>
+                        
+                        <td data-title="Aluno"  >{$value.nomepessoa}</td>
+                        {$cpf = $value.cpfpessoa}
+                        {if="$cpf == null"}
+                          <td data-title="CPF" >Aluno sem CPF</td>
+                        {else}
+                          <td data-title="CPF" >{function="mascara($cpf, '###.###.###-##')"}</td>
+                        {/if}
+                        {if="$value.hrentrada == null"}
+                          <td data-title="Hora Entrada">Sem entrada registrada</td>
+                        {else}
+                          <td data-title="Hora Entrada">{function="formatarHora($value.hrentrada)"}</td>
+                        {/if}
+                        <td data-title="Status">
+                            {if="$value.hrentrada == null"}
+                                {if="$value.frequenciaocorrencia_idfrequenciaocorrencia == null"}
+                                  Falta não justificada
+                                {else}
+                                  Falta justificada
+                                {/if}
+                            {else}
+                                Presente
+                            {/if}
+
+                        </td>
+                        
+                      </tr>
+                   {/loop}
+                  </tbody>
+                </table>
+              </section>
+              
+            </div>
+
+            <!-- /content-panel -->
+          </div>
+          <!-- /col-lg-12 -->
+        </div>
+        <!-- /row -->
+      </section>
+      <!-- /wrapper -->
+    </section>
+    <script type="text/javascript">
+      google.charts.load("current", {packages:["corechart"]});
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Status', 'Número de alunos'],
+          ['Ausente: {$ausente}',  {$ausente}],
+          ['Presente: {$presente}', {$presente}]
+        ]);
+
+        var options = {
+          title: 'Relatorio Diário',
+          is3D: true,
+          slices: {
+            0: { color: '#e74c3c' },
+            1: { color: '#2ecc71' }
+          }
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
+        chart.draw(data, options);
+      }
+    </script>

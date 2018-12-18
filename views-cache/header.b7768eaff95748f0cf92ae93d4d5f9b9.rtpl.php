@@ -2,7 +2,8 @@
 <html lang="pt-br">
 
 <head>
-  <meta charset="utf-8">
+  <meta http-equiv="content-Type" content="text/html; charset=iso-8859-1" />
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="">
   <meta name="author" content="Dashboard">
@@ -19,7 +20,8 @@
   <link href="/res/Admin/css/style.css" rel="stylesheet">
   <link href="/res/Admin/css/style-responsive.css" rel="stylesheet">
   <link href="/res/Admin/css/table-responsive.css" rel="stylesheet">
-
+  <link rel="stylesheet" type="text/css" href="lib/bootstrap-fileupload/bootstrap-fileupload.css" />
+  <link href="css/style.css" rel="stylesheet">
 
 <body>
   <section id="container">
@@ -29,7 +31,7 @@
         <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
       </div>
 
-      <a href="/admin/" class="logo"><img src="/res/Admin/images/logo.png" height="30" width="120"></a>
+     
 
       
       <div class="top-menu">
@@ -42,8 +44,15 @@
       <div id="sidebar" class="nav-collapse ">
         <!-- sidebar menu start-->
         <ul class="sidebar-menu" id="nav-accordion">
-          <p class="centered"><a href="/admin/profile/"><img src="" class="img-circle" width="80"></a></p>
-          <h5 class="centered">Diretor Amilton</h5>
+         
+          <?php if( $avatar == null ){ ?>
+            <p class="centered"><img src="/res/Admin/img/user-avatar/user.jpg" class="img-circle" width="100" height="100"></p> 
+          <?php }else{ ?>
+            <p class="centered"><img src="/res/Admin/img/user-avatar/<?php echo htmlspecialchars( $avatar, ENT_COMPAT, 'UTF-8', FALSE ); ?>.jpg" class="img-circle" width="100" height="100"></p> 
+            
+          <?php } ?>
+          
+          <h5 class="centered"><?php echo htmlspecialchars( $name, ENT_COMPAT, 'UTF-8', FALSE ); ?></h5>
           <li class="mt">
             <a href="/portal/profile/">
               <i class="fa fa-user"></i>
@@ -53,7 +62,7 @@
           <li class="sub-menu">
             <a href="javascript:;">
               <i class="fa fa-group"></i>
-              <span>Usuarios</span>
+              <span>Usuários</span>
               </a>
             <ul class="sub">
               <li><a href="/portal/users/create/">Cadastrar</a></li>
@@ -73,8 +82,17 @@
           <li >
             <a href="/portal/frequencia">
               <i class="fa fa-book  "></i>
-              <span>Frequencia</span>
+              <span>Frequência</span>
               </a>
+          </li>
+          <li class="sub-menu">
+            <a href="javascript:;">
+              <i class="fa fa-book"></i>
+              <span>Relatorio</span>
+              </a>
+            <ul class="sub">
+              <li><a href="/portal/relatorios/"><i class="fa fa-angle-right"></i>Diário</a></li>
+            </ul>
           </li>
         </ul>
         <!-- sidebar menu end-->

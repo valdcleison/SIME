@@ -2,6 +2,10 @@
 
 namespace Sime\DB;
 
+use \Sime\Controller\Usuario;
+
+header("Content-Type: text/html;  charset=ISO-8859-1",true);
+
 class Sql {
 
 	const HOSTNAME = "br876.hostgator.com.br";
@@ -18,12 +22,18 @@ class Sql {
 
 	public function __construct()
 	{
-
-		$this->conn = new \PDO(
-			"mysql:dbname=".Sql::DBNAME.";host=".Sql::HOSTNAME, 
-			Sql::USERNAME,
-			Sql::PASSWORD
-		);
+		try {
+			$this->conn = new \PDO(
+				"mysql:dbname=".Sql::DBNAME.";host=".Sql::HOSTNAME, 
+				Sql::USERNAME,
+				Sql::PASSWORD
+			);
+		} catch (\Exception $e) {
+			Usuario::setError("Não foi possivel concluir a solicitação, por favor tente mais tarde");
+			echo "alert('Não foi possivel concluir a solicitação, por favor tente mais tarde')";
+			header("Location: /");
+		}
+		
 
 	}
 

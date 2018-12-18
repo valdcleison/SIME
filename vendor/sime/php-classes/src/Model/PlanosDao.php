@@ -8,9 +8,10 @@ class PlanosDao {
 
 	public function savePlanos($plano){
 		$sql = new Sql();
-		$sql->query("INSERT INTO planos(descricao, preco) VALUES (:descricao, :preco)", array( 
+		$sql->query("INSERT INTO planos(descricao, preco, descricao_plano) VALUES (:descricao, :preco, :descricao_plano)", array( 
 			":descricao"=>$plano->getdescricao(),
-			":preco"=>$plano->getpreco()
+			":preco"=>$plano->getpreco(),
+			":descricao_plano"=>$plano->getdescricaoplano()
 		));
 	}
 
@@ -30,10 +31,11 @@ class PlanosDao {
 
 	public function updatePlanos($planos){
 		$sql = new Sql();
-		$result = $sql->select("UPDATE planos SET descricao = :descricao, preco = :preco WHERE idplano = :id", array( 
+		$result = $sql->select("UPDATE planos SET descricao = :descricao, preco = :preco, descricao_plano = :descricao_plano WHERE idplano = :id", array( 
 			":id"=>$planos->getidplano(),
 			":descricao"=>$planos->getdescricao(),
-			":preco"=>$planos->getpreco()
+			":preco"=>$planos->getpreco(),
+			"descricao_plano"=>$planos->getdescricaoplano()
 		));
 	}
 

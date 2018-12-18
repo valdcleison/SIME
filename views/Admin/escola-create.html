@@ -51,7 +51,7 @@
                       <div class="col-md-12">
                         <div class="input-group mb-3">
 
-                          <input type="text" name="cnpjescola" id="cnpj" class="form-control" placeholder="00.000.000/0000-00" aria-describedby="button-addon2" minlength="14" maxlength="14" required>
+                          <input type="text" name="cnpjescola" id="cnpj" class="form-control" placeholder="00.000.000/0000-00" required>
                           
 
                         </div>
@@ -71,7 +71,7 @@
                       <div class="col-md-12">
                         <select class="form-control" name="planos">
                           {loop="$planos"}
-                          <option value="{$value.idplano}">{$value.descricao} - R${$value.preco}/Mês ou R${$value.preco * 12}/Ano</option>
+                          <option value="{$value.idplano}">{$value.descricao} - R${$value.preco}</option>
                           {/loop}
                         </select>
                       </div>
@@ -214,7 +214,7 @@
                       </div>
                     </div>
 
-
+                    
                   </div>  
 
                       <br>

@@ -38,20 +38,65 @@ class UsuarioDao {
 		$user->setData($results[0]);
 	}
 
-	public function saveUserEscola($user){
+	public function saveUserEscola($user, $avatar){
 		$sql = new Sql();
 		
-		$results = $sql->select("CALL sp_escola_user_create(:pnomepessoa, :pcpfpessoa, :pemailpessoa, :user, :pass, :inadmin, :idescola)", array(
+		$results = $sql->select("CALL sp_escola_user_create(:pnomepessoa, :pcpfpessoa, :pemailpessoa, :user, :pass, :avatar, :inadmin, :idescola)", array(
 			":pnomepessoa"=>$user->getnomepessoa(),
 			":pcpfpessoa"=>$user->getcpfpessoa(),
 			":pemailpessoa"=>$user->getemailpessoa(),
 			":user"=>$user->getusuario(),
 			":pass"=>$user->getpass(),
+			":avatar"=>$avatar,
 			":inadmin"=>$user->getinadmin(),
 			":idescola"=>$user->getidescola()
 		));
 		
 		$user->setData($results[0]);
+	}
+
+	public function listUserByEscola($idescola, $idusuario){
+		$sql = new Sql();
+		
+		$resuts = $sql->select("SELECT * FROM usuario u 
+				INNER JOIN escola_usuario eu ON eu.usuario_idusuario = u.idusuario
+				INNER JOIN pessoa p ON u.idpessoa = p.idpessoa
+				WHERE eu.escola_idescola = :id
+				AND u.idusuario = :idusuario", array(
+				":id"=>$idescola,
+				":idusuario"=>$idusuario
+		));
+
+		return $resuts;
+	}
+
+	public function editUserEscola($user, $avatar){
+		$sql = new Sql();
+		
+		$results = $sql->select("CALL sp_escola_user_update(:pnomepessoa, :avatar, :inadmin, :idusuario, :idpessoa, :idescola_usuario)", array(
+			":pnomepessoa"=>$user->getnomepessoa(),
+			":avatar"=>$avatar,
+			":inadmin"=>$user->getinadmin(),
+			":idusuario"=>$user->getidusuario(),
+			":idpessoa"=>$user->getidpessoa(),
+			":idescola_usuario"=>$user->getidescola_usuario()
+		));
+		
+		
+	}
+
+	public function deleteUserEscola($user){
+	
+		$sql = new Sql();
+		
+		$results = $sql->select("CALL sp_escola_user_delete(:idusuario, :idpessoa, :idescola_usuario)", array(
+			
+			":idusuario"=>$user->getidusuario(),
+			":idpessoa"=>$user->getidpessoa(),
+			":idescola_usuario"=>$user->getidescola_usuario()
+		));
+		
+		
 	}
 
 	public function updateAdmin($user){
@@ -86,8 +131,9 @@ class UsuarioDao {
 		$sql = new Sql();
 		
 		
-		$sql->query("CALL sp_user_delete(:iduser)", array(
-			":iduser" => (int)$user->getidusuario()
+		$sql->query("CALL sp_user_delete(:iduser, :idpessoa)", array(
+			":iduser" =>$user->getidusuario(),
+			":idpessoa"=>$user->getidpessoa()
 		));
 		
 	}
@@ -100,7 +146,7 @@ class UsuarioDao {
 		));
 
 		if(count($results) === 0){
-			throw new \Exception("Dados Inexistente!");
+			throw new \Exception("Usuário ou senha inválidos");
 			
 		}
 		$data = $results[0];
@@ -108,11 +154,23 @@ class UsuarioDao {
 		
 		if(password_verify($pass, $data['senha'])){
 			
+			
+			if((int)$data['niveladmin'] === 1){
+				$results2 = $sql->select("SELECT * FROM usuario u  
+					INNER JOIN pessoa p USING (idpessoa) 
+					INNER JOIN escola_usuario eu ON eu.usuario_idusuario = u.idusuario WHERE u.usuario = :user", array(
+					":user"=>$user
+				));
+
+				return $results2[0];
+
+				
+			}
 			return $data;
 
 		}else{
 
-			throw new \Exception("Dados Inexistente!");
+			throw new \Exception("Usuário ou senha inválidos");
 
 		}
 	}
@@ -235,9 +293,10 @@ class UsuarioDao {
 	}
 
 	public function changePassword($idUsuario, $senha){
+		
 		$sql = new Sql();
 		$sql->query("UPDATE usuario SET senha = :senha WHERE idusuario = :idUsuario", array(
-			":senha"=>$senha,
+			":senha"=>$pass,
 			":idUsuario"=>$idUsuario
 		));
 	}

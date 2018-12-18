@@ -1,13 +1,60 @@
-
+$("#salvarsenha").attr("disabled", "true");
 $(document).ready(function() {
-    $("#nomeescola").blur(function(){
-        if($("#nomeescola").val() == ""){
-            $("#fg-nomeescola").addClass("has-error");
+    $(".obrigate").blur(function(){
+        if($(".obrigate").val() == ""){
+            $(".obrigate").addClass("has-error");
         }else{
-            $("#fg-nomeescola").removeClass("has-error");
+            $(".obrigate").removeClass("has-error");
         }
         
+    });  
+   
+    
+    
+    $("#senhaaluno").keyup(function(){
+        var senha = $(this).val();
+        var resenha = $("#resenhaaluno").val();
+        console.log($("#salvarsenha").prop("disabled"));
+        if(senha == resenha ){
+            $("#salvarsenha").removeAttr("disabled");
+            console.log(senha + " " + resenha);
+        }else{
+            console.log("senha 1");
+            $("#salvarsenha").attr("disabled", "true");
+
+        }
+
     });
+
+    $("#resenhaaluno").keyup(function(){
+        var senha = $("#senhaaluno").val();
+        var resenha = $(this).val();;
+        console.log($("#salvarsenha").prop("disabled"));
+        if(senha == resenha){
+            $("#salvarsenha").removeAttr("disabled");
+            console.log(senha + " " + resenha);
+        }else{
+            console.log("senha 2");
+            $("#salvarsenha").attr("disabled", "true");
+        }
+
+    });
+
+    $("#cpf").mask("999.999.999-99");
+    $("#cpf2").mask("999.999.999-99");
+    $("#cnpj").mask("99.999.999/9999-99");
+    $("#telefone").mask("(99)9999-9999");
+    $("#celular").mask("(99)99999-9999");
+    $("#cep").mask("99999-999");
+    $("#search").mask("99-99-9999");
+    
+    $("#avatar-aluno").hover(
+        function(){
+            alert("ok");
+            $('#avatar-texto').css({display:"block"});
+        }
+    );
+    
     function validaCep(){
         $("#btnEscola").click(function() {
         alert("OK");
@@ -35,12 +82,14 @@ $(document).ready(function() {
                             return true;
                         } 
                         else {
+                            limpa_formulário_cep();
                             alert("CEP não encontrado.");
                             return false;
                         }
                     });
                 } 
                 else {
+                    limpa_formulário_cep();
                     alert("Formato de CEP inválido.");
                     return false;
                 }
@@ -56,6 +105,7 @@ $(document).ready(function() {
 
     function limpa_formulário_cep() {
         // Limpa valores do formulário de cep.
+        $("#cep").val("");
         $("#log").val("");
         $("#bairro").val("");
         $("#cidade").val("");

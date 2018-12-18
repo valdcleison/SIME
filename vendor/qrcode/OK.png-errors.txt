@@ -1,0 +1,1 @@
+2018-11-13 18:11:12: imagepng(/res/img/alunos-carteirinha/OK.png): failed to open stream: No such file or directory2018-11-13 18:11:56: imagepng(res/img/alunos-carteirinha/OK.png): failed to open stream: No such file or directory

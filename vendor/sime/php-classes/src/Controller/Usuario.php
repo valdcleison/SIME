@@ -22,6 +22,7 @@ class Usuario extends Control{
 		$user->setData($data);
 
 	
+	
 
 		$_SESSION[Usuario::SESSION] = $user->getValues();
 
@@ -247,23 +248,17 @@ class Usuario extends Control{
 			"user-avatar" . 
 			$this->getidusuario() . ".jpg")){
 
-			$url = "/res/Admin/img/user-avatar/" . $this->getidusuario() . ".jpg";
+			$url = "/res/Admin/img/user-avatar/" . $this->getusuario() . ".jpg";
 		} else {
 			$url = "/res/Admin/images/user.png";
 		}
 
-		$this->setavatar($url);
+
 	}
 
-	public function getValues(){
-		$this->checarAvatar();
 
-		$values = parent::getValues();
 
-		return $values;
-	}
-
-	public function salvarUsuarioEscola(){
+	public function salvarUsuarioEscola($avatar){
 		$usuarioDao = new UsuarioDao();
 		
 		if($this->getinadmin() === null){
@@ -280,7 +275,7 @@ class Usuario extends Control{
 		
 		$this->setpass($password);
 		
-		$usuarioDao->saveUserEscola($this);
+		$usuarioDao->saveUserEscola($this, $avatar);
 
 	}
 
@@ -292,13 +287,17 @@ class Usuario extends Control{
 		switch ($extensao) {
 			case "jpg":
 			case "jpeg":
+			case "JPG":
+			case "JPEG":
 				$image = imagecreatefromjpeg($file["tmp_name"]);
 			break;
 				
 			case "gif":
+			case "GIF":
 				$image = imagecreatefromgif($file["tmp_name"]);
 			break;
 			case "png":
+			case "PNG":
 				$image = imagecreatefrompng($file["tmp_name"]);
 			break;
 			
@@ -319,6 +318,38 @@ class Usuario extends Control{
 		imagedestroy($image);
 
 		$this->checarAvatar();
+		$_SESSION['User']['avatar'] = $this->getusuario();
+	}
+
+
+	public function listarUsuariosEscola($idescola, $idusuario){
+
+		$userDao = new UsuarioDao();
+		$dados = $userDao->checkUsuario($idescola);
+		
+		$escola = $userDao->listUserByEscola($dados[0]['idescola'], $idusuario);
+
+		$this->setData(array());
+		
+		return $escola;
+	}
+
+	public function editarUsuarioEscola($avatar){
+		$usuarioDao = new UsuarioDao();
+		
+		if($this->getinadmin() === null){
+			$this->setinadmin(0);
+		}else{
+			$this->setinadmin(1);
+		}
+		
+		$usuarioDao->editUserEscola($this, $avatar);
+	}
+
+	public function deletarUsuarioEscola(){
+		$usuarioDao = new UsuarioDao();
+		
+		$usuarioDao->deleteUserEscola($this);
 	}
 
 
@@ -407,9 +438,13 @@ class Usuario extends Control{
 
 
 	public function atualizarSenha($senha){
-		$userDao = new UsuarioDao();
 		
-		$userDao->changePassword($this->getidusuario(),$senha);
+		$userDao = new UsuarioDao();
+		$pass = password_hash($senha, PASSWORD_DEFAULT, [
+			'cost'=>12
+		]);
+
+		$userDao->changePassword($this->getidusuario(),$pass);
 	}
 
 	public function alterarSenha($senhaAtual, $novaSenha){

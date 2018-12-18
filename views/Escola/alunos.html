@@ -1,12 +1,12 @@
 
 
      <section id="main-content">
-      <section class="wrapper">
+      <section class="wrapper site-min-height">
         
         <div class="row mt">
           <div class="col-lg-12">
             <div class="content-panel">
-              <h4><i class="fa fa-angle-right"></i> Lista de Usuarios</h4>
+              <h4><i class="fa fa-angle-right"></i> Lista de Alunos</h4>
               <div class="row">
                 
                 <div class="col-md-6">
@@ -28,27 +28,34 @@
                 <table class="table table-bordered table-striped cf">
                   <thead class="cf">
                     <tr>
-                      <th>#</th>
                       <th ><i class="fa fa-user"> </i> Nome</th>
-                      <th><i class="fa fa-envelope-o"> </i> CPF</th>
-                      <th><i class="fa fa-envelope-o"> </i> Número da Matrícula</th>
+                      <th><i class="fa fa-creditcard"> </i> CPF</th>
+                      <th><b>#</b> Matrícula</th>
                       <th><i class="fa fa-envelope-o"> </i> Responsavel</th>
                       <th><i class="fa fa-envelope-o"> </i> Endereco</th>
+                      <th><i class="fa fa-envelope-o"> </i> Usuário</th>
                       <th></th>
                     </tr>
                   </thead>
                   <tbody>
                     {loop="$alunos"}
                       <tr>
-                        <td data-title="#">
-                          {$value.idaluno}
-                        </td>
-                        <td data-title="Nome" class="hidden-phone">{$value.nomepessoa}</td>
-                        <td data-title="CPF" class="hidden-phone">{$value.cpfpessoa}</td>
-                        <td data-title="Número da matrícula" class="hidden-phone">{$value.numeromatricula}</td>
-                        <td data-title="Responsavel">{$value.nomeresponsavel}</td>
-                        <td data-title="Endereco">{$value.rua}, {$value.numero} - {$value.cidade} - {$value.estado}</td>
-                        <td>
+                        
+                        {$cpf = $value.cpfpessoa}
+                        <td valign="middle" data-title="Nome" class="hidden-phone">{$value.nomepessoa}</td>
+                        {if="$cpf == null"}
+                          <td  valign="middle" data-title="CPF" class="hidden-phone">Aluno sem CPF</td>
+                        {else}
+
+                          <td  valign="middle" data-title="CPF" class="hidden-phone">{function="mascara($cpf, '###.###.###-##')"}</td>
+                        {/if}
+                        <td  valign="middle" data-title="Matrícula" class="hidden-phone">{$value.numeromatricula}</td>
+                        <td  valign="middle" data-title="Responsavel">{$value.nomeresponsavel}</td>
+                        <td  valign="middle" data-title="Endereco">{$value.rua}, {$value.numero} - {$value.cidade} - {$value.estado}</td>
+                        <td  valign="middle" data-title="Usuário">{$value.usuario}</td>
+                        <td valign="middle" >
+                          <a class="btn btn-primary btn-xs" href="/portal/alunos/{$value.idaluno}/senha/"><i class="fa fa-pencil"></i> Nova Senha</a>
+                          <a class="btn btn-success btn-xs" href="/portal/alunos/{$value.idaluno}/carteirinha/"><i class="fa fa-pencil"></i> Gerar Carteirinha</a>
                           <a class="btn btn-primary btn-xs" href="/portal/alunos/{$value.idaluno}"><i class="fa fa-pencil"></i> Editar</a>
                           <a class="btn btn-danger btn-xs" onclick="return confirm('Deseja excluir o Aluno: {$value.idaluno}?')" href="/portal/alunos/{$value.idaluno}/delete"><i class="fa fa-trash-o "></i> Deletar</a>
                         </td>

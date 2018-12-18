@@ -3448,3 +3448,53 @@ ul.chat-available-user li a:hover {
 #copyrights a {
   color: #fff;
 }
+
+#profile hr{
+    display: none;
+}
+
+#avatar-texto{
+    color: #2ecc71;
+    font-weight: bold;
+    font-size: 1.2em;
+    text-align: center;
+    margin-top: -35px;
+    display: none;
+}
+
+
+
+#avatar-aluno img:hover{
+    transition: 1s;
+    background-color: #fff;
+    opacity: 0.1;
+}
+
+#avatar-aluno img{
+    transition: 1s;
+}
+
+#avatar-aluno{
+    transition: 1s;
+    color: #fff;
+}
+
+
+#search-div{
+    margin-left: 2px;
+}
+
+#search-div .col-sm-1{
+    margin-right: 5px;
+}
+
+td a{
+    margin: 2px;
+}
+
+@media (max-width: 991px) {
+    #profile hr{
+        display: block;
+    }
+
+}

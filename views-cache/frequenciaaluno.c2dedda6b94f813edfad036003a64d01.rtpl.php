@@ -2,11 +2,10 @@
 
 
      <section id="main-content">
-      <section class="wrapper">
+      <section class="wrapper site-min-height">
         <br>
        
-        <a type="submit" class="btn btn-warning" id="btnEscola" ><i class="fa fa-minus-square"></i> Finalizar Frequencia</a>
-
+        
         <div class="row mt">
           <div class="col-lg-12">
             <div class="content-panel">
@@ -37,10 +36,9 @@
                 <table class="table table-bordered table-striped cf">
                   <thead class="cf">
                     <tr>
-                      <th>#</th>
                       <th ><i class="fa fa-user"> </i> Aluno</th>
-                      <th><i class=" fa fa-flag"> </i> CPF</th>
-                      <th><i class="fa fa-envelope-o"> </i> Hora Entrada</th>
+                      <th><i class=" fa fa-card"> </i> CPF</th>
+                      <th><i class="fa fa-clock-o"> </i> Hora Entrada</th>
                       <th><i class=" fa fa-flag"> </i> Status</th>
                       <th></th>
                     </tr>
@@ -49,27 +47,37 @@
                     <?php $counter1=-1;  if( isset($frequencia) && ( is_array($frequencia) || $frequencia instanceof Traversable ) && sizeof($frequencia) ) foreach( $frequencia as $key1 => $value1 ){ $counter1++; ?>
 
                       <tr>
-                        <td data-title="#">
-                          <?php echo htmlspecialchars( $value1["idfrequenciaaluno"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
+                        
+                        <td data-title="Aluno"  ><?php echo htmlspecialchars( $value1["nomepessoa"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                        <?php $cpf = $value1["cpfpessoa"]; ?>
 
-                        </td>
-                        <td data-title="Aluno" class="hidden-phone"><?php echo htmlspecialchars( $value1["nomepessoa"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
-                        <td data-title="CPF" class="hidden-phone"><?php echo htmlspecialchars( $value1["cpfpessoa"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                        <?php if( $cpf == null ){ ?>
+
+                          <td data-title="CPF" >Aluno sem CPF</td>
+                        <?php }else{ ?>
+
+                          <td data-title="CPF" ><?php echo mascara($cpf, '###.###.###-##'); ?></td>
+                        <?php } ?>
+
                         <?php if( $value1["hrentrada"] == null ){ ?>
 
                           <td data-title="Hora Entrada">Sem entrada registrada</td>
                         <?php }else{ ?>
 
-                          <td data-title="Hora Entrada"><?php echo htmlspecialchars( $value1["hrentrada"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                          <td data-title="Hora Entrada"><?php echo formatarHora($value1["hrentrada"]); ?></td>
                         <?php } ?>
 
                         <td data-title="Status">
                             <?php if( $value1["hrentrada"] == null ){ ?>
 
-                                Ausente
-                            <?php }elseif( $value1["hrentrada"] != null && $value1["hrsaida"] == null ){ ?>
+                                <?php if( $value1["frequenciaocorrencia_idfrequenciaocorrencia"] == null ){ ?>
 
-                                Saida não registrada
+                                  Falta não justificada
+                                <?php }else{ ?>
+
+                                  Falta justificada
+                                <?php } ?>
+
                             <?php }else{ ?>
 
                                 Presente
@@ -80,18 +88,18 @@
                         <td>
                           <?php if( $value1["hrentrada"] == null ){ ?>
 
-                              <a class="btn btn-primary btn-xs" href="/portal/value/<?php echo htmlspecialchars( $idfrequencia, ENT_COMPAT, 'UTF-8', FALSE ); ?>/detalhes/justificar/"><i class="fa fa-pencil"></i> Justificar Ausencia</a>
-                          <?php }elseif( $value1["hrentrada"] != null && $value1["hrsaida"] == null ){ ?>
+                            <?php if( $value1["frequenciaocorrencia_idfrequenciaocorrencia"] == null ){ ?>
 
-                              <a class="btn btn-primary btn-xs" href="/portal/frequencia/<?php echo htmlspecialchars( $idfrequencia, ENT_COMPAT, 'UTF-8', FALSE ); ?>/detalhes/justificar/"><i class="fa fa-pencil"></i> Justificar Ausencia</a>
-                          <?php }else{ ?>
+                              <a class="btn btn-primary btn-xs" href="/portal/frequencia/<?php echo htmlspecialchars( $idfrequencia, ENT_COMPAT, 'UTF-8', FALSE ); ?>/detalhes/<?php echo htmlspecialchars( $value1["idfrequenciaaluno"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/"><i class="fa fa-pencil"></i> Justificar Ausência</a>
+                            <?php }else{ ?>
 
-                              <a class="btn btn-primary btn-xs disabled" ><i class="fa fa-pencil"></i> Justificar Ausencia</a>
+                              <a class="btn btn-primary btn-xs disabled"><i class="fa fa-pencil"></i> Justificar Ausência</a>
+                            <?php } ?>
+
+
                           <?php } ?>
 
                           
-                          <a class="btn btn-primary btn-xs" href="/portal/frequencia/<?php echo htmlspecialchars( $idfrequencia, ENT_COMPAT, 'UTF-8', FALSE ); ?>/detalhes/<?php echo htmlspecialchars( $value1["idfrequenciaaluno"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><i class="fa fa-pencil"></i> Editar</a>
-                          <a class="btn btn-danger btn-xs" onclick="return confirm('Deseja excluir a frequencia?')" href="/portal/frequencia/<?php echo htmlspecialchars( $idfrequencia, ENT_COMPAT, 'UTF-8', FALSE ); ?>/detalhes/<?php echo htmlspecialchars( $value1["idfrequenciaaluno"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/delete"><i class="fa fa-trash-o "></i> Deletar</a>
                         </td>
                       </tr>
                    <?php } ?>

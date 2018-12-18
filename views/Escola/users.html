@@ -1,7 +1,7 @@
 
 
      <section id="main-content">
-      <section class="wrapper">
+      <section class="wrapper site-min-height ">
         
         <div class="row mt">
           <div class="col-lg-12">
@@ -28,7 +28,6 @@
                 <table class="table table-bordered table-striped cf">
                   <thead class="cf">
                     <tr>
-                      <th>#</th>
                       <th ><i class="fa fa-user"> </i> Nome</th>
                       <th><i class="fa fa-envelope-o"> </i> Email</th>
                       <th><i class=" fa fa-user"> </i> Nome de Usuário</th>
@@ -40,24 +39,26 @@
                   <tbody>
                     {loop="$users"}
                       <tr>
-                        <td data-title="#">
-                          {$value.idusuario}
-                        </td>
+                        
                         <td data-title="Nome">{$value.nomepessoa}</td>
                         <td data-title="Email">{$value.emailpessoa}</td>
                         <td data-title="Nome de Usuário">{$value.usuario}</td>
                         {if="$value.avatar == null"}
-                          {$value.avatar = "user"}
+                        
+                          <td data-title="Avatar" class="center"><img src="/res/Admin/img/user-avatar/user.jpg" width="30" height="30"></td>
+                        {else}
+                          <td data-title="Avatar" class="center"><img src="/res/Admin/img/user-avatar/{$value.usuario}.jpg" width="30" height="30"></td>
                         {/if}
-                        <td data-title="Avatar" class="center"><img src="/res/Admin/img/user-avatar/{$value.usuario}.jpg" width="30" height="30"></td>
+                        
+
                         <td data-title="Nivel"><span class="label label-primary label-mini">{if="$value.inadmin == 0"}Usuario{else}Administrador{/if}</span></td>
                         <td>
                           {if="$value.statususuario == 0"}
-                          <a class="btn btn-info btn-xs" onclick="return confirm('Deseja desbloquear o acesso ao usuário: {$value.usuario}?')" href="/portal/usuario/{$value.idusuario}/status/{$value.statususuario}">
+                          <a class="btn btn-info btn-xs" onclick="return confirm('Deseja desbloquear o acesso ao usuário: {$value.usuario}?')" href="/portal/users/{$value.idusuario}/status/{$value.statususuario}">
                             
                               <i class="fa fa-lock"></i> Bloqueado</a>
                             {else}
-                             <a class="btn btn-info btn-xs" onclick="return confirm('Deseja bloquear o acesso ao usuário: {$value.usuario}?')" href="/portal/usuario/{$value.idusuario}/status/{$value.statususuario}">
+                             <a class="btn btn-info btn-xs" onclick="return confirm('Deseja bloquear o acesso ao usuário: {$value.usuario}?')" href="/portal/users/{$value.idusuario}/status/{$value.statususuario}">
                               <i class="fa fa-unlock"></i> Desbloqueado</a>
                             {/if}
                           <a class="btn btn-info btn-xs" href="/portal/users/{$value.idusuario}/password"><i class="fa fa-lock"></i> Alterar Senha</a>

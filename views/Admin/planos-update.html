@@ -13,9 +13,15 @@
               <div class=" form">
                 <form class="cmxform form-horizontal style-form" id="commentForm" method="post" action="/admin/planos/{$plano.idplano}">
                   <div class="form-group ">
-                    <label for="cname" class="control-label col-lg-2">Descrição</label>
+                    <label for="cname" class="control-label col-lg-2">Plano</label>
                     <div class="col-lg-10">
                       <input class=" form-control" id="cname" name="descricao" minlength="2" type="text" value="{$plano.descricao}" required />
+                    </div>
+                  </div>
+                  <div class="form-group ">
+                    <label for="cname" class="control-label col-lg-2">Descrição</label>
+                    <div class="col-lg-10">
+                      <input class=" form-control" id="cname" name="descricaoplano" minlength="2" type="text" value="{$plano.descricaoplano}" required />
                     </div>
                   </div>
                   <div class="form-group ">

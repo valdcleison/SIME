@@ -686,6 +686,7 @@ class Tpl {
                 $line++;
 
             // stop the execution of the script
+           
             $e = new Tpl\SyntaxException('Syntax ' . $match[0] . ' not allowed in template: ' . $this->templateInfo['template_filepath'] . ' at line ' . $line);
             throw $e->templateFile($this->templateInfo['template_filepath'])
                     ->tag($match[0])

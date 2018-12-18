@@ -2,7 +2,8 @@
 <html lang="pt-br">
 
 <head>
-  <meta charset="utf-8">
+  <meta http-equiv="content-Type" content="text/html; charset=iso-8859-1" />
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="">
   <meta name="author" content="Dashboard">
@@ -43,7 +44,17 @@
       <div id="sidebar" class="nav-collapse ">
         <!-- sidebar menu start-->
         <ul class="sidebar-menu" id="nav-accordion">
-          <p class="centered"><img src="/res/Admin/images/user.png" class="img-circle" width="80"></p>
+         
+          <?php if( $avatar == null ){ ?>
+
+            <p class="centered"><img src="/res/Admin/img/user-avatar/user.jpg" class="img-circle" width="100" height="100"></p> 
+          <?php }else{ ?>
+
+            <p class="centered"><img src="/res/Admin/img/user-avatar/<?php echo htmlspecialchars( $avatar, ENT_COMPAT, 'UTF-8', FALSE ); ?>.jpg" class="img-circle" width="100" height="100"></p> 
+            
+          <?php } ?>
+
+          
           <h5 class="centered"><?php echo htmlspecialchars( $name, ENT_COMPAT, 'UTF-8', FALSE ); ?></h5>
           <li class="mt">
             <a href="/portal/profile/">
@@ -51,6 +62,8 @@
               <span>Perfil Escolar</span>
               </a>
           </li>
+          <?php if( $inadmin == 1 ){ ?>
+
           <li class="sub-menu">
             <a href="javascript:;">
               <i class="fa fa-group"></i>
@@ -61,6 +74,8 @@
               <li><a href="/portal/users/">Listar</a></li>
             </ul>
           </li>
+          <?php } ?>
+
           <li class="sub-menu">
             <a href="javascript:;">
               <i class="fa fa-group"></i>
@@ -71,10 +86,29 @@
               <li><a href="/portal/alunos/">Listar</a></li>
             </ul>
           </li>
+          <?php if( $inadmin == 1 ){ ?>
+
           <li >
             <a href="/portal/frequencia">
               <i class="fa fa-book  "></i>
               <span>Frequência</span>
+              </a>
+          </li>
+          <?php } ?>
+
+          <li class="sub-menu">
+            <a href="javascript:;">
+              <i class="fa fa-book"></i>
+              <span>Relatorio</span>
+              </a>
+            <ul class="sub">
+              <li><a href="/portal/relatorios/"><i class="fa fa-angle-right"></i>Diário</a></li>
+            </ul>
+          </li>
+          <li >
+            <a href="/portal/app/">
+              <i class="fa fa-mobile"></i>
+              <span>Aplicativo</span>
               </a>
           </li>
         </ul>

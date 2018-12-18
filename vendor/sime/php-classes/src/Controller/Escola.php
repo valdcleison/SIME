@@ -96,6 +96,12 @@ class Escola extends Control{
 		return EscolaDao::listAll();
 	}
 
+	public function listarPorEscola($idescola){
+		$escolaDao = new EscolaDao();
+		$dados =  $escolaDao->listarPorEscola($idescola);
+		return $dados;
+	}
+
 	public function buscarEscolaPorId($id){
 		$escolaDao = new EscolaDao();
 		$dados =  $escolaDao->listById((int)$id);

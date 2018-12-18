@@ -30,13 +30,13 @@
       <form class="form-login" action="/forgot/reset-password/" method="post">
         <h2 class="form-login-heading">Recupere Sua Senha</h2>
         <div class="login-wrap">
-          
+          <input type="hidden" name="code" value="{$code}">
           <input type="password" id="senha" name="senha" class="form-control" minlength="8" placeholder="SENHA"  required>
           <br>
           <input type="password" id="resenha" name ="comsenha" class="form-control" minlength="8" placeholder="CONFIRMAÇÃO DE SENHA" required>
           <br>
           
-          <input class="btn btn-theme btn-block" onclick="confirmPass();" type="submit" value="SALVAR"/>
+          <input class="btn btn-theme btn-block" type="submit" value="SALVAR"/>
           
         </div>
        </form>

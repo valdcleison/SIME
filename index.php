@@ -2,12 +2,21 @@
 session_start();
 require_once("vendor/autoload.php");
 
+
+
 use \Sime\App;
 use \Slim\Slim;
 use \Sime\Page;
 use \Sime\Controller\Usuario;
-
+ini_set('default_charset','UTF-8');
+header('Content-Type: text/html; charset=utf-8');
 $app = new Slim();
+
+include('vendor/qrcode/qrlib.php');
+require_once("functions.php");
+
+// include autoloader
+require_once("vendor/dompdf/autoload.inc.php");
 
 $app->notFound(function () use ($app) {
     $page = new Page("/views/", [
@@ -18,6 +27,7 @@ $app->notFound(function () use ($app) {
 	$page->setTpl("not");
 });
 
+
 $app->get('/', function(){
 	
 	$page = new Page();
@@ -25,6 +35,7 @@ $app->get('/', function(){
 	$page->setTpl("index");
 
 });
+
 
 $app->get('/login/', function(){
 	
@@ -58,7 +69,7 @@ $app->post('/login/', function(){
 					header("Location: /login/",1000);
 					exit;
 				}
-				header("Location: /portal/aluno");
+				header("Location: /portal/aluno/");
 				exit;
 			break;
 			case '1':
@@ -104,21 +115,21 @@ $app->post("/forgot/", function(){
 		header("Location: /login/");
 		exit;
 	}
-	//try{
+	try{
 		$email = $_POST['emailpessoa'];
 
 		$user = Usuario::reSenha($email);
 		
-	//}catch(Exception $e){
-		//Usuario::setError("Não foi possivel recuperar sua senha!");
-		//header("Location: /login/");
-		//exit;
-	//}
+	}catch(Exception $e){
+		Usuario::setError("Não foi possivel recuperar sua senha!");
+		header("Location: /login/");
+		exit;
+	}
 
 
-	//Usuario::setSuccess("Acese seu email para recuperar sua senha!");
-	//header("Location: /login/");
-	//exit;
+	Usuario::setSuccess("Acese seu email para recuperar sua senha!");
+	header("Location: /login/");
+	exit;
 });
 
 $app->get("/forgot/reset-password", function(){
@@ -166,7 +177,8 @@ $app->post("/forgot/reset-password/", function(){
 
 		$user->buscarAdmin($idusuario);
 		$user->atualizarSenha($senha);
-	}catch(Exception $e){
+	}catch(\Exception $e){
+		
 		Usuario::setError($e->getMessage());
 		header("Location: /login");
 		exit;
@@ -178,10 +190,35 @@ $app->post("/forgot/reset-password/", function(){
 
 });
 
+$app->post("/contato/", function(){
+
+	if (isset($_POST['g-recaptcha-response'])) {
+	    $captcha_data = $_POST['g-recaptcha-response'];
+	}
+
+	// Se nenhum valor foi recebido, o usuário não realizou o captcha
+	if (!$captcha_data) {
+	    echo "Por favor, confirme o captcha.";
+	    exit;
+	}
+
+	$resposta = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=SUA-CHAVE-SECRETA&response=".$captcha_data."&remoteip=".$_SERVER['REMOTE_ADDR']);
+
+	if ($resposta.success) {
+	    echo "Obrigado por deixar sua mensagem!";
+	} else {
+	    echo "Usuário mal intencionado detectado. A mensagem não foi enviada.";
+	    exit;
+	}
+	var_dump($_POST);
+	exit;
+});
+
 require_once("site.php");
 require_once("admin.php");
 require_once("escola.php");
 require_once("webservice.php");
+require_once("aluno.php");
 
 $app->run();
  ?>

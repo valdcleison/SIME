@@ -8,29 +8,24 @@ use \Sime\WebService\Frequencia;
 use \Sime\SMS;
 
 $app->get("/teste/", function(){
-		$idfrequenciaaluno = "1";
+		$idfrequenciaaluno = "64";
 
 		$frequenciaaluno = new FrequenciaAluno();
-		$dados = $frequenciaaluno->buscarFrequenciaAlunoPorId($idfrequenciaaluno);
-		
-			$data = new DateTime($dados["dtfrequencia"]);
+		$dados = $frequenciaaluno->buscarFrequenciaAlunoPorE($idfrequenciaaluno);
 			
 			
+			$data = new DateTime($dados[0]["dtfrequencia"]);
+			var_dump($dados);
+			exit;
 			
-			$email = new \Sime\Mailer($dados["email"], $dados["nomepessoa"] , "Notificação", "notificacao", array(
-				"nomealuno"=>"Aluno Test",
-				"data"=>$data->format('d-m-Y')
-			));
-
-			$email->send();
 			
 			$url = 'https://www.paposms.com/webservice/1.0/send/';
 
-			$message = "O Aluno Teste, cuja matricula ". $dados["numeromatricula"] .", não compareceu a escola no dia ". date("d-m-Y") . "";
+			$message = "O Aluno Teste, cuja matricula ". $dados[0]["numeromatricula"] .", não compareceu a escola no dia ". date("d-m-Y") . "";
 			$fields = array(
-			        "user"=>'w.jotas3@gmail.com',
-			        "pass"=>'willian23',
-			        "numbers"=>$dados["telefone"],
+			        "user"=>'marroia.123@gmail.com',
+			        "pass"=>'paposms',
+			        "numbers"=>$dados[0]["telefone"],
 			        "message"=>$message,
 			        "return_format"=>"json"
 			    );
@@ -470,20 +465,20 @@ $app->post("/ws/:versao/portal/:usuario/:senha/sincdata/", function($version, $u
 					$hrentrada = $_POST['hrentrada'];
 
 					$frequenciaaluno = new FrequenciaAluno();
-					$dados = $frequenciaaluno->buscarFrequenciaAlunoPorId($idfrequenciaaluno);
-
+					$dados = $frequenciaaluno->buscarFrequenciaAlunoPorE($idfrequenciaaluno);
+					
 					if($hrentrada === "null" || $hrentrada === null || $hrentrada === ""){
 
-							$data = new DateTime($dados["dtfrequencia"]);
+							$data = new DateTime($dados[0]["dtfrequencia"]);
 							
 														
 							$url = 'https://www.paposms.com/webservice/1.0/send/';
 				
-							$message = "O Aluno Teste, cuja matricula ". $dados["numeromatricula"] .", não compareceu a escola no dia ". date("d-m-Y") . "";
+							$message = "O Aluno ".$dados[0]["nomepessoa"].", cuja matricula ". $dados[0]["numeromatricula"] .", não compareceu a escola no dia ". date("d-m-Y") . "";
 							$fields = array(
-							        "user"=>'bilca2011@gmail.com',
-							        "pass"=>'simesco',
-							        "numbers"=>$dados["telefone"],
+							        "user"=>'valdemir.valdeci@gmail.com',
+			        				"pass"=>'val@123456',
+							        "numbers"=>$dados[0]["telefone"],
 							        "message"=>$message,
 							        "return_format"=>"json"
 							    );
@@ -497,13 +492,13 @@ $app->post("/ws/:versao/portal/:usuario/:senha/sincdata/", function($version, $u
 							$result_array = json_decode($result, true);
 				
 							if ($result_array['result'] === true) {
-							    echo "Mensagem enviada.";
+							    $m = "Mensagem enviada.";
 							} else {
-							    echo "Mensagem não enviada";
+							    $m = "Mensagem não enviada";
 							}
 							echo json_encode(array(
 								"status"=>"ok",
-								"menssage"=>"Aluno Ausente".$hrentrada.""
+								"menssage"=>"Aluno ".$m." Ausente".$idfrequenciaaluno
 				
 							));
 					}else{
@@ -512,7 +507,7 @@ $app->post("/ws/:versao/portal/:usuario/:senha/sincdata/", function($version, $u
 						$frAluno->AlterarPorId($idfrequenciaaluno, $hrentrada);
 						echo json_encode(array(
 							"status"=>"ok",
-							"menssage"=>"Aluno Presente".$hrentrada.""
+							"menssage"=>"Aluno Presente".$hrentrada
 							
 
 						));

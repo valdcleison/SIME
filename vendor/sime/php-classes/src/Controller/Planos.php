@@ -12,6 +12,7 @@ class Planos extends Control{
 	}
 
 	public static function buscarPlanos(){
+		
 		return PlanosDao::buscarPlanos();
 	}
 

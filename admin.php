@@ -8,16 +8,8 @@ use \Sime\Controller\Planos;
 $app->get("/admin/", function(){
 	
 	
-	Usuario::verifyLogin(2);
-
-	$page = new Page("/views/Admin/",[
-		"header"=>true,
-		"footer"=>true,
-		"data"=>array(
-			"name"=> $_SESSION['User']['nomepessoa']
-		)]);
-	$page->setTpl("index");
-
+	header("Location: /admin/escola/");
+	exit;
 
 });
 
@@ -60,9 +52,10 @@ $app->get("/admin/users/create/", function(){
 });
 
 $app->post("/admin/users/create/", function(){
-	Usuario::verifyLogin(2);
-
-	if(strlen($_POST['cpfpessoa']) !== 11){
+	//Usuario::verifyLogin(2);
+	$_POST['cpfpessoa'] = str_replace(".", "", $_POST['cpfpessoa']);
+	$_POST['cpfpessoa'] = str_replace("-", "", $_POST['cpfpessoa']);
+	/*if(strlen($_POST['cpfpessoa']) !== 11){
 		Usuario::setError("Cpf inválido!");
 		echo "<script>javascript:history.back()</script>";
 		exit;
@@ -88,7 +81,7 @@ $app->post("/admin/users/create/", function(){
 		Usuario::setError("CPF inválido!");
 		echo "<script>javascript:history.back()</script>";
 		exit;
-	}
+	}*/
 
 	try{
 		$user = new Usuario();
@@ -133,7 +126,7 @@ $app->get("/admin/users/:id", function($id){
 	$user = new Usuario();
 	$user->buscarAdmin((int)$id);
 
-	$page = new Page("/views/admin/",[
+	$page = new Page("/views/Admin/",[
 		"header"=>true,
 		"footer"=>true,
 		"data"=>array(
@@ -156,6 +149,8 @@ $app->post("/admin/users/:id", function($id){
 		echo "<script>javascript:history.back()</script>";
 		exit;
 	}
+
+
 
 	try{
 		$user = new Usuario();
@@ -287,16 +282,27 @@ $app->get("/admin/escola/create/", function(){
 $app->post("/admin/escola/create/", function(){
 	Usuario::verifyLogin(2);
 	try{
-		if((int) strlen($_POST['telefone']) < 11){
+		if((int) strlen($_POST['telefone']) < 9){
 			Escola::setError("O numero de telefone precisa conter 11 numeros!");
 			echo "<script>javascript:history.back()</script>";
 			exit;
 		}
-		if((int) strlen($_POST['celular']) < 11 ){
+		if((int) strlen($_POST['celular']) < 10 ){
 			Escola::setError("O numero de cellular precisa conter 11 numeros!");
 			echo "<script>javascript:history.back()</script>";
 			exit;
 		}
+		$_POST['cpfgestor'] = str_replace(".", "", $_POST['cpfgestor']);
+		$_POST['cpfgestor'] = str_replace("-", "", $_POST['cpfgestor']);
+
+		$_POST['cnpjescola'] = str_replace( ".", "", $_POST['cnpjescola']);
+		$_POST['cnpjescola'] = str_replace( "-", "", $_POST['cnpjescola']);
+		$_POST['cnpjescola'] = str_replace( "/", "", $_POST['cnpjescola']);
+
+		$_POST['cep'] = str_replace( "-", "", $_POST['cep']);
+
+		$_POST['telefone'] = str_replace("-", "", $_POST['telefone']);
+		$_POST['celular'] = str_replace( "-", "", $_POST['celular']);
 		
 
 		foreach ($_POST as $key => $value) {
@@ -493,7 +499,7 @@ $app->post("/admin/planos/create/", function(){
 		echo "<script>javascript:history.back()</script>";
 		exit;
 	}
-	str_replace(",", ".", $_POST['preco']);
+	$_POST['preco'] = str_replace(",", ".", $_POST['preco']);
 	try {
 		$planos = new Planos();
 		$planos->setData($_POST);
@@ -569,7 +575,7 @@ $app->post("/admin/planos/:id", function($id){
 			echo "<script>javascript:history.back()</script>";
 			exit;
 		}
-		str_replace(",", ".", $_POST['preco']);
+		$_POST['preco'] = str_replace(",", ".", $_POST['preco']);
 
 		$planos = new Planos();
 		$planos->buscarPlanosPorId($id);
